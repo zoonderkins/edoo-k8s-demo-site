@@ -1,12 +1,12 @@
 ---
-date: 2025-05-18T10:00:49+00:00
+date: 2025-05-18T11:01:17+00:00
 ---
 
 # K8s Production Cluster
 
 <div class="node-info">
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
+Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
 Total Pods: <strong id="index-total-pods">66</strong>
@@ -14,6 +14,7 @@ Total Pods: <strong id="index-total-pods">66</strong>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -91,13 +92,13 @@ Total Pods: <strong id="index-total-pods">66</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cloudflared-6d5bcbf6c6-86w66</td>
+          <td>cloudflared-27ds4</td>
           <td>cloudflare</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cloudflared-6d5bcbf6c6-n5h4b</td>
+          <td>cloudflared-ld67z</td>
           <td>cloudflare</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -343,13 +344,13 @@ Total Pods: <strong id="index-total-pods">66</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-5476f64bd7-krvlm</td>
+          <td>update-pods-md-29126100-cfx4d</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126040-49g9j</td>
+          <td>hugo-site-7b8b7cf5b5-h9z9s</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -367,7 +368,7 @@ Total Pods: <strong id="index-total-pods">66</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-manual-ff5-ct9w9</td>
+          <td>update-pods-md-29126040-49g9j</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-2</td>
@@ -428,42 +429,3 @@ Total Pods: <strong id="index-total-pods">66</strong>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
