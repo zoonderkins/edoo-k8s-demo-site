@@ -1,5 +1,5 @@
 ---
-date: 2025-05-18T16:00:38+00:00
+date: 2025-05-18T17:01:16+00:00
 ---
 
 # K8s Production Cluster
@@ -14,6 +14,7 @@ Total Pods: <strong id="index-total-pods">75</strong>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -403,13 +404,13 @@ Total Pods: <strong id="index-total-pods">75</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-748b8fcfb-54rfj</td>
+          <td>hugo-site-8675d749b9-s4qrf</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126400-dqd2s</td>
+          <td>update-pods-md-29126460-7x2zf</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -427,10 +428,10 @@ Total Pods: <strong id="index-total-pods">75</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126220-fcpb4</td>
+          <td>update-pods-md-29126400-dqd2s</td>
           <td>prod</td>
           <td>Succeeded</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>vmagent-vmks-victoria-metrics-k8s-stack-575b6d45c5-fdp2b</td>
@@ -488,42 +489,3 @@ Total Pods: <strong id="index-total-pods">75</strong>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
