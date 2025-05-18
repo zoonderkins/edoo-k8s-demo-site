@@ -1,5 +1,5 @@
 ---
-date: 2025-05-18T07:21:21+00:00
+date: 2025-05-18T08:00:39+00:00
 ---
 
 # K8s Production Cluster
@@ -9,11 +9,12 @@ date: 2025-05-18T07:21:21+00:00
 Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">61</strong>
+Total Pods: <strong id="index-total-pods">62</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -328,7 +329,13 @@ Total Pods: <strong id="index-total-pods">61</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-7f949655f5-p2qd7</td>
+          <td>hugo-site-f8bd85595-rfrtc</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29125920-f2brj</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -336,7 +343,7 @@ Total Pods: <strong id="index-total-pods">61</strong>
       <tr>
           <td>update-pods-md-manual-ff5-ct9w9</td>
           <td>prod</td>
-          <td class="status-running">Running</td>
+          <td>Succeeded</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
@@ -395,3 +402,42 @@ Total Pods: <strong id="index-total-pods">61</strong>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
