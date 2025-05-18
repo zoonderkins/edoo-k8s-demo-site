@@ -1,5 +1,5 @@
 ---
-date: 2025-05-18T14:00:17+00:00
+date: 2025-05-18T15:00:44+00:00
 ---
 
 # K8s Production Cluster
@@ -9,11 +9,12 @@ date: 2025-05-18T14:00:17+00:00
 Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">72</strong>
+Total Pods: <strong id="index-total-pods">75</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -137,25 +138,25 @@ Total Pods: <strong id="index-total-pods">72</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>cloudflared-574f65998f-xklp4</td>
+          <td>cloudflared-574f65998f-vwc9b</td>
           <td>cloudflare</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-envoy-njlz5</td>
+          <td>cilium-b2lzk</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-operator-86d86869fd-xprv9</td>
+          <td>cilium-envoy-bdmzx</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-s5lg5</td>
+          <td>cilium-operator-5876b8b787-2dxnq</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -167,49 +168,49 @@ Total Pods: <strong id="index-total-pods">72</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
+          <td>hubble-relay-7b4c9d4474-fffn5</td>
+          <td>kube-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
           <td>konnectivity-agent-mzf7h</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>kube-proxy-6njb4</td>
+          <td>kube-proxy-2bgwc</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>kube-router-2b8pr</td>
+          <td>kube-router-zwdj7</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-envoy-bvswq</td>
+          <td>cilium-4858x</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>cilium-vvqpf</td>
+          <td>cilium-envoy-4sr6n</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>coredns-7d4f7fbd5c-7gw6j</td>
+          <td>coredns-7d4f7fbd5c-ksf9n</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hubble-relay-589fbddbf-rs7kp</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>hubble-ui-76d4965bb6-gcb9r</td>
+          <td>hubble-ui-76d4965bb6-q7x75</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -221,13 +222,13 @@ Total Pods: <strong id="index-total-pods">72</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>kube-proxy-5d9cz</td>
+          <td>kube-proxy-2gd69</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>kube-router-2w8g6</td>
+          <td>kube-router-g7gjj</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -383,19 +384,37 @@ Total Pods: <strong id="index-total-pods">72</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126280-kb74x</td>
+          <td>metallb-controller-8474b54bc4-cgztm</td>
+          <td>metallb-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>metallb-speaker-9jqjx</td>
+          <td>metallb-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>metallb-speaker-xdt6r</td>
+          <td>metallb-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>hugo-site-8f4d4dd64-srhr5</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hugo-site-6bb85f7746-bkmfj</td>
+          <td>update-pods-md-29126340-58k2q</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126100-cfx4d</td>
+          <td>update-pods-md-29126280-kb74x</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -443,7 +462,7 @@ Total Pods: <strong id="index-total-pods">72</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>vmsingle-vmks-victoria-metrics-k8s-stack-85cdb84cb5-x45f6</td>
+          <td>vmsingle-vmks-victoria-metrics-k8s-stack-85cdb84cb5-4hf5z</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -468,42 +487,3 @@ Total Pods: <strong id="index-total-pods">72</strong>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
