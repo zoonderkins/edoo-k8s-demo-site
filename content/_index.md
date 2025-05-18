@@ -1,19 +1,20 @@
 ---
-date: 2025-05-18T13:00:24+00:00
+date: 2025-05-18T14:00:17+00:00
 ---
 
 # K8s Production Cluster
 
 <div class="node-info">
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
+Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">65</strong>
+Total Pods: <strong id="index-total-pods">72</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -92,6 +93,48 @@ Total Pods: <strong id="index-total-pods">65</strong>
           <td>cert-manager</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>client-645b68dcf7-4mgpb</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>client2-66475877c6-rgkch</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>echo-same-node-6c545975c6-vb54h</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>host-netns-44fwz</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>client3-795488bf5-wk74c</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>echo-other-node-7f546db4f4-wqwll</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>host-netns-5cfvg</td>
+          <td>cilium-test-1</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
           <td>cloudflared-574f65998f-xklp4</td>
@@ -340,13 +383,13 @@ Total Pods: <strong id="index-total-pods">65</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-7b97f5dd89-fchmh</td>
+          <td>update-pods-md-29126280-kb74x</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126220-fcpb4</td>
+          <td>hugo-site-6bb85f7746-bkmfj</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -358,13 +401,13 @@ Total Pods: <strong id="index-total-pods">65</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126040-49g9j</td>
+          <td>update-pods-md-29126160-k82jq</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29126160-k82jq</td>
+          <td>update-pods-md-29126220-fcpb4</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-2</td>
@@ -425,3 +468,42 @@ Total Pods: <strong id="index-total-pods">65</strong>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
