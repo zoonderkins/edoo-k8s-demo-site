@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: prod
+  namespace: argocd
+spec:
+  description: Production environment project
+  
+  # Allow deployments to the prod namespace on the current cluster
+  destinations:
+  - namespace: prod
+    server: https://kubernetes.default.svc
+  
+  # Allow applications to use any repository and Helm/Kustomize resources
+  sourceRepos:
+  - '*'
+  
+  # Allow all cluster-scoped resources except for ResourceQuota
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  
+  # Allow all namespaced resources
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  
+  # Project roles (optional)
+  roles:
+  - name: admin
+    description: Full access to the project
+    policies:
+    - p, proj:prod:admin, applications, *, prod/*, allow 

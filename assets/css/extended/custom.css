@@ -1,0 +1,73 @@
+/* Custom styles to make the dashboard look better */
+
+.post-content h2 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #3182ce;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.post-content table th,
+.post-content table td {
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.post-content table th {
+  background-color: #edf2f7;
+  font-weight: bold;
+}
+
+.post-content table tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+.post-content table tr:hover {
+  background-color: #ebf8ff;
+}
+
+.post-content hr {
+  margin: 30px 0;
+}
+
+.env-links {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.env-links a {
+  padding: 10px 15px;
+  background-color: #4299e1;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 5px;
+}
+
+.env-links a:hover {
+  background-color: #3182ce;
+}
+
+.node-info {
+  background-color: #e6fffa;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 5px solid #38b2ac;
+  margin: 20px 0;
+}
+
+/* Responsive table for small screens */
+@media (max-width: 768px) {
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+  }
+} 

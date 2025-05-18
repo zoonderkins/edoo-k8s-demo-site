@@ -1,0 +1,80 @@
+{{ if eq .RelPermalink "/" }}
+<script>
+// Dashboard Live Data Polling
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize dashboard with dynamic features
+  setupLiveData();
+});
+
+// Set up live data polling
+function setupLiveData() {
+  // Check if we should use in-browser API calls or rely on page reloads
+  const hasAjaxSupport = true;
+  
+  if (hasAjaxSupport) {
+    // Try to load the API data if available
+    fetchClusterStatus();
+    
+    // Set up refresh button functionality
+    document.getElementById('manual-refresh-btn')?.addEventListener('click', function() {
+      fetchClusterStatus();
+    });
+  }
+}
+
+// Fetch cluster status from API
+async function fetchClusterStatus() {
+  try {
+    const response = await fetch('/api/cluster-status.json');
+    if (!response.ok) {
+      console.warn('Cluster status API endpoint not available');
+      return;
+    }
+    
+    const data = await response.json();
+    updateClusterStatusDisplay(data);
+  } catch (error) {
+    console.error('Error fetching cluster status:', error);
+  }
+}
+
+// Update cluster status display with new data
+function updateClusterStatusDisplay(data) {
+  // Update dashboard elements with IDs
+  updateElementIfExists('node-name', data.nodeName);
+  updateElementIfExists('cluster-status', data.clusterStatus);
+  updateElementIfExists('index-cluster-status', data.clusterStatus);
+  updateElementIfExists('total-pods', data.statistics.totalPods);
+  updateElementIfExists('index-total-pods', data.statistics.totalPods);
+  updateElementIfExists('running-pods', data.statistics.runningPods);
+  
+  // Update any timestamp displays
+  document.querySelectorAll('.dynamic-timestamp').forEach(el => {
+    const date = new Date(data.lastUpdated);
+    el.textContent = date.toLocaleTimeString();
+  });
+  
+  // Update status colors
+  const statusIndicator = document.querySelector('.status-indicator');
+  if (statusIndicator) {
+    statusIndicator.className = 'status-indicator ' + data.statusClass;
+    statusIndicator.classList.add('refreshed');
+    setTimeout(() => {
+      statusIndicator.classList.remove('refreshed');
+    }, 1000);
+  }
+}
+
+// Update a DOM element with new data and highlight it
+function updateElementIfExists(id, value) {
+  const element = document.getElementById(id);
+  if (element && element.textContent != value) {
+    element.textContent = value;
+    element.classList.add('updated');
+    setTimeout(() => {
+      element.classList.remove('updated');
+    }, 1000);
+  }
+}
+</script>
+{{ end }} 

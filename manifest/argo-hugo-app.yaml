@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hugo-k8s-dashboard
+  namespace: argocd
+spec:
+  project: prod
+  source:
+    repoURL: https://github.com/zoonderkins/edoo-k8s-demo-site.git
+    targetRevision: master
+    path: charts/hugo-site
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

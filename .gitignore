@@ -1,0 +1,18 @@
+manifest/github-secret-notes.txt
+
+# Hugo specific files
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+/node_modules/
+.hugo_build.lock
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo

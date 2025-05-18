@@ -1,0 +1,28 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/zoonderkins/hugo-k8s-dashboard
+  tag: 2e9be9e5fddf689b745b8a35b155b83e16ebc7c6
+  pullPolicy: Always
+  # Pull secrets for private image registry
+  pullSecrets:
+    - name: regcred
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: k8s.edoo.dev
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: k8s-edoo-dev-tls
+  #    hosts:
+  #      - k8s.edoo.dev

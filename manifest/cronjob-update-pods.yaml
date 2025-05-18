@@ -1,0 +1,400 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-pods-md
+  namespace: prod
+spec:
+  schedule: "0 * * * *"  # Run every 1 hour for more dynamic updates
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 3  # Limit retries to 3 attempts
+      template:
+        spec:
+          containers:
+          - name: update-pods
+            image: bitnami/git:latest  # Changed to git-based image
+            env:
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-token-secret
+                  key: GITHUB_TOKEN
+            - name: GIT_USERNAME
+              value: "zoonderkins"
+            - name: GIT_EMAIL
+              value: "git-ed@runbox.no"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              
+              # Install required tools 
+              apt-get update && apt-get install -y curl jq
+              
+              # Install kubectl directly from Kubernetes
+              echo "Installing kubectl..."
+              KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+              curl -LO "https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl"
+              chmod +x ./kubectl
+              mv ./kubectl /usr/local/bin/kubectl
+              
+              # Verify kubectl installation
+              kubectl version --client
+              
+              # Debug token - print first few characters (safely)
+              echo "GitHub token length: ${#GITHUB_TOKEN}"
+              echo "Token prefix: ${GITHUB_TOKEN:0:4}..."
+              
+              # Clone the repository
+              echo "Cloning repository..."
+              REPO_DIR="/tmp/repo"
+              git clone "https://${GIT_USERNAME}:${GITHUB_TOKEN}@github.com/zoonderkins/edoo-k8s-demo-site.git" "${REPO_DIR}"
+              
+              # Configure git (inside repo directory)
+              cd "${REPO_DIR}"
+              git config --global user.email "${GIT_EMAIL}"
+              git config --global user.name "${GIT_USERNAME}"
+              
+              # Create a simple update script directly in the script
+              echo "Fetching pod information..."
+              mkdir -p content static/api static/css static/js
+              
+              # Ensure custom directories exist and are not modified
+              echo "Ensuring custom content directories..."
+              mkdir -p static/css/custom static/js/custom
+              
+              # Create a .gitkeep file if the directories are empty
+              touch static/css/custom/.gitkeep static/js/custom/.gitkeep
+              
+              # Get actual pod information
+              echo "Getting pod information..."
+              # Get pod data - Format: POD_NAME NAMESPACE STATUS NODE
+              POD_INFO=$(kubectl get pods --all-namespaces -o=custom-columns=NAME:.metadata.name,NAMESPACE:.metadata.namespace,STATUS:.status.phase,NODE:.spec.nodeName --no-headers | sort -b -k2)
+              
+              # Calculate pod totals
+              TOTAL_PODS=$(echo "$POD_INFO" | wc -l | tr -d ' ')
+              RUNNING_PODS=$(echo "$POD_INFO" | grep -c "Running" || echo "0")
+              CURRENT_DATE=$(date -Iseconds)
+              
+              # Get current pod's worker node
+              WORKER_NODE=$(kubectl get pod -o jsonpath="{.spec.nodeName}" -n ${POD_NAMESPACE} ${HOSTNAME} 2>/dev/null || echo "unknown-worker")
+              echo "Current worker node: ${WORKER_NODE}"
+              
+              # Get list of namespaces with running pods (exclude empty namespaces)
+              NAMESPACES=$(echo "$POD_INFO" | cut -d' ' -f2 | sort | uniq)
+              # Get top namespaces with most pods (limit to top 5-6 for the dashboard)
+              TOP_NAMESPACES=$(echo "$POD_INFO" | cut -d' ' -f2 | sort | uniq -c | sort -nr | head -5 | tr -s ' ' | cut -d' ' -f3)
+              echo "Top namespaces with most pods: $(echo $TOP_NAMESPACES | tr '\n' ' ')"
+              
+              # Update _index.md directly with pod data instead of creating a separate pods.md
+              if [ -f "content/_index.md" ]; then
+                echo "Updating content in _index.md..."
+                
+                # Update date field in frontmatter with sed
+                sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" content/_index.md
+                
+                # Update total pods count
+                if grep -q "id=\"index-total-pods\"" content/_index.md; then
+                  sed -i "s/<strong id=\"index-total-pods\">[0-9]*<\/strong>/<strong id=\"index-total-pods\">${TOTAL_PODS}<\/strong>/g" content/_index.md
+                fi
+                
+                # Update worker node info if exists
+                if grep -q "id=\"worker-node-name\"" content/_index.md; then
+                  sed -i "s/<strong id=\"worker-node-name\">[^<]*<\/strong>/<strong id=\"worker-node-name\">${WORKER_NODE}<\/strong>/g" content/_index.md
+                fi
+                
+                # Find the key infrastructure pods table and update it
+                if grep -q "id=\"summary-table\"" content/_index.md; then
+                  echo "Updating summary table in index..."
+                  # Create temporary files for the parts before and after the table
+                  grep -B 10000 "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md > /tmp/index_before_table.md || true
+                  
+                  # Get everything after the key infrastructure pods section
+                  grep -A 10000 "</table>" content/_index.md > /tmp/index_after_table.md || true
+                  
+                  # Recreate the file with new table content
+                  cat /tmp/index_before_table.md > content/_index.md
+                  echo '<table class="pod-table" id="summary-table">' >> content/_index.md
+                  echo '  <thead>' >> content/_index.md
+                  echo '      <tr>' >> content/_index.md
+                  echo '          <th>Pod Name</th>' >> content/_index.md
+                  echo '          <th>Namespace</th>' >> content/_index.md
+                  echo '          <th>Status</th>' >> content/_index.md
+                  echo '          <th>Node</th>' >> content/_index.md
+                  echo '      </tr>' >> content/_index.md
+                  echo '  </thead>' >> content/_index.md
+                  echo '  <tbody>' >> content/_index.md
+                  
+                  # Add pod data from POD_INFO
+                  echo "$POD_INFO" | while read -r POD_NAME NAMESPACE STATUS NODE; do
+                    echo "      <tr>" >> content/_index.md
+                    echo "          <td>${POD_NAME}</td>" >> content/_index.md
+                    echo "          <td>${NAMESPACE}</td>" >> content/_index.md
+                    
+                    # Add status with appropriate class
+                    if [[ "$STATUS" == "Running" ]]; then
+                      echo "          <td class=\"status-running\">${STATUS}</td>" >> content/_index.md
+                    elif [[ "$STATUS" == "Pending" ]]; then
+                      echo "          <td class=\"status-pending\">${STATUS}</td>" >> content/_index.md
+                    elif [[ "$STATUS" == "Failed" || "$STATUS" == "Error" ]]; then
+                      echo "          <td class=\"status-error\">${STATUS}</td>" >> content/_index.md
+                    else
+                      echo "          <td>${STATUS}</td>" >> content/_index.md
+                    fi
+                    
+                    echo "          <td>${NODE}</td>" >> content/_index.md
+                    echo "      </tr>" >> content/_index.md
+                  done
+                  
+                  # Close the table
+                  echo '  </tbody>' >> content/_index.md
+                  echo '</table>' >> content/_index.md
+                  
+                  # Remove the action buttons and namespace links section since we don't need them
+                  # We're showing all pods directly in _index.md and don't need pod page links
+                  
+                  # Add some CSS for the pod table
+                  if ! grep -q "pod-table" /tmp/index_after_table.md; then
+                    echo "<style>" >> content/_index.md
+                    echo ".pod-table {" >> content/_index.md
+                    echo "  width: 100%;" >> content/_index.md
+                    echo "  border-collapse: collapse;" >> content/_index.md
+                    echo "  margin-bottom: 30px;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".pod-table th {" >> content/_index.md
+                    echo "  background-color: #f8f9fa;" >> content/_index.md
+                    echo "  padding: 10px 15px;" >> content/_index.md
+                    echo "  text-align: left;" >> content/_index.md
+                    echo "  font-weight: 600;" >> content/_index.md
+                    echo "  border-bottom: 2px solid #dee2e6;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".pod-table td {" >> content/_index.md
+                    echo "  padding: 10px 15px;" >> content/_index.md
+                    echo "  border-bottom: 1px solid #e9ecef;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".pod-table tbody tr:hover {" >> content/_index.md
+                    echo "  background-color: #f8f9fa;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".status-running {" >> content/_index.md
+                    echo "  color: #28a745;" >> content/_index.md
+                    echo "  font-weight: 600;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".status-pending {" >> content/_index.md
+                    echo "  color: #ffc107;" >> content/_index.md
+                    echo "  font-weight: 600;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".status-error {" >> content/_index.md
+                    echo "  color: #dc3545;" >> content/_index.md
+                    echo "  font-weight: 600;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "</style>" >> content/_index.md
+                  fi
+                fi
+              else
+                # Create a basic _index.md file if it doesn't exist
+                echo "---" > content/_index.md
+                echo "title: \"Kubernetes Dashboard\"" >> content/_index.md
+                echo "date: ${CURRENT_DATE}" >> content/_index.md
+                echo "---" >> content/_index.md
+                echo "" >> content/_index.md
+                echo "# Kubernetes Pod Status" >> content/_index.md
+                echo "" >> content/_index.md
+                
+                # Add node-info section with worker node
+                echo "<div class=\"node-info\">" >> content/_index.md
+                echo "<span style=\"color: green\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong></span> | Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> content/_index.md
+                echo "<div class=\"worker-node-info\">Current worker: <strong id=\"worker-node-name\">${WORKER_NODE}</strong></div>" >> content/_index.md
+                echo "</div>" >> content/_index.md
+                echo "" >> content/_index.md
+                
+                # Add the table for all pods
+                echo "<h2>Kubernetes Pods</h2>" >> content/_index.md
+                echo "" >> content/_index.md
+                
+                echo '<table class="pod-table" id="summary-table">' >> content/_index.md
+                echo '  <thead>' >> content/_index.md
+                echo '      <tr>' >> content/_index.md
+                echo '          <th>Pod Name</th>' >> content/_index.md
+                echo '          <th>Namespace</th>' >> content/_index.md
+                echo '          <th>Status</th>' >> content/_index.md
+                echo '          <th>Node</th>' >> content/_index.md
+                echo '      </tr>' >> content/_index.md
+                echo '  </thead>' >> content/_index.md
+                echo '  <tbody>' >> content/_index.md
+                
+                # Add pod data from POD_INFO
+                echo "$POD_INFO" | while read -r POD_NAME NAMESPACE STATUS NODE; do
+                  echo "      <tr>" >> content/_index.md
+                  echo "          <td>${POD_NAME}</td>" >> content/_index.md
+                  echo "          <td>${NAMESPACE}</td>" >> content/_index.md
+                  
+                  # Add status with appropriate class
+                  if [[ "$STATUS" == "Running" ]]; then
+                    echo "          <td class=\"status-running\">${STATUS}</td>" >> content/_index.md
+                  elif [[ "$STATUS" == "Pending" ]]; then
+                    echo "          <td class=\"status-pending\">${STATUS}</td>" >> content/_index.md
+                  elif [[ "$STATUS" == "Failed" || "$STATUS" == "Error" ]]; then
+                    echo "          <td class=\"status-error\">${STATUS}</td>" >> content/_index.md
+                  else
+                    echo "          <td>${STATUS}</td>" >> content/_index.md
+                  fi
+                  
+                  echo "          <td>${NODE}</td>" >> content/_index.md
+                  echo "      </tr>" >> content/_index.md
+                done
+                
+                # Close the table
+                echo '  </tbody>' >> content/_index.md
+                echo '</table>' >> content/_index.md
+                
+                # Add CSS for the dashboard
+                echo "" >> content/_index.md
+                echo "<style>" >> content/_index.md
+                echo ".node-info {" >> content/_index.md
+                echo "  background-color: #f8f9fa;" >> content/_index.md
+                echo "  padding: 15px;" >> content/_index.md
+                echo "  border-radius: 8px;" >> content/_index.md
+                echo "  margin-bottom: 20px;" >> content/_index.md
+                echo "  box-shadow: 0 2px 4px rgba(0,0,0,0.05);" >> content/_index.md
+                echo "  position: relative;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".worker-node-info {" >> content/_index.md
+                echo "  margin-top: 8px;" >> content/_index.md
+                echo "  font-size: 0.9em;" >> content/_index.md
+                echo "  color: #495057;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".pod-table {" >> content/_index.md
+                echo "  width: 100%;" >> content/_index.md
+                echo "  border-collapse: collapse;" >> content/_index.md
+                echo "  margin-bottom: 30px;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".pod-table th {" >> content/_index.md
+                echo "  background-color: #f8f9fa;" >> content/_index.md
+                echo "  padding: 10px 15px;" >> content/_index.md
+                echo "  text-align: left;" >> content/_index.md
+                echo "  font-weight: 600;" >> content/_index.md
+                echo "  border-bottom: 2px solid #dee2e6;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".pod-table td {" >> content/_index.md
+                echo "  padding: 10px 15px;" >> content/_index.md
+                echo "  border-bottom: 1px solid #e9ecef;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".pod-table tbody tr:hover {" >> content/_index.md
+                echo "  background-color: #f8f9fa;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".status-running {" >> content/_index.md
+                echo "  color: #28a745;" >> content/_index.md
+                echo "  font-weight: 600;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".status-pending {" >> content/_index.md
+                echo "  color: #ffc107;" >> content/_index.md
+                echo "  font-weight: 600;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".status-error {" >> content/_index.md
+                echo "  color: #dc3545;" >> content/_index.md
+                echo "  font-weight: 600;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "</style>" >> content/_index.md
+              fi
+              
+              # Create JSON API with proper formatting
+              echo "{" > static/api/cluster-status.json
+              echo "  \"statistics\": {" >> static/api/cluster-status.json
+              echo "    \"totalPods\": ${TOTAL_PODS}," >> static/api/cluster-status.json
+              echo "    \"runningPods\": ${RUNNING_PODS}" >> static/api/cluster-status.json
+              echo "  }" >> static/api/cluster-status.json
+              echo "}" >> static/api/cluster-status.json
+              
+              # Stage all content updates
+              echo "Staging content updates..."
+              git add -A
+              
+              # Check if there are changes to commit
+              if git diff --staged --quiet; then
+                echo "No changes to commit"
+              else
+                echo "Committing content updates..."
+                git commit -m "Automatic update of pod status at $(date -u)"
+                
+                # Update image tag in values.yaml
+                if [ -f "charts/hugo-site/values.yaml" ]; then
+                  echo "Updating values.yaml first to ensure correct tag reference..."
+                  
+                  # Create a temporary unique tag to update later
+                  TEMP_TAG="temp-tag-$(date +%s)"
+                  
+                  # Update the values.yaml file with the temporary tag
+                  sed "s/^  tag:.*$/  tag: $TEMP_TAG/" charts/hugo-site/values.yaml > /tmp/new_values.yaml
+                  mv /tmp/new_values.yaml charts/hugo-site/values.yaml
+                  
+                  # Commit the temporary values.yaml change
+                  git add charts/hugo-site/values.yaml
+                  git commit -m "Temporary tag update for values.yaml"
+                  
+                  # Now get the final commit SHA - this will be the one GitHub Actions uses
+                  FINAL_COMMIT_SHA=$(git rev-parse HEAD)
+                  echo "Final commit SHA: ${FINAL_COMMIT_SHA}"
+                  
+                  # Update the git commit hash in the _index.md file if the element exists
+                  if grep -q "id=\"git-commit-hash\"" content/_index.md; then
+                    HASH_SHORT="${FINAL_COMMIT_SHA:0:7}"
+                    sed "s/<span class=\"commit-hash\" id=\"git-commit-hash\">[^<]*<\/span>/<span class=\"commit-hash\" id=\"git-commit-hash\">$HASH_SHORT<\/span>/g" content/_index.md > /tmp/new_index.md
+                    mv /tmp/new_index.md content/_index.md
+                    git add content/_index.md
+                  fi
+                  
+                  # Now update with the final SHA that GitHub Actions will use
+                  sed "s/^  tag:.*$/  tag: $FINAL_COMMIT_SHA/" charts/hugo-site/values.yaml > /tmp/new_values.yaml
+                  mv /tmp/new_values.yaml charts/hugo-site/values.yaml
+                  
+                  # Amend the commit to include the final SHA reference
+                  git add charts/hugo-site/values.yaml
+                  git commit --amend -m "Update image tag to match final commit SHA: ${FINAL_COMMIT_SHA}"
+                  
+                  echo "Values.yaml updated with final commit SHA: ${FINAL_COMMIT_SHA}"
+                fi
+                
+                # Push all changes to repository
+                echo "Pushing changes to repository..."
+                git remote set-url origin "https://${GIT_USERNAME}:${GITHUB_TOKEN}@github.com/zoonderkins/edoo-k8s-demo-site.git"
+                git push origin master --force
+                echo "All changes pushed successfully"
+                
+                # Trigger ArgoCD sync after GitHub Actions has time to build
+                echo "Waiting for GitHub Actions to build and push the new image (5 minutes)..."
+                sleep 300
+                
+                echo "Triggering ArgoCD sync..."
+                if command -v kubectl &> /dev/null; then
+                  # Patch ArgoCD application to force sync
+                  kubectl -n argocd patch application hugo-k8s-dashboard -p '{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}' --type=merge || echo "Failed to patch via kubectl"
+                  kubectl -n argocd patch application hugo-k8s-dashboard --type=json -p='[{"op": "replace", "path": "/metadata/annotations/argocd.argoproj.io~1sync-options", "value":"Force=true"}]' || echo "Failed to force sync via kubectl"
+                  echo "ArgoCD sync triggered"
+                else
+                  echo "kubectl not available, skipping manual sync"
+                fi
+              fi
+              
+              echo "Pod information update process completed successfully"
+          restartPolicy: OnFailure
+          serviceAccountName: github-push

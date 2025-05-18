@@ -1,0 +1,24 @@
+baseURL = 'https://k8s.edoo.dev/'
+languageCode = 'en-us'
+title = 'K8s Dashboard'
+theme = 'PaperMod'
+
+# Ignore warnings about raw HTML in markdown
+[markup.goldmark.renderer]
+  unsafe = true
+
+[params]
+  defaultTheme = "auto"
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  
+  # Custom CSS and JS files
+  customCSS = [
+    "css/dashboard.css",
+    "css/dashboard-live.css"
+  ]
+  customJS = [
+    "js/dashboard.js",
+    "js/dashboard-live.js"
+  ]

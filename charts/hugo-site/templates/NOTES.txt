@@ -1,0 +1,30 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To access the Kubernetes Dashboard:
+
+{{- if contains "ClusterIP" .Values.service.type }}
+  kubectl port-forward svc/hugo-site -n {{ .Release.Namespace }} 8080:{{ .Values.service.port }}
+  
+  Then open your browser at: http://localhost:8080
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services hugo-site)
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  
+  Then open your browser at: http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.service.type }}
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        You can watch the status of by running: 
+        
+        kubectl get --namespace {{ .Release.Namespace }} svc -w hugo-site
+        
+  Once available, open your browser at: http://[EXTERNAL-IP]:{{ .Values.service.port }}
+{{- else if contains "Ingress" .Values.service.type }}
+  The dashboard should be available at:
+  
+  https://k8s.edoo.dev
+{{- end }}
+
+For more information and updates, visit:
+https://github.com/zoonderkins/edoo-k8s-demo-site 
