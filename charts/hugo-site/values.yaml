@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 image:
   repository: ghcr.io/zoonderkins/hugo-k8s-dashboard
   tag: b39ffbdfd03f1764e7e9984dcb1cb14ff412042d
