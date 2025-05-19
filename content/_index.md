@@ -1,12 +1,12 @@
 ---
-date: 2025-05-19T10:00:50+00:00
+date: 2025-05-19T11:00:33+00:00
 ---
 
 # K8s Production Cluster
 
 <div class="node-info">
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
+Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
 Total Pods: <strong id="index-total-pods">60</strong>
@@ -14,6 +14,7 @@ Total Pods: <strong id="index-total-pods">60</strong>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -307,21 +308,15 @@ Total Pods: <strong id="index-total-pods">60</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-557cccb49b-lg2g5</td>
+          <td>hugo-site-58bcc65dcf-ng5r8</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29127480-z4n4z</td>
+          <td>update-pods-md-29127540-p2z2x</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29127300-89r44</td>
-          <td>prod</td>
-          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
@@ -337,43 +332,37 @@ Total Pods: <strong id="index-total-pods">60</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
+          <td>update-pods-md-29127480-z4n4z</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
           <td>vmks-grafana-7bcbdcbffc-vv9nm</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>vmks-kube-state-metrics-5987f4b4d-kgc4z</td>
+          <td>vmks-prometheus-node-exporter-kgzsf</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>vmks-prometheus-node-exporter-j7ssn</td>
+          <td>vmks-victoria-metrics-operator-564ff45f6c-zzqwp</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>vmks-victoria-metrics-operator-77bbcd4cb-lznmf</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmsingle-vmks-victoria-metrics-k8s-stack-669b999d86-4hhtf</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmagent-vmks-victoria-metrics-k8s-stack-787dbb57f4-vktqw</td>
+          <td>vmagent-vmks-victoria-metrics-k8s-stack-6865d74f48-bkfx7</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>vmalert-vmks-victoria-metrics-k8s-stack-797cb8d6b7-l8bk8</td>
+          <td>vmalert-vmks-victoria-metrics-k8s-stack-7c9fbf8fc4-cjvf4</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -385,49 +374,22 @@ Total Pods: <strong id="index-total-pods">60</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>vmks-prometheus-node-exporter-xz2z5</td>
+          <td>vmks-kube-state-metrics-7c79f7dd7c-zgh86</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>vmks-prometheus-node-exporter-b4g6d</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>vmsingle-vmks-victoria-metrics-k8s-stack-5968cb6475-shhv5</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
