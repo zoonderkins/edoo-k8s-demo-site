@@ -1,19 +1,20 @@
 ---
-date: 2025-05-19T04:00:29+00:00
+date: 2025-05-19T05:00:55+00:00
 ---
 
 # K8s Production Cluster
 
 <div class="node-info">
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
+Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">56</strong>
+Total Pods: <strong id="index-total-pods">58</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -124,6 +125,12 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
+          <td>hubble-relay-7b4c9d4474-5gtzm</td>
+          <td>kube-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
           <td>konnectivity-agent-n6bqk</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
@@ -148,7 +155,7 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>coredns-7d4f7fbd5c-dthbc</td>
+          <td>coredns-7d4f7fbd5c-6jgc5</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -304,19 +311,25 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-f59f4f54b-z7zlg</td>
+          <td>hugo-site-859486c89f-j2xkj</td>
           <td>prod</td>
           <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29127180-rmm6f</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29127060-j7fr9</td>
+          <td>prod</td>
+          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>update-pods-md-29127120-bhnbq</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29127060-j7fr9</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -346,6 +359,12 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
+          <td>vmsingle-vmks-victoria-metrics-k8s-stack-669b999d86-4hhtf</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
           <td>vmagent-vmks-victoria-metrics-k8s-stack-787dbb57f4-vktqw</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
@@ -369,11 +388,44 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
-      <tr>
-          <td>vmsingle-vmks-victoria-metrics-k8s-stack-669b999d86-cnlg7</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
