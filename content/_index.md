@@ -1,5 +1,5 @@
 ---
-date: 2025-05-19T17:00:38+00:00
+date: 2025-05-19T18:00:47+00:00
 ---
 
 # K8s Production Cluster
@@ -14,6 +14,7 @@ Total Pods: <strong id="index-total-pods">58</strong>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -326,21 +327,15 @@ Total Pods: <strong id="index-total-pods">58</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29127900-zzrqd</td>
+          <td>hugo-site-794795f7b7-2bs52</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hugo-site-7845b59967-kp5l4</td>
+          <td>update-pods-md-29127960-w5mpz</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29127720-f94xn</td>
-          <td>prod</td>
-          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
@@ -351,6 +346,12 @@ Total Pods: <strong id="index-total-pods">58</strong>
       </tr>
       <tr>
           <td>update-pods-md-29127840-br686</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29127900-zzrqd</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -387,3 +388,42 @@ Total Pods: <strong id="index-total-pods">58</strong>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
