@@ -1,5 +1,5 @@
 ---
-date: 2025-05-19T07:00:34+00:00
+date: 2025-05-19T08:00:44+00:00
 ---
 
 # K8s Production Cluster
@@ -14,6 +14,7 @@ Total Pods: <strong id="index-total-pods">61</strong>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -88,13 +89,7 @@ Total Pods: <strong id="index-total-pods">61</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>cloudflared-n88t9</td>
-          <td>cloudflare</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cloudflared-5rfqx</td>
+          <td>cloudflared-68fd85bfc8-xvnjs</td>
           <td>cloudflare</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -119,6 +114,12 @@ Total Pods: <strong id="index-total-pods">61</strong>
       </tr>
       <tr>
           <td>hubble-relay-7b4c9d4474-5gtzm</td>
+          <td>kube-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>hubble-ui-76d4965bb6-nsfgq</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -304,34 +305,34 @@ Total Pods: <strong id="index-total-pods">61</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-6f566b8948-nfrcj</td>
+          <td>hugo-site-7b6cd4c7c9-9bdg6</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29127360-d495x</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>hugo-site-7b6cd4c7c9-7q62k</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
           <td>update-pods-md-29127300-89r44</td>
           <td>prod</td>
-          <td class="status-running">Running</td>
+          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>hugo-site-6f566b8948-2llcz</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
           <td>update-pods-md-manual-1747633188488-46p47</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29127180-rmm6f</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
           <td>update-pods-md-29127240-rmbf6</td>
@@ -395,3 +396,42 @@ Total Pods: <strong id="index-total-pods">61</strong>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
