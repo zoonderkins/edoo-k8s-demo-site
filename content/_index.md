@@ -1,5 +1,5 @@
 ---
-date: 2025-05-19T15:00:41+00:00
+date: 2025-05-19T16:01:17+00:00
 ---
 
 # K8s Production Cluster
@@ -26,6 +26,7 @@ Total Pods: <strong id="index-total-pods">58</strong>
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
+<table class="pod-table" id="summary-table">
   <thead>
       <tr>
           <th>Pod Name</th>
@@ -36,7 +37,7 @@ Total Pods: <strong id="index-total-pods">58</strong>
   </thead>
   <tbody>
       <tr>
-          <td>alloy-s4gvs</td>
+          <td>alloy-lw24s</td>
           <td>alloy</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -324,21 +325,15 @@ Total Pods: <strong id="index-total-pods">58</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-5f47fdbfdb-4xvt7</td>
+          <td>hugo-site-79bfff89f6-f9lps</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29127780-5g62c</td>
+          <td>update-pods-md-29127840-br686</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29127600-s2dml</td>
-          <td>prod</td>
-          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
@@ -354,7 +349,13 @@ Total Pods: <strong id="index-total-pods">58</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>grafana-6bc6668f5b-b8sgs</td>
+          <td>update-pods-md-29127780-5g62c</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>grafana-99b45986c-qr6nb</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -385,3 +386,42 @@ Total Pods: <strong id="index-total-pods">58</strong>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
