@@ -1,5 +1,5 @@
 ---
-date: 2025-05-19T12:01:18+00:00
+date: 2025-05-19T13:00:42+00:00
 ---
 
 # K8s Production Cluster
@@ -9,11 +9,12 @@ date: 2025-05-19T12:01:18+00:00
 Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">56</strong>
+Total Pods: <strong id="index-total-pods">55</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -309,16 +310,16 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29127600-s2dml</td>
+          <td>hugo-site-7749bd9486-smscw</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hugo-site-7965b578bd-sb8wl</td>
+          <td>update-pods-md-29127660-5dr6q</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>update-pods-md-29127540-p2z2x</td>
@@ -327,10 +328,10 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29127420-b5mrm</td>
+          <td>update-pods-md-29127600-s2dml</td>
           <td>prod</td>
           <td>Succeeded</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>update-pods-md-29127480-z4n4z</td>
@@ -339,7 +340,7 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>grafana-6bc6668f5b-f9zmz</td>
+          <td>grafana-6bc6668f5b-b8sgs</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -362,50 +363,5 @@ Total Pods: <strong id="index-total-pods">56</strong>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
-      <tr>
-          <td>vmks-victoria-metrics-operator-cleanup-hook-7zwxd</td>
-          <td>victoria</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
