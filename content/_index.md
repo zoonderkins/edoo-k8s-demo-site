@@ -1,5 +1,5 @@
 ---
-date: 2025-05-18T17:01:16+00:00
+date: 2025-05-19T03:01:16+00:00
 ---
 
 # K8s Production Cluster
@@ -9,11 +9,12 @@ date: 2025-05-18T17:01:16+00:00
 Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">75</strong>
+Total Pods: <strong id="index-total-pods">54</strong>
  </div>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -38,253 +39,157 @@ Total Pods: <strong id="index-total-pods">75</strong>
   </thead>
   <tbody>
       <tr>
+          <td>k0s-color-argo-argocd-applicationset-controller-5ff797b646hh47p</td>
+          <td>argocd</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
           <td>k0s-color-argo-argocd-application-controller-0</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-applicationset-controller-5c88f54dc8k548v</td>
+          <td>k0s-color-argo-argocd-dex-server-648b7c9844-k994n</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-dex-server-b9df6f656-5qpx4</td>
+          <td>k0s-color-argo-argocd-notifications-controller-68bd6b9c47-w7s2x</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-notifications-controller-5684bd5688-qs6xb</td>
+          <td>k0s-color-argo-argocd-redis-645cb8b784-25krn</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-redis-c76b9b88c-qzk6c</td>
+          <td>k0s-color-argo-argocd-repo-server-6c7479f898-99qq7</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-repo-server-5d6fb98655-4kdqz</td>
+          <td>k0s-color-argo-argocd-server-d75dcf45-dk5zv</td>
           <td>argocd</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>k0s-color-argo-argocd-server-5866f68c86-fp6mf</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cert-manager-6468fc8f56-4nzh9</td>
+          <td>cert-manager-cainjector-7fd85dcc7-kcwxb</td>
           <td>cert-manager</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cert-manager-cainjector-7fd85dcc7-7qvg5</td>
+          <td>cert-manager-webhook-57df45f686-z97tc</td>
           <td>cert-manager</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cert-manager-webhook-57df45f686-z7bvv</td>
+          <td>cert-manager-6468fc8f56-mhtqg</td>
           <td>cert-manager</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>client-645b68dcf7-4mgpb</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>client2-66475877c6-rgkch</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>echo-same-node-6c545975c6-vb54h</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>host-netns-44fwz</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>client3-795488bf5-wk74c</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>echo-other-node-7f546db4f4-wqwll</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>host-netns-5cfvg</td>
-          <td>cilium-test-1</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cloudflared-574f65998f-vwc9b</td>
-          <td>cloudflare</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cilium-4rf4v</td>
+          <td>cilium-envoy-gw5hp</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-envoy-bdmzx</td>
+          <td>cilium-tz4ps</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>cilium-operator-5d9fbf9f57-fjrtg</td>
+          <td>coredns-7d4f7fbd5c-jb7tq</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>coredns-7d4f7fbd5c-plh4w</td>
+          <td>konnectivity-agent-n6bqk</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hubble-relay-7b4c9d4474-fffn5</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>konnectivity-agent-mzf7h</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>kube-proxy-2bgwc</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>kube-router-zwdj7</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cilium-8266l</td>
+          <td>cilium-7b2gg</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>cilium-envoy-4sr6n</td>
+          <td>cilium-envoy-n299t</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>coredns-7d4f7fbd5c-ksf9n</td>
+          <td>cilium-operator-5b47585b65-rfgqz</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hubble-ui-76d4965bb6-q7x75</td>
+          <td>coredns-7d4f7fbd5c-dthbc</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>konnectivity-agent-w25vp</td>
+          <td>konnectivity-agent-rx2vm</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>kube-proxy-2gd69</td>
+          <td>metrics-server-7778865875-kxhj5</td>
           <td>kube-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>kube-router-g7gjj</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>metrics-server-7778865875-jjqpj</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>local-path-provisioner-74f9666bc9-xq9v7</td>
-          <td>local-path-storage</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-attacher-7bfc99fdf6-7ljkz</td>
+          <td>csi-attacher-7bfc99fdf6-9tlkx</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-attacher-7bfc99fdf6-ftdkz</td>
+          <td>csi-provisioner-5bfbf9655-fmjpd</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-provisioner-5bfbf9655-d2bbl</td>
+          <td>csi-provisioner-5bfbf9655-mw9xz</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-provisioner-5bfbf9655-kc2rh</td>
+          <td>csi-resizer-6d8bdc48b6-7vqjm</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-resizer-6d8bdc48b6-4hf77</td>
+          <td>csi-snapshotter-68467df45d-n6njl</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-snapshotter-68467df45d-7xtzr</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>engine-image-ei-b907910b-758pn</td>
+          <td>engine-image-ei-b907910b-hdffg</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -296,61 +201,73 @@ Total Pods: <strong id="index-total-pods">75</strong>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>longhorn-csi-plugin-xfcf4</td>
+          <td>longhorn-csi-plugin-glqfw</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>longhorn-manager-n5c65</td>
+          <td>longhorn-driver-deployer-5f44b4dc59-w2pbb</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>longhorn-ui-f7ff9c74-rq54l</td>
+          <td>longhorn-manager-m7xct</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>csi-attacher-7bfc99fdf6-rbxgh</td>
+          <td>longhorn-ui-f7ff9c74-dvllq</td>
+          <td>longhorn-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>csi-attacher-7bfc99fdf6-25w29</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>csi-provisioner-5bfbf9655-sw5xk</td>
+          <td>csi-attacher-7bfc99fdf6-5mm9v</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>csi-resizer-6d8bdc48b6-dvvcj</td>
+          <td>csi-provisioner-5bfbf9655-qj6dc</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>csi-resizer-6d8bdc48b6-kb9nr</td>
+          <td>csi-resizer-6d8bdc48b6-489kx</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>csi-snapshotter-68467df45d-7prgr</td>
+          <td>csi-resizer-6d8bdc48b6-nw9qk</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>csi-snapshotter-68467df45d-bqwb8</td>
+          <td>csi-snapshotter-68467df45d-pg44m</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>engine-image-ei-b907910b-vrrp5</td>
+          <td>csi-snapshotter-68467df45d-xtfm8</td>
+          <td>longhorn-system</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>engine-image-ei-b907910b-hf7hj</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -362,112 +279,70 @@ Total Pods: <strong id="index-total-pods">75</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>longhorn-csi-plugin-9j796</td>
+          <td>longhorn-csi-plugin-n9gvd</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>longhorn-driver-deployer-5f44b4dc59-zvzk5</td>
+          <td>longhorn-manager-sjdx8</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>longhorn-manager-q9g8w</td>
+          <td>longhorn-ui-f7ff9c74-pg4sr</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>longhorn-ui-f7ff9c74-ls66r</td>
-          <td>longhorn-system</td>
+          <td>hugo-site-68bb8cbff8-s8png</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29127060-j7fr9</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>vmks-grafana-7bcbdcbffc-vv9nm</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>vmks-kube-state-metrics-5987f4b4d-kgc4z</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>vmks-prometheus-node-exporter-j7ssn</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>vmks-victoria-metrics-operator-77bbcd4cb-lznmf</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>vmagent-vmks-victoria-metrics-k8s-stack-787dbb57f4-vktqw</td>
+          <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>metallb-controller-8474b54bc4-cgztm</td>
-          <td>metallb-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>metallb-speaker-9jqjx</td>
-          <td>metallb-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>metallb-speaker-xdt6r</td>
-          <td>metallb-system</td>
+          <td>vmalert-vmks-victoria-metrics-k8s-stack-797cb8d6b7-l8bk8</td>
+          <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>hugo-site-8675d749b9-s4qrf</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29126460-7x2zf</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29126280-kb74x</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29126340-58k2q</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29126400-dqd2s</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmagent-vmks-victoria-metrics-k8s-stack-575b6d45c5-fdp2b</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmalert-vmks-victoria-metrics-k8s-stack-6655449f66-tzs7g</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmks-kube-state-metrics-5987f4b4d-2hxfs</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmks-prometheus-node-exporter-nw66n</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmks-victoria-metrics-operator-8448f486c9-bsw7v</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmsingle-vmks-victoria-metrics-k8s-stack-85cdb84cb5-4hf5z</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>vmalertmanager-vmks-victoria-metrics-k8s-stack-0</td>
@@ -476,16 +351,55 @@ Total Pods: <strong id="index-total-pods">75</strong>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>vmks-grafana-58f78b886c-cwqkt</td>
+          <td>vmks-prometheus-node-exporter-xz2z5</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>vmks-prometheus-node-exporter-n4567</td>
+          <td>vmsingle-vmks-victoria-metrics-k8s-stack-669b999d86-cnlg7</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
