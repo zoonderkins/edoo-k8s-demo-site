@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 image:
   repository: ghcr.io/zoonderkins/hugo-k8s-dashboard
   tag: 31a86245c17ac8fb8ea8a1021719302908067a2a
@@ -11,18 +11,18 @@ service:
   type: ClusterIP
   port: 80
 
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: k8s.edoo.dev
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
-  #  - secretName: k8s-edoo-dev-tls
-  #    hosts:
-  #      - k8s.edoo.dev
+# ingress:
+#   enabled: false
+#   className: ""
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   hosts:
+#     - host: k8s.edoo.dev
+#       paths:
+#         - path: /
+#           pathType: Prefix
+#   tls: []
+#   #  - secretName: k8s-edoo-dev-tls
+#   #    hosts:
+#   #      - k8s.edoo.dev

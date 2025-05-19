@@ -15,22 +15,6 @@ Total Pods: <strong id="index-total-pods">58</strong>
 ### Kubernetes Pods
 
 <table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
   <thead>
       <tr>
           <th>Pod Name</th>
