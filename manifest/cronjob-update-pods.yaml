@@ -99,6 +99,15 @@ spec:
                 # Update date field in frontmatter with sed
                 sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" content/_index.md
                 
+                # Get git commit hash (short format)
+                GIT_HASH=$(git rev-parse --short HEAD)
+                
+                # Update the last update div with timestamp and git hash if it exists
+                if grep -q "class=\"last-update\"" content/_index.md; then
+                  FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S %Z")
+                  sed -i -E "s|<div class=\"last-update\">.*Last update: <br>.*Hash: .*</div>|<div class=\"last-update\">Last update: <br>${FORMATTED_DATE}<br>Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span></div>|s" content/_index.md
+                fi
+                
                 # Update total pods count
                 if grep -q "id=\"index-total-pods\"" content/_index.md; then
                   sed -i "s/<strong id=\"index-total-pods\">[0-9]*<\/strong>/<strong id=\"index-total-pods\">${TOTAL_PODS}<\/strong>/g" content/_index.md
@@ -112,11 +121,40 @@ spec:
                 # Find the key infrastructure pods table and update it
                 if grep -q "id=\"summary-table\"" content/_index.md; then
                   echo "Updating summary table in index..."
-                  # Create temporary files for the parts before and after the table
-                  grep -B 10000 "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md > /tmp/index_before_table.md || true
                   
-                  # Get everything after the key infrastructure pods section
-                  grep -A 10000 "</table>" content/_index.md > /tmp/index_after_table.md || true
+                  # First, clean up any duplicate table tags that may exist from previous runs
+                  # Remove all duplicate table tags, keeping only the first one
+                  awk '
+                  BEGIN { table_count = 0 }
+                  /<table class="pod-table" id="summary-table">/ {
+                    table_count++
+                    if (table_count == 1) print $0
+                    next
+                  }
+                  { print $0 }
+                  ' content/_index.md > /tmp/cleaned_index.md
+                  
+                  # Replace original file with cleaned version
+                  cp /tmp/cleaned_index.md content/_index.md
+                  
+                  # Create temporary files for the parts before and after the table
+                  grep -B 10000 -m 1 "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md > /tmp/index_before_table.md || true
+                  
+                  # Find the line number of the table to accurately get everything after it
+                  TABLE_LINE=$(grep -n "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md | head -1 | cut -d: -f1)
+                  
+                  # Find the closing table tag after our opening tag
+                  TOTAL_LINES=$(wc -l < content/_index.md)
+                  AFTER_TABLE=$(tail -n $((TOTAL_LINES - TABLE_LINE)) content/_index.md | grep -n "</table>" | head -1 | cut -d: -f1)
+                  
+                  # Get everything after the first closing tag that appears after our table tag
+                  if [ ! -z "$AFTER_TABLE" ]; then
+                    AFTER_LINE=$((TABLE_LINE + AFTER_TABLE))
+                    tail -n $((TOTAL_LINES - AFTER_LINE)) content/_index.md > /tmp/index_after_table.md
+                  else
+                    # If no closing tag found, create an empty file
+                    touch /tmp/index_after_table.md
+                  fi
                   
                   # Recreate the file with new table content
                   cat /tmp/index_before_table.md > content/_index.md
@@ -156,12 +194,17 @@ spec:
                   echo '  </tbody>' >> content/_index.md
                   echo '</table>' >> content/_index.md
                   
-                  # Remove the action buttons and namespace links section since we don't need them
-                  # We're showing all pods directly in _index.md and don't need pod page links
+                  # Append content after the table if it exists
+                  if [ -s /tmp/index_after_table.md ]; then
+                    cat /tmp/index_after_table.md >> content/_index.md
+                  fi
                   
-                  # Add some CSS for the pod table
-                  if ! grep -q "pod-table" /tmp/index_after_table.md; then
+                  # Add CSS for the table if it's not already there
+                  if ! grep -q "pod-table" content/_index.md | grep -q "width: 100%"; then
+                    # Add style section
                     echo "<style>" >> content/_index.md
+                    
+                    # Table styles
                     echo ".pod-table {" >> content/_index.md
                     echo "  width: 100%;" >> content/_index.md
                     echo "  border-collapse: collapse;" >> content/_index.md
@@ -198,6 +241,47 @@ spec:
                     echo ".status-error {" >> content/_index.md
                     echo "  color: #dc3545;" >> content/_index.md
                     echo "  font-weight: 600;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    
+                    # Last update styles
+                    echo ".last-update {" >> content/_index.md
+                    echo "  margin-top: 10px;" >> content/_index.md
+                    echo "  margin-bottom: 20px;" >> content/_index.md
+                    echo "  padding: 10px;" >> content/_index.md
+                    echo "  background-color: #f8f9fa;" >> content/_index.md
+                    echo "  border-radius: 4px;" >> content/_index.md
+                    echo "  font-size: 0.9em;" >> content/_index.md
+                    echo "  color: #6c757d;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".commit-hash {" >> content/_index.md
+                    echo "  font-family: monospace;" >> content/_index.md
+                    echo "  background-color: #e9ecef;" >> content/_index.md
+                    echo "  padding: 2px 4px;" >> content/_index.md
+                    echo "  border-radius: 3px;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    
+                    # Close style tag
+                    echo "</style>" >> content/_index.md
+                  elif ! grep -q "last-update" content/_index.md | grep -q "margin-top"; then
+                    # If table styles exist but not last-update styles, add just those
+                    echo "<style>" >> content/_index.md
+                    echo ".last-update {" >> content/_index.md
+                    echo "  margin-top: 10px;" >> content/_index.md
+                    echo "  margin-bottom: 20px;" >> content/_index.md
+                    echo "  padding: 10px;" >> content/_index.md
+                    echo "  background-color: #f8f9fa;" >> content/_index.md
+                    echo "  border-radius: 4px;" >> content/_index.md
+                    echo "  font-size: 0.9em;" >> content/_index.md
+                    echo "  color: #6c757d;" >> content/_index.md
+                    echo "}" >> content/_index.md
+                    echo "" >> content/_index.md
+                    echo ".commit-hash {" >> content/_index.md
+                    echo "  font-family: monospace;" >> content/_index.md
+                    echo "  background-color: #e9ecef;" >> content/_index.md
+                    echo "  padding: 2px 4px;" >> content/_index.md
+                    echo "  border-radius: 3px;" >> content/_index.md
                     echo "}" >> content/_index.md
                     echo "</style>" >> content/_index.md
                   fi
@@ -313,6 +397,22 @@ spec:
                 echo ".status-error {" >> content/_index.md
                 echo "  color: #dc3545;" >> content/_index.md
                 echo "  font-weight: 600;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo ".last-update {" >> content/_index.md
+                echo "  margin-top: 10px;" >> content/_index.md
+                echo "  margin-bottom: 20px;" >> content/_index.md
+                echo "  padding: 10px;" >> content/_index.md
+                echo "  background-color: #f8f9fa;" >> content/_index.md
+                echo "  border-radius: 4px;" >> content/_index.md
+                echo "  font-size: 0.9em;" >> content/_index.md
+                echo "  color: #6c757d;" >> content/_index.md
+                echo "}" >> content/_index.md
+                echo "" >> content/_index.md
+                echo ".commit-hash {" >> content/_index.md
+                echo "  font-family: monospace;" >> content/_index.md
+                echo "  background-color: #e9ecef;" >> content/_index.md
+                echo "  padding: 2px 4px;" >> content/_index.md
+                echo "  border-radius: 3px;" >> content/_index.md
                 echo "}" >> content/_index.md
                 echo "</style>" >> content/_index.md
               fi
