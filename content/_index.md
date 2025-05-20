@@ -14,7 +14,7 @@ Total Pods: <strong id="index-total-pods">63</strong>
 
 <div class="last-update">
 Last update: 2025-05-20 11:20:50 UTC<br>
-Hash: <span class="commit-hash" id="git-commit-hash">bd46a7a</span>
+Hash: <span class="commit-hash" id="git-commit-hash">471b434</span>
 </div>
 
 ### Kubernetes Pods
