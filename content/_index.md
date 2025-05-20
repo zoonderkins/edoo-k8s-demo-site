@@ -1,15 +1,15 @@
 ---
-date: 2025-05-20T05:00:18+00:00
+date: 2025-05-20T06:00:34+00:00
 ---
 
 # K8s Production Cluster
 
 <div class="node-info">
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
+Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">69</strong>
+Total Pods: <strong id="index-total-pods">63</strong>
  </div>
 
 <div class="last-update">
@@ -19,6 +19,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">bd46a7a</span>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -321,91 +322,55 @@ Hash: <span class="commit-hash" id="git-commit-hash">bd46a7a</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>go-5b944cbf54-t4svh</td>
+          <td>parca-78bf6fcc4c-f5l5v</td>
           <td>parca</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>go-5b944cbf54-x9m5t</td>
+          <td>parca-agent-rsbvm</td>
           <td>parca</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>go-pie-6fbf5f7d97-4jmps</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>go-pie-6fbf5f7d97-g28j5</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>nodejs-8956864cf-662jq</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>nodejs-8956864cf-7wmkw</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>parca-8f78d5bb6-klxs2</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>parca-agent-n9bpp</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>go-5b944cbf54-bm5ms</td>
+          <td>parca-agent-2hxbq</td>
           <td>parca</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>go-pie-6fbf5f7d97-26kfr</td>
-          <td>parca</td>
+          <td>parca-8f78d5bb6-5bwz4</td>
+          <td>parca-app</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>nodejs-56c99554b9-64sjq</td>
+          <td>parca-app</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>nodejs-8956864cf-g7mrj</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>parca-agent-n7dfm</td>
-          <td>parca</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>hugo-site-795b5f5797-6kt27</td>
+          <td>hugo-site-665474cd7d-nmgl4</td>
           <td>prod</td>
           <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29128680-wnxm8</td>
+          <td>prod</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29128560-4hmfr</td>
+          <td>prod</td>
+          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>update-pods-md-29128620-4qkqk</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29128560-4hmfr</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -448,3 +413,42 @@ Hash: <span class="commit-hash" id="git-commit-hash">bd46a7a</span>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
