@@ -86,51 +86,60 @@ spec:
               WORKER_NODE=$(kubectl get pod -o jsonpath="{.spec.nodeName}" -n ${POD_NAMESPACE} ${HOSTNAME} 2>/dev/null || echo "unknown-worker")
               echo "Current worker node: ${WORKER_NODE}"
               
-              # Get list of namespaces with running pods (exclude empty namespaces)
-              NAMESPACES=$(echo "$POD_INFO" | cut -d' ' -f2 | sort | uniq)
-              # Get top namespaces with most pods (limit to top 5-6 for the dashboard)
-              TOP_NAMESPACES=$(echo "$POD_INFO" | cut -d' ' -f2 | sort | uniq -c | sort -nr | head -5 | tr -s ' ' | cut -d' ' -f3)
-              echo "Top namespaces with most pods: $(echo $TOP_NAMESPACES | tr '\n' ' ')"
+              # Get GitHub commit hash - use webhook SHA if available or current git hash
+              if [ -n "${GITHUB_SHA}" ]; then
+                GIT_HASH="${GITHUB_SHA:0:7}"
+              else
+                GIT_HASH=$(git rev-parse --short HEAD)
+              fi
+              
+              # Format date in CST timezone instead of UTC
+              # First make sure the tzdata package is installed
+              if ! dpkg -l | grep -q tzdata; then
+                apt-get update && apt-get install -y tzdata
+              fi
+              
+              # Set timezone to CST and format date - force update with current time
+              export TZ="America/Chicago"
+              FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
               
               # Update _index.md directly with pod data instead of creating a separate pods.md
               if [ -f "content/_index.md" ]; then
                 echo "Updating content in _index.md..."
                 
-                # Create a completely clean version of the file to work with
-                # This is more reliable than trying to patch the existing file
+                # Create a completely clean version of the file to work with - no duplicate tables
                 TMP_INDEX="/tmp/clean_index.md"
                 
-                # Extract the frontmatter
+                # First fix any duplicate table tags that may exist by removing them
+                # Parse the file and remove duplicate table tags
+                awk 'BEGIN { duplicate_table = 0 }
+                /<table class="pod-table" id="summary-table">/ { 
+                  if (duplicate_table == 0) {
+                    duplicate_table = 1; 
+                    print;
+                  }
+                  next
+                }
+                { print }' content/_index.md > /tmp/fixed_index.md
+                
+                # Make sure the changes took effect before continuing
+                mv /tmp/fixed_index.md content/_index.md
+                
+                # Now extract the frontmatter
                 sed -n '1,/^---$/p' content/_index.md > "${TMP_INDEX}"
                 
                 # Update date field in frontmatter
                 sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" "${TMP_INDEX}"
                 
-                # Get git commit hash (short format)
-                GIT_HASH=$(git rev-parse --short HEAD)
+                # Add the main title and stats section (extract from existing file)
+                TITLE_SECTION=$(sed -n '/# K8s Production Cluster/,/<div class="last-update">/p' content/_index.md | head -n -1)
+                echo "$TITLE_SECTION" >> "${TMP_INDEX}"
                 
-                # Format date in CST timezone instead of UTC
-                # First make sure the tzdata package is installed
-                if ! dpkg -l | grep -q tzdata; then
-                  apt-get update && apt-get install -y tzdata
-                fi
+                # Update total pods count in the extracted content
+                sed -i "s/<strong id=\"index-total-pods\">[0-9]*<\/strong>/<strong id=\"index-total-pods\">${TOTAL_PODS}<\/strong>/g" "${TMP_INDEX}"
                 
-                # Set timezone to CST and format date
-                export TZ="America/Chicago"
-                FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
-                
-                # Add the main title and stats section
-                echo "" >> "${TMP_INDEX}"
-                echo "# K8s Production Cluster" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "<div class=\"node-info\">" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "Worker node: <strong id=\"worker-node-name\">${WORKER_NODE}</strong><br>" >> "${TMP_INDEX}"
-                echo "<span style=\"color: green\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong>" >> "${TMP_INDEX}"
-                echo "<br>" >> "${TMP_INDEX}"
-                echo "Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> "${TMP_INDEX}"
-                echo " </div>" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
+                # Update worker node info if exists
+                sed -i "s/<strong id=\"worker-node-name\">[^<]*<\/strong>/<strong id=\"worker-node-name\">${WORKER_NODE}<\/strong>/g" "${TMP_INDEX}"
                 
                 # Add last update section with current timestamp and git hash
                 echo "<div class=\"last-update\">" >> "${TMP_INDEX}"
@@ -181,63 +190,69 @@ spec:
                 echo '</table>' >> "${TMP_INDEX}"
                 echo "" >> "${TMP_INDEX}"
                 
-                # Add the CSS - always ensure all styles are present
-                echo "<style>" >> "${TMP_INDEX}"
-                echo ".pod-table {" >> "${TMP_INDEX}"
-                echo "  width: 100%;" >> "${TMP_INDEX}"
-                echo "  border-collapse: collapse;" >> "${TMP_INDEX}"
-                echo "  margin-bottom: 30px;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".pod-table th {" >> "${TMP_INDEX}"
-                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
-                echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
-                echo "  text-align: left;" >> "${TMP_INDEX}"
-                echo "  font-weight: 600;" >> "${TMP_INDEX}"
-                echo "  border-bottom: 2px solid #dee2e6;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".pod-table td {" >> "${TMP_INDEX}"
-                echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
-                echo "  border-bottom: 1px solid #e9ecef;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".pod-table tbody tr:hover {" >> "${TMP_INDEX}"
-                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".status-running {" >> "${TMP_INDEX}"
-                echo "  color: #28a745;" >> "${TMP_INDEX}"
-                echo "  font-weight: 600;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".status-pending {" >> "${TMP_INDEX}"
-                echo "  color: #ffc107;" >> "${TMP_INDEX}"
-                echo "  font-weight: 600;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".status-error {" >> "${TMP_INDEX}"
-                echo "  color: #dc3545;" >> "${TMP_INDEX}"
-                echo "  font-weight: 600;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".last-update {" >> "${TMP_INDEX}"
-                echo "  margin-top: 10px;" >> "${TMP_INDEX}"
-                echo "  margin-bottom: 20px;" >> "${TMP_INDEX}"
-                echo "  padding: 10px;" >> "${TMP_INDEX}"
-                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
-                echo "  border-radius: 4px;" >> "${TMP_INDEX}"
-                echo "  font-size: 0.9em;" >> "${TMP_INDEX}"
-                echo "  color: #6c757d;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo ".commit-hash {" >> "${TMP_INDEX}"
-                echo "  font-family: monospace;" >> "${TMP_INDEX}"
-                echo "  background-color: #e9ecef;" >> "${TMP_INDEX}"
-                echo "  padding: 2px 4px;" >> "${TMP_INDEX}"
-                echo "  border-radius: 3px;" >> "${TMP_INDEX}"
-                echo "}" >> "${TMP_INDEX}"
-                echo "</style>" >> "${TMP_INDEX}"
+                # Add the CSS - extract existing styles if available, otherwise use defaults
+                if grep -q "<style>" content/_index.md; then
+                  # Extract existing styles
+                  sed -n '/<style>/,/<\/style>/p' content/_index.md >> "${TMP_INDEX}"
+                else
+                  # Add default styles
+                  echo "<style>" >> "${TMP_INDEX}"
+                  echo ".pod-table {" >> "${TMP_INDEX}"
+                  echo "  width: 100%;" >> "${TMP_INDEX}"
+                  echo "  border-collapse: collapse;" >> "${TMP_INDEX}"
+                  echo "  margin-bottom: 30px;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".pod-table th {" >> "${TMP_INDEX}"
+                  echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                  echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
+                  echo "  text-align: left;" >> "${TMP_INDEX}"
+                  echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                  echo "  border-bottom: 2px solid #dee2e6;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".pod-table td {" >> "${TMP_INDEX}"
+                  echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
+                  echo "  border-bottom: 1px solid #e9ecef;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".pod-table tbody tr:hover {" >> "${TMP_INDEX}"
+                  echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".status-running {" >> "${TMP_INDEX}"
+                  echo "  color: #28a745;" >> "${TMP_INDEX}"
+                  echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".status-pending {" >> "${TMP_INDEX}"
+                  echo "  color: #ffc107;" >> "${TMP_INDEX}"
+                  echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".status-error {" >> "${TMP_INDEX}"
+                  echo "  color: #dc3545;" >> "${TMP_INDEX}"
+                  echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".last-update {" >> "${TMP_INDEX}"
+                  echo "  margin-top: 10px;" >> "${TMP_INDEX}"
+                  echo "  margin-bottom: 20px;" >> "${TMP_INDEX}"
+                  echo "  padding: 10px;" >> "${TMP_INDEX}"
+                  echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                  echo "  border-radius: 4px;" >> "${TMP_INDEX}"
+                  echo "  font-size: 0.9em;" >> "${TMP_INDEX}"
+                  echo "  color: #6c757d;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "" >> "${TMP_INDEX}"
+                  echo ".commit-hash {" >> "${TMP_INDEX}"
+                  echo "  font-family: monospace;" >> "${TMP_INDEX}"
+                  echo "  background-color: #e9ecef;" >> "${TMP_INDEX}"
+                  echo "  padding: 2px 4px;" >> "${TMP_INDEX}"
+                  echo "  border-radius: 3px;" >> "${TMP_INDEX}"
+                  echo "}" >> "${TMP_INDEX}"
+                  echo "</style>" >> "${TMP_INDEX}"
+                fi
                 
                 # Replace the original file with our clean version
                 cp "${TMP_INDEX}" content/_index.md

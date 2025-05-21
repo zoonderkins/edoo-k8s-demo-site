@@ -24,7 +24,6 @@ Hash: <span class="commit-hash" id="git-commit-hash">749aeba</span>
 ### Kubernetes Pods
 
 <table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
   <thead>
       <tr>
           <th>Pod Name</th>
