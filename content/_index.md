@@ -10,41 +10,19 @@ Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
 Total Pods: <strong id="index-total-pods">58</strong>
- </div>
+
+Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="_blank">https://github.com/zoonderkins/edoo-k8s-demo-site</a>
+</div>
 
 <div class="last-update">
-Last update: 2025-05-20 11:20:50 UTC<br>
+Last update: 2025-05-21 12:20:00 CST<br>
 Hash: <span class="commit-hash" id="git-commit-hash">59e6f43</span>
 </div>
 
+
+
 ### Kubernetes Pods
 
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
   <thead>
       <tr>

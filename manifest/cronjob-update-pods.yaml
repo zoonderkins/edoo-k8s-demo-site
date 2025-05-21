@@ -96,196 +96,154 @@ spec:
               if [ -f "content/_index.md" ]; then
                 echo "Updating content in _index.md..."
                 
-                # Update date field in frontmatter with sed
-                sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" content/_index.md
+                # Create a completely clean version of the file to work with
+                # This is more reliable than trying to patch the existing file
+                TMP_INDEX="/tmp/clean_index.md"
+                
+                # Extract the frontmatter
+                sed -n '1,/^---$/p' content/_index.md > "${TMP_INDEX}"
+                
+                # Update date field in frontmatter
+                sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" "${TMP_INDEX}"
                 
                 # Get git commit hash (short format)
                 GIT_HASH=$(git rev-parse --short HEAD)
                 
-                # Update the last update div with timestamp and git hash if it exists
-                if grep -q "class=\"last-update\"" content/_index.md; then
-                  FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S %Z")
-                  sed -i -E "s|<div class=\"last-update\">.*Last update: <br>.*Hash: .*</div>|<div class=\"last-update\">Last update: <br>${FORMATTED_DATE}<br>Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span></div>|s" content/_index.md
+                # Format date in CST timezone instead of UTC
+                # First make sure the tzdata package is installed
+                if ! dpkg -l | grep -q tzdata; then
+                  apt-get update && apt-get install -y tzdata
                 fi
                 
-                # Update total pods count
-                if grep -q "id=\"index-total-pods\"" content/_index.md; then
-                  sed -i "s/<strong id=\"index-total-pods\">[0-9]*<\/strong>/<strong id=\"index-total-pods\">${TOTAL_PODS}<\/strong>/g" content/_index.md
-                fi
+                # Set timezone to CST and format date
+                export TZ="America/Chicago"
+                FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
                 
-                # Update worker node info if exists
-                if grep -q "id=\"worker-node-name\"" content/_index.md; then
-                  sed -i "s/<strong id=\"worker-node-name\">[^<]*<\/strong>/<strong id=\"worker-node-name\">${WORKER_NODE}<\/strong>/g" content/_index.md
-                fi
+                # Add the main title and stats section
+                echo "" >> "${TMP_INDEX}"
+                echo "# K8s Production Cluster" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo "<div class=\"node-info\">" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo "Worker node: <strong id=\"worker-node-name\">${WORKER_NODE}</strong><br>" >> "${TMP_INDEX}"
+                echo "<span style=\"color: green\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong>" >> "${TMP_INDEX}"
+                echo "<br>" >> "${TMP_INDEX}"
+                echo "Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> "${TMP_INDEX}"
+                echo " </div>" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
                 
-                # Find the key infrastructure pods table and update it
-                if grep -q "id=\"summary-table\"" content/_index.md; then
-                  echo "Updating summary table in index..."
+                # Add last update section with current timestamp and git hash
+                echo "<div class=\"last-update\">" >> "${TMP_INDEX}"
+                echo "Last update: ${FORMATTED_DATE}<br>" >> "${TMP_INDEX}"
+                echo "Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span>" >> "${TMP_INDEX}"
+                echo "</div>" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                
+                # Add the kubernetes pods section header
+                echo "### Kubernetes Pods" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                
+                # Add the table with only one table tag
+                echo '<table class="pod-table" id="summary-table">' >> "${TMP_INDEX}"
+                echo '  <thead>' >> "${TMP_INDEX}"
+                echo '      <tr>' >> "${TMP_INDEX}"
+                echo '          <th>Pod Name</th>' >> "${TMP_INDEX}"
+                echo '          <th>Namespace</th>' >> "${TMP_INDEX}"
+                echo '          <th>Status</th>' >> "${TMP_INDEX}"
+                echo '          <th>Node</th>' >> "${TMP_INDEX}"
+                echo '      </tr>' >> "${TMP_INDEX}"
+                echo '  </thead>' >> "${TMP_INDEX}"
+                echo '  <tbody>' >> "${TMP_INDEX}"
+                
+                # Add pod data from POD_INFO
+                echo "$POD_INFO" | while read -r POD_NAME NAMESPACE STATUS NODE; do
+                  echo "      <tr>" >> "${TMP_INDEX}"
+                  echo "          <td>${POD_NAME}</td>" >> "${TMP_INDEX}"
+                  echo "          <td>${NAMESPACE}</td>" >> "${TMP_INDEX}"
                   
-                  # First, clean up any duplicate table tags that may exist from previous runs
-                  # Remove all duplicate table tags, keeping only the first one
-                  awk '
-                  BEGIN { table_count = 0 }
-                  /<table class="pod-table" id="summary-table">/ {
-                    table_count++
-                    if (table_count == 1) print $0
-                    next
-                  }
-                  { print $0 }
-                  ' content/_index.md > /tmp/cleaned_index.md
-                  
-                  # Replace original file with cleaned version
-                  cp /tmp/cleaned_index.md content/_index.md
-                  
-                  # Create temporary files for the parts before and after the table
-                  grep -B 10000 -m 1 "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md > /tmp/index_before_table.md || true
-                  
-                  # Find the line number of the table to accurately get everything after it
-                  TABLE_LINE=$(grep -n "<table class=\"pod-table\" id=\"summary-table\"" content/_index.md | head -1 | cut -d: -f1)
-                  
-                  # Find the closing table tag after our opening tag
-                  TOTAL_LINES=$(wc -l < content/_index.md)
-                  AFTER_TABLE=$(tail -n $((TOTAL_LINES - TABLE_LINE)) content/_index.md | grep -n "</table>" | head -1 | cut -d: -f1)
-                  
-                  # Get everything after the first closing tag that appears after our table tag
-                  if [ ! -z "$AFTER_TABLE" ]; then
-                    AFTER_LINE=$((TABLE_LINE + AFTER_TABLE))
-                    tail -n $((TOTAL_LINES - AFTER_LINE)) content/_index.md > /tmp/index_after_table.md
+                  # Add status with appropriate class
+                  if [[ "$STATUS" == "Running" ]]; then
+                    echo "          <td class=\"status-running\">${STATUS}</td>" >> "${TMP_INDEX}"
+                  elif [[ "$STATUS" == "Pending" ]]; then
+                    echo "          <td class=\"status-pending\">${STATUS}</td>" >> "${TMP_INDEX}"
+                  elif [[ "$STATUS" == "Failed" || "$STATUS" == "Error" ]]; then
+                    echo "          <td class=\"status-error\">${STATUS}</td>" >> "${TMP_INDEX}"
                   else
-                    # If no closing tag found, create an empty file
-                    touch /tmp/index_after_table.md
+                    echo "          <td>${STATUS}</td>" >> "${TMP_INDEX}"
                   fi
                   
-                  # Recreate the file with new table content
-                  cat /tmp/index_before_table.md > content/_index.md
-                  echo '<table class="pod-table" id="summary-table">' >> content/_index.md
-                  echo '  <thead>' >> content/_index.md
-                  echo '      <tr>' >> content/_index.md
-                  echo '          <th>Pod Name</th>' >> content/_index.md
-                  echo '          <th>Namespace</th>' >> content/_index.md
-                  echo '          <th>Status</th>' >> content/_index.md
-                  echo '          <th>Node</th>' >> content/_index.md
-                  echo '      </tr>' >> content/_index.md
-                  echo '  </thead>' >> content/_index.md
-                  echo '  <tbody>' >> content/_index.md
-                  
-                  # Add pod data from POD_INFO
-                  echo "$POD_INFO" | while read -r POD_NAME NAMESPACE STATUS NODE; do
-                    echo "      <tr>" >> content/_index.md
-                    echo "          <td>${POD_NAME}</td>" >> content/_index.md
-                    echo "          <td>${NAMESPACE}</td>" >> content/_index.md
-                    
-                    # Add status with appropriate class
-                    if [[ "$STATUS" == "Running" ]]; then
-                      echo "          <td class=\"status-running\">${STATUS}</td>" >> content/_index.md
-                    elif [[ "$STATUS" == "Pending" ]]; then
-                      echo "          <td class=\"status-pending\">${STATUS}</td>" >> content/_index.md
-                    elif [[ "$STATUS" == "Failed" || "$STATUS" == "Error" ]]; then
-                      echo "          <td class=\"status-error\">${STATUS}</td>" >> content/_index.md
-                    else
-                      echo "          <td>${STATUS}</td>" >> content/_index.md
-                    fi
-                    
-                    echo "          <td>${NODE}</td>" >> content/_index.md
-                    echo "      </tr>" >> content/_index.md
-                  done
-                  
-                  # Close the table
-                  echo '  </tbody>' >> content/_index.md
-                  echo '</table>' >> content/_index.md
-                  
-                  # Append content after the table if it exists
-                  if [ -s /tmp/index_after_table.md ]; then
-                    cat /tmp/index_after_table.md >> content/_index.md
-                  fi
-                  
-                  # Add CSS for the table if it's not already there
-                  if ! grep -q "pod-table" content/_index.md | grep -q "width: 100%"; then
-                    # Add style section
-                    echo "<style>" >> content/_index.md
-                    
-                    # Table styles
-                    echo ".pod-table {" >> content/_index.md
-                    echo "  width: 100%;" >> content/_index.md
-                    echo "  border-collapse: collapse;" >> content/_index.md
-                    echo "  margin-bottom: 30px;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".pod-table th {" >> content/_index.md
-                    echo "  background-color: #f8f9fa;" >> content/_index.md
-                    echo "  padding: 10px 15px;" >> content/_index.md
-                    echo "  text-align: left;" >> content/_index.md
-                    echo "  font-weight: 600;" >> content/_index.md
-                    echo "  border-bottom: 2px solid #dee2e6;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".pod-table td {" >> content/_index.md
-                    echo "  padding: 10px 15px;" >> content/_index.md
-                    echo "  border-bottom: 1px solid #e9ecef;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".pod-table tbody tr:hover {" >> content/_index.md
-                    echo "  background-color: #f8f9fa;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".status-running {" >> content/_index.md
-                    echo "  color: #28a745;" >> content/_index.md
-                    echo "  font-weight: 600;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".status-pending {" >> content/_index.md
-                    echo "  color: #ffc107;" >> content/_index.md
-                    echo "  font-weight: 600;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".status-error {" >> content/_index.md
-                    echo "  color: #dc3545;" >> content/_index.md
-                    echo "  font-weight: 600;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    
-                    # Last update styles
-                    echo ".last-update {" >> content/_index.md
-                    echo "  margin-top: 10px;" >> content/_index.md
-                    echo "  margin-bottom: 20px;" >> content/_index.md
-                    echo "  padding: 10px;" >> content/_index.md
-                    echo "  background-color: #f8f9fa;" >> content/_index.md
-                    echo "  border-radius: 4px;" >> content/_index.md
-                    echo "  font-size: 0.9em;" >> content/_index.md
-                    echo "  color: #6c757d;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".commit-hash {" >> content/_index.md
-                    echo "  font-family: monospace;" >> content/_index.md
-                    echo "  background-color: #e9ecef;" >> content/_index.md
-                    echo "  padding: 2px 4px;" >> content/_index.md
-                    echo "  border-radius: 3px;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    
-                    # Close style tag
-                    echo "</style>" >> content/_index.md
-                  elif ! grep -q "last-update" content/_index.md | grep -q "margin-top"; then
-                    # If table styles exist but not last-update styles, add just those
-                    echo "<style>" >> content/_index.md
-                    echo ".last-update {" >> content/_index.md
-                    echo "  margin-top: 10px;" >> content/_index.md
-                    echo "  margin-bottom: 20px;" >> content/_index.md
-                    echo "  padding: 10px;" >> content/_index.md
-                    echo "  background-color: #f8f9fa;" >> content/_index.md
-                    echo "  border-radius: 4px;" >> content/_index.md
-                    echo "  font-size: 0.9em;" >> content/_index.md
-                    echo "  color: #6c757d;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "" >> content/_index.md
-                    echo ".commit-hash {" >> content/_index.md
-                    echo "  font-family: monospace;" >> content/_index.md
-                    echo "  background-color: #e9ecef;" >> content/_index.md
-                    echo "  padding: 2px 4px;" >> content/_index.md
-                    echo "  border-radius: 3px;" >> content/_index.md
-                    echo "}" >> content/_index.md
-                    echo "</style>" >> content/_index.md
-                  fi
-                fi
+                  echo "          <td>${NODE}</td>" >> "${TMP_INDEX}"
+                  echo "      </tr>" >> "${TMP_INDEX}"
+                done
+                
+                # Close the table
+                echo '  </tbody>' >> "${TMP_INDEX}"
+                echo '</table>' >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                
+                # Add the CSS - always ensure all styles are present
+                echo "<style>" >> "${TMP_INDEX}"
+                echo ".pod-table {" >> "${TMP_INDEX}"
+                echo "  width: 100%;" >> "${TMP_INDEX}"
+                echo "  border-collapse: collapse;" >> "${TMP_INDEX}"
+                echo "  margin-bottom: 30px;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".pod-table th {" >> "${TMP_INDEX}"
+                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
+                echo "  text-align: left;" >> "${TMP_INDEX}"
+                echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                echo "  border-bottom: 2px solid #dee2e6;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".pod-table td {" >> "${TMP_INDEX}"
+                echo "  padding: 10px 15px;" >> "${TMP_INDEX}"
+                echo "  border-bottom: 1px solid #e9ecef;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".pod-table tbody tr:hover {" >> "${TMP_INDEX}"
+                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".status-running {" >> "${TMP_INDEX}"
+                echo "  color: #28a745;" >> "${TMP_INDEX}"
+                echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".status-pending {" >> "${TMP_INDEX}"
+                echo "  color: #ffc107;" >> "${TMP_INDEX}"
+                echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".status-error {" >> "${TMP_INDEX}"
+                echo "  color: #dc3545;" >> "${TMP_INDEX}"
+                echo "  font-weight: 600;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".last-update {" >> "${TMP_INDEX}"
+                echo "  margin-top: 10px;" >> "${TMP_INDEX}"
+                echo "  margin-bottom: 20px;" >> "${TMP_INDEX}"
+                echo "  padding: 10px;" >> "${TMP_INDEX}"
+                echo "  background-color: #f8f9fa;" >> "${TMP_INDEX}"
+                echo "  border-radius: 4px;" >> "${TMP_INDEX}"
+                echo "  font-size: 0.9em;" >> "${TMP_INDEX}"
+                echo "  color: #6c757d;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}"
+                echo ".commit-hash {" >> "${TMP_INDEX}"
+                echo "  font-family: monospace;" >> "${TMP_INDEX}"
+                echo "  background-color: #e9ecef;" >> "${TMP_INDEX}"
+                echo "  padding: 2px 4px;" >> "${TMP_INDEX}"
+                echo "  border-radius: 3px;" >> "${TMP_INDEX}"
+                echo "}" >> "${TMP_INDEX}"
+                echo "</style>" >> "${TMP_INDEX}"
+                
+                # Replace the original file with our clean version
+                cp "${TMP_INDEX}" content/_index.md
+                
+                # Clean up the temp file
+                rm -f "${TMP_INDEX}"
               else
                 # Create a basic _index.md file if it doesn't exist
                 echo "---" > content/_index.md
@@ -296,10 +254,21 @@ spec:
                 echo "# Kubernetes Pod Status" >> content/_index.md
                 echo "" >> content/_index.md
                 
+                # Format date in CST timezone
+                export TZ="America/Chicago"
+                FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
+                
                 # Add node-info section with worker node
                 echo "<div class=\"node-info\">" >> content/_index.md
                 echo "<span style=\"color: green\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong></span> | Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> content/_index.md
                 echo "<div class=\"worker-node-info\">Current worker: <strong id=\"worker-node-name\">${WORKER_NODE}</strong></div>" >> content/_index.md
+                echo "</div>" >> content/_index.md
+                echo "" >> content/_index.md
+                
+                # Add last update section
+                echo "<div class=\"last-update\">" >> content/_index.md
+                echo "Last update: ${FORMATTED_DATE}<br>" >> content/_index.md
+                echo "Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span>" >> content/_index.md
                 echo "</div>" >> content/_index.md
                 echo "" >> content/_index.md
                 
