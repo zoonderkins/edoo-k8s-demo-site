@@ -1,5 +1,5 @@
 ---
-date: 2025-05-22T11:00:41+00:00
+date: 2025-05-22T12:00:45+00:00
 ---
 
 # K8s Production Cluster
@@ -23,6 +23,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">275fadd</span>
 
 ### Kubernetes Pods
 
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -353,21 +354,15 @@ Hash: <span class="commit-hash" id="git-commit-hash">275fadd</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29131860-pjwhg</td>
+          <td>hugo-site-8fbf5b79-bpzjt</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hugo-site-85cf595f5f-g4brg</td>
+          <td>update-pods-md-29131920-wjfn9</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29131680-vlbs6</td>
-          <td>prod</td>
-          <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
@@ -378,6 +373,12 @@ Hash: <span class="commit-hash" id="git-commit-hash">275fadd</span>
       </tr>
       <tr>
           <td>update-pods-md-29131800-w9cf9</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29131860-pjwhg</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -426,42 +427,3 @@ Hash: <span class="commit-hash" id="git-commit-hash">275fadd</span>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
