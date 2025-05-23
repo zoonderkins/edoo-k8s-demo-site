@@ -15,7 +15,7 @@ Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="
 </div>
 
 <div class="last-update">
-Hash: <span class="commit-hash" id="git-commit-hash">0803f0a</span>
+Hash: <span class="commit-hash" id="git-commit-hash">319a80c</span>
 </div>
 
 ### Kubernetes Pods
