@@ -15,65 +15,12 @@ Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="
 </div>
 
 <div class="last-update">
-Last update: 2025-05-21 12:20:00 CST<br>
+Last update
 Hash: <span class="commit-hash" id="git-commit-hash">7dde6aa</span>
 </div>
 
-
-
 ### Kubernetes Pods
 
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
   <thead>
       <tr>
           <th>Pod Name</th>
