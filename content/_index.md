@@ -16,7 +16,7 @@ Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="
 
 <div class="last-update">
 Last update: 2025-05-21 12:20:00 CST<br>
-Hash: <span class="commit-hash" id="git-commit-hash">2f1a075</span>
+Hash: <span class="commit-hash" id="git-commit-hash">1fc18c7</span>
 </div>
 
 
