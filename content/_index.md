@@ -1,5 +1,5 @@
 ---
-date: 2025-05-24T18:26:13+00:00
+date: 2025-05-24T18:39:22+00:00
 ---
 
 # K8s Production Cluster
@@ -17,8 +17,8 @@ Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="
 </div>
 
 <div class="last-update">
-Last update: <span id="last-update-time">2025-05-24 13:26:13 CST</span><br>
-Hash: <span class="commit-hash" id="git-commit-hash">04f6884</span>
+Last update: <span id="last-update-time">2025-05-24 13:39:22 CST</span><br>
+Hash: <span class="commit-hash" id="git-commit-hash">d3a453f</span>
 </div>
 
 ### Kubernetes Pods
@@ -322,13 +322,13 @@ Hash: <span class="commit-hash" id="git-commit-hash">04f6884</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-74c89b7869-54bxp</td>
+          <td>hugo-site-94f9ddf54-ffdhj</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-manual-1748111155348-clc6j</td>
+          <td>update-pods-md-manual-1748111945198-9x2tq</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
