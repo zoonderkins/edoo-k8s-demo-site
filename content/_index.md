@@ -1,5 +1,5 @@
 ---
-date: 2025-05-24T16:00:28+00:00
+date: 2025-05-24T17:00:45+00:00
 ---
 
 # K8s Production Cluster
@@ -9,7 +9,7 @@ date: 2025-05-24T16:00:28+00:00
 Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
 <span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
 <br>
-Total Pods: <strong id="index-total-pods">63</strong>
+Total Pods: <strong id="index-total-pods">65</strong>
 
 Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="_blank">https://github.com/zoonderkins/edoo-k8s-demo-site</a>
 </div>
@@ -19,6 +19,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
 </div>
 
 ### Kubernetes Pods
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -266,7 +267,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>longhorn-manager-52rrz</td>
+          <td>longhorn-manager-bfzfx</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -338,7 +339,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>longhorn-manager-t5xln</td>
+          <td>longhorn-manager-fl5qw</td>
           <td>longhorn-system</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-2</td>
@@ -350,16 +351,16 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>update-pods-md-29135040-zltnr</td>
+          <td>hugo-site-856c67cb95-kb2jz</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>hugo-site-976588f9-t82nq</td>
+          <td>update-pods-md-29135100-56wwv</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
+          <td>k0s-color-worker-1</td>
       </tr>
       <tr>
           <td>update-pods-md-29133120-tnwtn</td>
@@ -380,12 +381,6 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29134860-kp8jg</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
           <td>update-pods-md-29134920-p2mpz</td>
           <td>prod</td>
           <td>Succeeded</td>
@@ -398,7 +393,19 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
+          <td>update-pods-md-29135040-zltnr</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
           <td>grafana-99b45986c-qr6nb</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>node-exporter-prometheus-node-exporter-5wjqc</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
@@ -434,6 +441,12 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
+          <td>node-exporter-prometheus-node-exporter-22wzf</td>
+          <td>victoria</td>
+          <td class="status-running">Running</td>
+          <td>k0s-color-worker-2</td>
+      </tr>
+      <tr>
           <td>victoria-logs-vector-gsxl9</td>
           <td>victoria</td>
           <td class="status-running">Running</td>
@@ -441,3 +454,42 @@ Hash: <span class="commit-hash" id="git-commit-hash">8bceaa6</span>
       </tr>
   </tbody>
 </table>
+<style>
+.pod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.pod-table th {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.pod-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pod-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #dc3545;
+  font-weight: 600;
+}
+</style>
