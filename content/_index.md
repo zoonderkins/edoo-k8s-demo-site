@@ -4,6 +4,8 @@ date: 2025-05-24T17:00:45+00:00
 
 # K8s Production Cluster
 
+<div class="container">
+
 <div class="node-info">
 
 Worker node: <strong id="worker-node-name">k0s-color-worker-1</strong><br>
@@ -15,43 +17,12 @@ Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="
 </div>
 
 <div class="last-update">
+Last update: <span id="last-update-time">2025-05-25 02:00:00 CST</span><br>
 Hash: <span class="commit-hash" id="git-commit-hash">462b04a</span>
 </div>
 
 ### Kubernetes Pods
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
-<table class="pod-table" id="summary-table">
+<div class="table-container">
 <table class="pod-table" id="summary-table">
   <thead>
       <tr>
@@ -454,42 +425,291 @@ Hash: <span class="commit-hash" id="git-commit-hash">462b04a</span>
       </tr>
   </tbody>
 </table>
+</div>
+</div>
+
 <style>
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+/* Container for better mobile layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Header styles */
+h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+h3 {
+  color: #34495e;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+/* Node info section */
+.node-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.node-info a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.node-info a:hover {
+  color: #e3f2fd;
+}
+
+/* Last update section */
+.last-update {
+  background-color: #e8f5e8;
+  border-left: 4px solid #28a745;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #155724;
+}
+
+.commit-hash {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  background-color: #f1f3f4;
+  color: #d73a49;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid #e1e4e8;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .pod-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
+  margin: 0;
+  background: white;
+  min-width: 600px; /* Minimum width for proper display */
 }
 
 .pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px 12px;
   text-align: left;
   font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .pod-table td {
-  padding: 10px 15px;
+  padding: 12px;
   border-bottom: 1px solid #e9ecef;
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.pod-table tbody tr {
+  transition: background-color 0.2s ease;
 }
 
 .pod-table tbody tr:hover {
   background-color: #f8f9fa;
+  transform: scale(1.001);
 }
 
+.pod-table tbody tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+/* Status badges */
 .status-running {
   color: #28a745;
   font-weight: 600;
+  padding: 4px 8px;
+  background-color: #d4edda;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: inline-block;
 }
 
 .status-pending {
-  color: #ffc107;
+  color: #856404;
   font-weight: 600;
+  padding: 4px 8px;
+  background-color: #fff3cd;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: inline-block;
 }
 
 .status-error {
-  color: #dc3545;
+  color: #721c24;
   font-weight: 600;
+  padding: 4px 8px;
+  background-color: #f8d7da;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  .node-info {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+  
+  .pod-table th,
+  .pod-table td {
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+  
+  .pod-table th {
+    font-size: 0.8rem;
+  }
+  
+  /* Make long pod names wrap */
+  .pod-table td:first-child {
+    word-break: break-word;
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pod-table {
+    min-width: 500px;
+  }
+  
+  .pod-table th,
+  .pod-table td {
+    padding: 6px 4px;
+    font-size: 0.7rem;
+  }
+  
+  .node-info {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+  
+  .last-update {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+  }
+  
+  .container {
+    background: #2d2d2d;
+    color: #e0e0e0;
+  }
+  
+  .pod-table {
+    background: #2d2d2d;
+  }
+  
+  .pod-table tbody tr:nth-child(even) {
+    background-color: #333;
+  }
+  
+  .pod-table tbody tr:hover {
+    background-color: #404040;
+  }
+  
+  .pod-table td {
+    border-bottom-color: #444;
+  }
+  
+  .last-update {
+    background-color: #1e3a1e;
+    color: #90ee90;
+    border-left-color: #28a745;
+  }
+  
+  .commit-hash {
+    background-color: #333;
+    color: #ff6b6b;
+    border-color: #555;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .container {
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .pod-table {
+    font-size: 0.7rem;
+  }
+  
+  .node-info {
+    background: #f0f0f0 !important;
+    color: black !important;
+  }
 }
 </style>

@@ -45,7 +45,7 @@ A minimalist Kubernetes dashboard that displays your cluster's pod information o
 
 The system works as follows:
 
-1. A Kubernetes CronJob runs periodically (hourly) to gather pod information
+1. A Kubernetes CronJob runs periodically to gather pod information
 2. The CronJob updates the Hugo content directly in the _index.md file
 3. GitHub Actions workflow builds the Hugo site and packages it as a Docker image
 4. ArgoCD deploys the updated image to the Kubernetes cluster
@@ -54,8 +54,6 @@ The system works as follows:
 
 - **Simple dashboard**: Shows current cluster status and all pods on a single page
 - **Automatic updates**: CronJob refreshes pod information hourly
-- **Low resource usage**: Static site generation keeps resource requirements minimal
-- **No JavaScript dependencies**: Dashboard works without client-side JavaScript
 
 ## Setup Instructions
 
