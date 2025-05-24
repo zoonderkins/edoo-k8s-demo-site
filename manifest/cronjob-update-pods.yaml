@@ -608,37 +608,43 @@ spec:
                 # Clean up the temp file
                 rm -f "${TMP_INDEX}"
               else
-                # Create a basic _index.md file if it doesn't exist
+                # Create a basic _index.md file if it doesn't exist with Y2K cyberpunk styling
                 echo "---" > content/_index.md
-                echo "title: \"Kubernetes Dashboard\"" >> content/_index.md
+                echo "title: \"K8s Production Cluster\"" >> content/_index.md
                 echo "date: ${CURRENT_DATE}" >> content/_index.md
                 echo "---" >> content/_index.md
                 echo "" >> content/_index.md
-                echo "# Kubernetes Pod Status" >> content/_index.md
+                echo "# K8s Production Cluster" >> content/_index.md
+                echo "" >> content/_index.md
+                echo "<div class=\"container\">" >> content/_index.md
+                echo "" >> content/_index.md
+                echo "<div class=\"node-info\">" >> content/_index.md
+                echo "" >> content/_index.md
+                echo "Worker node: <strong id=\"worker-node-name\">${WORKER_NODE}</strong><br>" >> content/_index.md
+                echo "<span style=\"color: white\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong>" >> content/_index.md
+                echo "<br>" >> content/_index.md
+                echo "Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> content/_index.md
+                echo "" >> content/_index.md
+                echo "Repository: <a href=\"https://github.com/zoonderkins/edoo-k8s-demo-site\" target=\"_blank\">https://github.com/zoonderkins/edoo-k8s-demo-site</a>" >> content/_index.md
+                echo "</div>" >> content/_index.md
                 echo "" >> content/_index.md
                 
                 # Format date in CST timezone
                 export TZ="America/Chicago"
                 FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
                 
-                # Add node-info section with worker node
-                echo "<div class=\"node-info\">" >> content/_index.md
-                echo "<span style=\"color: white\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong></span> | Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> content/_index.md
-                echo "<div class=\"worker-node-info\">Current worker: <strong id=\"worker-node-name\">${WORKER_NODE}</strong></div>" >> content/_index.md
-                echo "</div>" >> content/_index.md
-                echo "" >> content/_index.md
-                
                 # Add last update section
                 echo "<div class=\"last-update\">" >> content/_index.md
-                echo "Last update: ${FORMATTED_DATE}<br>" >> content/_index.md
+                echo "Last update: <span id=\"last-update-time\">${FORMATTED_DATE}</span><br>" >> content/_index.md
                 echo "Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span>" >> content/_index.md
                 echo "</div>" >> content/_index.md
                 echo "" >> content/_index.md
                 
-                # Add the table for all pods
-                echo "<h2>Kubernetes Pods</h2>" >> content/_index.md
-                echo "" >> content/_index.md
+                # Add the kubernetes pods section header
+                echo "### Kubernetes Pods" >> content/_index.md
+                echo "<div class=\"table-container\">" >> content/_index.md
                 
+                # Add ONLY ONE table tag
                 echo '<table class="pod-table" id="summary-table">' >> content/_index.md
                 echo '  <thead>' >> content/_index.md
                 echo '      <tr>' >> content/_index.md
@@ -650,8 +656,12 @@ spec:
                 echo '  </thead>' >> content/_index.md
                 echo '  <tbody>' >> content/_index.md
                 
-                # Add pod data from POD_INFO
-                echo "$POD_INFO" | while read -r POD_NAME NAMESPACE STATUS NODE; do
+                # Add pod data from POD_INFO - use a temporary file to avoid subshell issues
+                echo "$POD_INFO" > /tmp/pod_data_fallback.txt
+                while read -r POD_NAME NAMESPACE STATUS NODE; do
+                  # Skip empty lines
+                  [ -z "$POD_NAME" ] && continue
+                  
                   echo "      <tr>" >> content/_index.md
                   echo "          <td>${POD_NAME}</td>" >> content/_index.md
                   echo "          <td>${NAMESPACE}</td>" >> content/_index.md
@@ -669,84 +679,409 @@ spec:
                   
                   echo "          <td>${NODE}</td>" >> content/_index.md
                   echo "      </tr>" >> content/_index.md
-                done
+                done < /tmp/pod_data_fallback.txt
+                
+                # Clean up temp file
+                rm -f /tmp/pod_data_fallback.txt
                 
                 # Close the table
                 echo '  </tbody>' >> content/_index.md
                 echo '</table>' >> content/_index.md
+                echo '</div>' >> content/_index.md
+                echo '</div>' >> content/_index.md
+                echo '' >> content/_index.md
                 
-                # Add CSS for the dashboard
-                echo "" >> content/_index.md
-                echo "<style>" >> content/_index.md
-                echo ".node-info {" >> content/_index.md
-                echo "  background-color: #f8f9fa;" >> content/_index.md
-                echo "  padding: 15px;" >> content/_index.md
-                echo "  border-radius: 8px;" >> content/_index.md
-                echo "  margin-bottom: 20px;" >> content/_index.md
-                echo "  box-shadow: 0 2px 4px rgba(0,0,0,0.05);" >> content/_index.md
-                echo "  position: relative;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".worker-node-info {" >> content/_index.md
-                echo "  margin-top: 8px;" >> content/_index.md
-                echo "  font-size: 0.9em;" >> content/_index.md
-                echo "  color: #495057;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".pod-table {" >> content/_index.md
-                echo "  width: 100%;" >> content/_index.md
-                echo "  border-collapse: collapse;" >> content/_index.md
-                echo "  margin-bottom: 30px;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".pod-table th {" >> content/_index.md
-                echo "  background-color: #f8f9fa;" >> content/_index.md
-                echo "  padding: 10px 15px;" >> content/_index.md
-                echo "  text-align: left;" >> content/_index.md
-                echo "  font-weight: 600;" >> content/_index.md
-                echo "  border-bottom: 2px solid #dee2e6;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".pod-table td {" >> content/_index.md
-                echo "  padding: 10px 15px;" >> content/_index.md
-                echo "  border-bottom: 1px solid #e9ecef;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".pod-table tbody tr:hover {" >> content/_index.md
-                echo "  background-color: #f8f9fa;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".status-running {" >> content/_index.md
-                echo "  color: #28a745;" >> content/_index.md
-                echo "  font-weight: 600;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".status-pending {" >> content/_index.md
-                echo "  color: #ffc107;" >> content/_index.md
-                echo "  font-weight: 600;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".status-error {" >> content/_index.md
-                echo "  color: #dc3545;" >> content/_index.md
-                echo "  font-weight: 600;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo ".last-update {" >> content/_index.md
-                echo "  margin-top: 10px;" >> content/_index.md
-                echo "  margin-bottom: 20px;" >> content/_index.md
-                echo "  padding: 10px;" >> content/_index.md
-                echo "  background-color: #f8f9fa;" >> content/_index.md
-                echo "  border-radius: 4px;" >> content/_index.md
-                echo "  font-size: 0.9em;" >> content/_index.md
-                echo "  color: #6c757d;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "" >> content/_index.md
-                echo ".commit-hash {" >> content/_index.md
-                echo "  font-family: monospace;" >> content/_index.md
-                echo "  background-color: #e9ecef;" >> content/_index.md
-                echo "  padding: 2px 4px;" >> content/_index.md
-                echo "  border-radius: 3px;" >> content/_index.md
-                echo "}" >> content/_index.md
-                echo "</style>" >> content/_index.md
+                # Add the comprehensive Y2K cyberpunk CSS styles
+                echo '<style>' >> content/_index.md
+                echo ':root {' >> content/_index.md
+                echo '  --neon-green: #0f0;' >> content/_index.md
+                echo '  --neon-pink: #ff69b4;' >> content/_index.md
+                echo '  --cyber-purple: #9370db;' >> content/_index.md
+                echo '  --matrix-black: #000;' >> content/_index.md
+                echo '  --cyber-blue: #00ffff;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '* { box-sizing: border-box; }' >> content/_index.md
+                echo '' >> content/_index.md
+                echo 'body {' >> content/_index.md
+                echo '  margin: 0;' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  font-family: "Courier New", monospace;' >> content/_index.md
+                echo '  cursor: crosshair;' >> content/_index.md
+                echo '  line-height: 1.6;' >> content/_index.md
+                echo '  padding: 20px;' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '  overflow-x: auto;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Scanline effect */' >> content/_index.md
+                echo 'body::before {' >> content/_index.md
+                echo '  content: "";' >> content/_index.md
+                echo '  position: fixed;' >> content/_index.md
+                echo '  top: 0;' >> content/_index.md
+                echo '  left: 0;' >> content/_index.md
+                echo '  width: 100%;' >> content/_index.md
+                echo '  height: 100%;' >> content/_index.md
+                echo '  background: linear-gradient(to bottom,' >> content/_index.md
+                echo '    rgba(255,255,255,0) 0%,' >> content/_index.md
+                echo '    rgba(0,255,0,0.03) 50%,' >> content/_index.md
+                echo '    rgba(255,255,255,0) 100%);' >> content/_index.md
+                echo '  animation: scan 8s linear infinite;' >> content/_index.md
+                echo '  pointer-events: none;' >> content/_index.md
+                echo '  z-index: 1000;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes scan {' >> content/_index.md
+                echo '  0% { transform: translateY(-100vh); }' >> content/_index.md
+                echo '  100% { transform: translateY(100vh); }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.container {' >> content/_index.md
+                echo '  max-width: 1200px;' >> content/_index.md
+                echo '  margin: 0 auto;' >> content/_index.md
+                echo '  background: rgba(0, 0, 0, 0.95);' >> content/_index.md
+                echo '  padding: 30px;' >> content/_index.md
+                echo '  border: 2px solid var(--neon-green);' >> content/_index.md
+                echo '  border-radius: 0;' >> content/_index.md
+                echo '  box-shadow:' >> content/_index.md
+                echo '    0 0 20px var(--neon-green),' >> content/_index.md
+                echo '    inset 0 0 20px rgba(0, 255, 0, 0.1);' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo 'h1 {' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  margin-bottom: 30px;' >> content/_index.md
+                echo '  font-size: 2.5rem;' >> content/_index.md
+                echo '  text-align: center;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 3px;' >> content/_index.md
+                echo '  animation: glitch-title 2s infinite;' >> content/_index.md
+                echo '  text-shadow:' >> content/_index.md
+                echo '    2px 2px var(--neon-pink),' >> content/_index.md
+                echo '    -2px -2px var(--cyber-purple),' >> content/_index.md
+                echo '    0 0 10px var(--neon-green);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes glitch-title {' >> content/_index.md
+                echo '  0% { transform: skew(0deg); }' >> content/_index.md
+                echo '  20% { transform: skew(2deg); filter: hue-rotate(0deg); }' >> content/_index.md
+                echo '  40% { transform: skew(-2deg); filter: hue-rotate(90deg); }' >> content/_index.md
+                echo '  60% { transform: skew(2deg); filter: hue-rotate(180deg); }' >> content/_index.md
+                echo '  80% { transform: skew(-2deg); filter: hue-rotate(270deg); }' >> content/_index.md
+                echo '  100% { transform: skew(0deg); filter: hue-rotate(360deg); }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo 'h3 {' >> content/_index.md
+                echo '  color: var(--cyber-purple);' >> content/_index.md
+                echo '  margin-top: 30px;' >> content/_index.md
+                echo '  margin-bottom: 15px;' >> content/_index.md
+                echo '  font-size: 1.5rem;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 2px;' >> content/_index.md
+                echo '  text-shadow: 0 0 10px var(--cyber-purple);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.node-info {' >> content/_index.md
+                echo '  background: linear-gradient(135deg,' >> content/_index.md
+                echo '    rgba(147, 112, 219, 0.3) 0%,' >> content/_index.md
+                echo '    rgba(255, 105, 180, 0.3) 50%,' >> content/_index.md
+                echo '    rgba(0, 255, 255, 0.3) 100%);' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  padding: 25px;' >> content/_index.md
+                echo '  border: 2px solid var(--neon-pink);' >> content/_index.md
+                echo '  margin-bottom: 25px;' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '  animation: info-pulse 4s infinite;' >> content/_index.md
+                echo '  text-shadow: 0 0 5px currentColor;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes info-pulse {' >> content/_index.md
+                echo '  0% { box-shadow: 0 0 10px var(--neon-pink); }' >> content/_index.md
+                echo '  50% { box-shadow: 0 0 30px var(--cyber-purple), 0 0 40px var(--neon-pink); }' >> content/_index.md
+                echo '  100% { box-shadow: 0 0 10px var(--neon-pink); }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.node-info::before {' >> content/_index.md
+                echo '  content: "> SYSTEM STATUS";' >> content/_index.md
+                echo '  position: absolute;' >> content/_index.md
+                echo '  top: -12px;' >> content/_index.md
+                echo '  left: 20px;' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  color: var(--neon-pink);' >> content/_index.md
+                echo '  padding: 0 10px;' >> content/_index.md
+                echo '  font-size: 0.8rem;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.node-info a {' >> content/_index.md
+                echo '  color: var(--cyber-blue);' >> content/_index.md
+                echo '  text-decoration: none;' >> content/_index.md
+                echo '  transition: all 0.3s;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.node-info a:hover {' >> content/_index.md
+                echo '  color: var(--neon-pink);' >> content/_index.md
+                echo '  text-shadow: 0 0 10px var(--neon-pink);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.last-update {' >> content/_index.md
+                echo '  background: rgba(0, 255, 0, 0.1);' >> content/_index.md
+                echo '  border: 1px solid var(--neon-green);' >> content/_index.md
+                echo '  border-left: 4px solid var(--neon-green);' >> content/_index.md
+                echo '  padding: 15px;' >> content/_index.md
+                echo '  margin: 20px 0;' >> content/_index.md
+                echo '  font-size: 0.9em;' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '  animation: data-stream 1s ease-in-out infinite alternate;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes data-stream {' >> content/_index.md
+                echo '  0% { box-shadow: 0 0 5px var(--neon-green); }' >> content/_index.md
+                echo '  100% { box-shadow: 0 0 15px var(--neon-green); }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.last-update::before {' >> content/_index.md
+                echo '  content: "> LAST_UPDATE.LOG";' >> content/_index.md
+                echo '  position: absolute;' >> content/_index.md
+                echo '  top: -12px;' >> content/_index.md
+                echo '  left: 15px;' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  padding: 0 8px;' >> content/_index.md
+                echo '  font-size: 0.7rem;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.commit-hash {' >> content/_index.md
+                echo '  font-family: "Courier New", monospace;' >> content/_index.md
+                echo '  background: rgba(255, 105, 180, 0.2);' >> content/_index.md
+                echo '  color: var(--neon-pink);' >> content/_index.md
+                echo '  padding: 4px 8px;' >> content/_index.md
+                echo '  border: 1px solid var(--neon-pink);' >> content/_index.md
+                echo '  font-size: 0.85em;' >> content/_index.md
+                echo '  text-shadow: 0 0 5px var(--neon-pink);' >> content/_index.md
+                echo '  animation: hash-flicker 2s infinite;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes hash-flicker {' >> content/_index.md
+                echo '  0%, 100% { opacity: 1; }' >> content/_index.md
+                echo '  50% { opacity: 0.7; }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.table-container {' >> content/_index.md
+                echo '  overflow-x: auto;' >> content/_index.md
+                echo '  margin: 25px 0;' >> content/_index.md
+                echo '  border: 2px solid var(--cyber-purple);' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '  background: rgba(147, 112, 219, 0.05);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.table-container::before {' >> content/_index.md
+                echo '  content: "> POD_MATRIX.DB";' >> content/_index.md
+                echo '  position: absolute;' >> content/_index.md
+                echo '  top: -12px;' >> content/_index.md
+                echo '  left: 20px;' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  color: var(--cyber-purple);' >> content/_index.md
+                echo '  padding: 0 10px;' >> content/_index.md
+                echo '  font-size: 0.8rem;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table {' >> content/_index.md
+                echo '  width: 100%;' >> content/_index.md
+                echo '  border-collapse: collapse;' >> content/_index.md
+                echo '  margin: 0;' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  min-width: 600px;' >> content/_index.md
+                echo '  font-family: "Courier New", monospace;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table th {' >> content/_index.md
+                echo '  background: linear-gradient(135deg, var(--cyber-purple) 0%, var(--neon-pink) 100%);' >> content/_index.md
+                echo '  color: var(--matrix-black);' >> content/_index.md
+                echo '  padding: 15px 12px;' >> content/_index.md
+                echo '  text-align: left;' >> content/_index.md
+                echo '  font-weight: 700;' >> content/_index.md
+                echo '  font-size: 0.9rem;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '  position: sticky;' >> content/_index.md
+                echo '  top: 0;' >> content/_index.md
+                echo '  z-index: 10;' >> content/_index.md
+                echo '  border: 1px solid var(--neon-green);' >> content/_index.md
+                echo '  text-shadow: none;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table td {' >> content/_index.md
+                echo '  padding: 12px;' >> content/_index.md
+                echo '  border: 1px solid rgba(0, 255, 0, 0.3);' >> content/_index.md
+                echo '  font-size: 0.85rem;' >> content/_index.md
+                echo '  vertical-align: middle;' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  background: rgba(0, 0, 0, 0.8);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table tbody tr {' >> content/_index.md
+                echo '  transition: all 0.3s ease;' >> content/_index.md
+                echo '  position: relative;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table tbody tr:hover {' >> content/_index.md
+                echo '  background: rgba(0, 255, 0, 0.1) !important;' >> content/_index.md
+                echo '  transform: scale(1.002);' >> content/_index.md
+                echo '  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table tbody tr:nth-child(even) {' >> content/_index.md
+                echo '  background: rgba(147, 112, 219, 0.05);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.pod-table tbody tr:nth-child(odd) {' >> content/_index.md
+                echo '  background: rgba(255, 105, 180, 0.05);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.status-running {' >> content/_index.md
+                echo '  color: var(--neon-green);' >> content/_index.md
+                echo '  font-weight: 600;' >> content/_index.md
+                echo '  padding: 4px 8px;' >> content/_index.md
+                echo '  background: rgba(0, 255, 0, 0.2);' >> content/_index.md
+                echo '  border: 1px solid var(--neon-green);' >> content/_index.md
+                echo '  font-size: 0.8rem;' >> content/_index.md
+                echo '  display: inline-block;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '  animation: status-pulse 2s infinite;' >> content/_index.md
+                echo '  text-shadow: 0 0 5px var(--neon-green);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.status-pending {' >> content/_index.md
+                echo '  color: #ffff00;' >> content/_index.md
+                echo '  font-weight: 600;' >> content/_index.md
+                echo '  padding: 4px 8px;' >> content/_index.md
+                echo '  background: rgba(255, 255, 0, 0.2);' >> content/_index.md
+                echo '  border: 1px solid #ffff00;' >> content/_index.md
+                echo '  font-size: 0.8rem;' >> content/_index.md
+                echo '  display: inline-block;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '  animation: status-pulse 2s infinite;' >> content/_index.md
+                echo '  text-shadow: 0 0 5px #ffff00;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '.status-error {' >> content/_index.md
+                echo '  color: #ff0040;' >> content/_index.md
+                echo '  font-weight: 600;' >> content/_index.md
+                echo '  padding: 4px 8px;' >> content/_index.md
+                echo '  background: rgba(255, 0, 64, 0.2);' >> content/_index.md
+                echo '  border: 1px solid #ff0040;' >> content/_index.md
+                echo '  font-size: 0.8rem;' >> content/_index.md
+                echo '  display: inline-block;' >> content/_index.md
+                echo '  text-transform: uppercase;' >> content/_index.md
+                echo '  letter-spacing: 1px;' >> content/_index.md
+                echo '  animation: status-pulse 2s infinite;' >> content/_index.md
+                echo '  text-shadow: 0 0 5px #ff0040;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@keyframes status-pulse {' >> content/_index.md
+                echo '  0%, 100% { opacity: 1; }' >> content/_index.md
+                echo '  50% { opacity: 0.7; }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Custom scrollbar */' >> content/_index.md
+                echo '::-webkit-scrollbar {' >> content/_index.md
+                echo '  width: 12px;' >> content/_index.md
+                echo '  height: 12px;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '::-webkit-scrollbar-track {' >> content/_index.md
+                echo '  background: var(--matrix-black);' >> content/_index.md
+                echo '  border: 1px solid var(--neon-green);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '::-webkit-scrollbar-thumb {' >> content/_index.md
+                echo '  background: linear-gradient(45deg, var(--neon-green), var(--cyber-purple));' >> content/_index.md
+                echo '  border: 1px solid var(--matrix-black);' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '::-webkit-scrollbar-thumb:hover {' >> content/_index.md
+                echo '  background: linear-gradient(45deg, var(--cyber-purple), var(--neon-pink));' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Mobile responsiveness with cyberpunk flair */' >> content/_index.md
+                echo '@media (max-width: 768px) {' >> content/_index.md
+                echo '  body { padding: 10px; }' >> content/_index.md
+                echo '  .container { padding: 20px; }' >> content/_index.md
+                echo '  h1 { font-size: 1.8rem; letter-spacing: 2px; }' >> content/_index.md
+                echo '  h3 { font-size: 1.2rem; letter-spacing: 1px; }' >> content/_index.md
+                echo '  .node-info { padding: 20px; font-size: 0.9rem; }' >> content/_index.md
+                echo '  .pod-table th, .pod-table td { padding: 8px 6px; font-size: 0.75rem; }' >> content/_index.md
+                echo '  .pod-table th { font-size: 0.8rem; }' >> content/_index.md
+                echo '  .pod-table td:first-child { word-break: break-word; max-width: 150px; }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '@media (max-width: 480px) {' >> content/_index.md
+                echo '  .pod-table { min-width: 500px; }' >> content/_index.md
+                echo '  .pod-table th, .pod-table td { padding: 6px 4px; font-size: 0.7rem; }' >> content/_index.md
+                echo '  .node-info { padding: 15px; font-size: 0.85rem; }' >> content/_index.md
+                echo '  .last-update { padding: 12px; font-size: 0.8rem; }' >> content/_index.md
+                echo '  h1 { font-size: 1.5rem; letter-spacing: 1px; }' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Matrix rain effect for background */' >> content/_index.md
+                echo '.container::after {' >> content/_index.md
+                echo '  content: "";' >> content/_index.md
+                echo '  position: absolute;' >> content/_index.md
+                echo '  top: 0;' >> content/_index.md
+                echo '  left: 0;' >> content/_index.md
+                echo '  right: 0;' >> content/_index.md
+                echo '  bottom: 0;' >> content/_index.md
+                echo '  background-image:' >> content/_index.md
+                echo '    radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),' >> content/_index.md
+                echo '    radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),' >> content/_index.md
+                echo '    radial-gradient(circle at 40% 40%, rgba(147, 112, 219, 0.1) 0%, transparent 50%);' >> content/_index.md
+                echo '  pointer-events: none;' >> content/_index.md
+                echo '  z-index: -1;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Footer styling to match cyberpunk theme */' >> content/_index.md
+                echo 'footer, .footer, #footer, .site-footer {' >> content/_index.md
+                echo '  background: var(--matrix-black) !important;' >> content/_index.md
+                echo '  color: var(--neon-green) !important;' >> content/_index.md
+                echo '  border-top: 2px solid var(--neon-green) !important;' >> content/_index.md
+                echo '  padding: 20px !important;' >> content/_index.md
+                echo '  font-family: "Courier New", monospace !important;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo 'footer a, .footer a, #footer a, .site-footer a {' >> content/_index.md
+                echo '  color: var(--cyber-blue) !important;' >> content/_index.md
+                echo '  text-decoration: none !important;' >> content/_index.md
+                echo '  transition: all 0.3s !important;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo 'footer a:hover, .footer a:hover, #footer a:hover, .site-footer a:hover {' >> content/_index.md
+                echo '  color: var(--neon-pink) !important;' >> content/_index.md
+                echo '  text-shadow: 0 0 10px var(--neon-pink) !important;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Ensure any white backgrounds are overridden */' >> content/_index.md
+                echo '.content-wrapper, .main-content, .page-content {' >> content/_index.md
+                echo '  background: var(--matrix-black) !important;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '' >> content/_index.md
+                echo '/* Override any default theme footer styling */' >> content/_index.md
+                echo 'body > footer,' >> content/_index.md
+                echo 'body > .footer,' >> content/_index.md
+                echo '.hugo-footer,' >> content/_index.md
+                echo '.theme-footer {' >> content/_index.md
+                echo '  background: var(--matrix-black) !important;' >> content/_index.md
+                echo '  color: var(--neon-green) !important;' >> content/_index.md
+                echo '  border-top: 2px solid var(--neon-green) !important;' >> content/_index.md
+                echo '}' >> content/_index.md
+                echo '</style>' >> content/_index.md
               fi
               
               # Create JSON API with proper formatting
