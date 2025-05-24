@@ -1,5 +1,5 @@
 ---
-date: 2025-05-24T13:00:22+00:00
+date: 2025-05-24T14:00:42+00:00
 ---
 
 # K8s Production Cluster
@@ -19,6 +19,7 @@ Hash: <span class="commit-hash" id="git-commit-hash">089cd7e</span>
 </div>
 
 ### Kubernetes Pods
+<table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
 <table class="pod-table" id="summary-table">
@@ -347,16 +348,16 @@ Hash: <span class="commit-hash" id="git-commit-hash">089cd7e</span>
           <td>k0s-color-worker-2</td>
       </tr>
       <tr>
-          <td>hugo-site-85b9688d8f-sqv4q</td>
+          <td>update-pods-md-29134920-p2mpz</td>
           <td>prod</td>
           <td class="status-running">Running</td>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29134860-kp8jg</td>
+          <td>hugo-site-67768b65df-4jddq</td>
           <td>prod</td>
           <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
+          <td>k0s-color-worker-2</td>
       </tr>
       <tr>
           <td>update-pods-md-29133120-tnwtn</td>
@@ -377,12 +378,6 @@ Hash: <span class="commit-hash" id="git-commit-hash">089cd7e</span>
           <td>k0s-color-worker-1</td>
       </tr>
       <tr>
-          <td>update-pods-md-29134680-dtpkt</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
           <td>update-pods-md-29134740-bcn9w</td>
           <td>prod</td>
           <td>Succeeded</td>
@@ -390,6 +385,12 @@ Hash: <span class="commit-hash" id="git-commit-hash">089cd7e</span>
       </tr>
       <tr>
           <td>update-pods-md-29134800-7g7fn</td>
+          <td>prod</td>
+          <td>Succeeded</td>
+          <td>k0s-color-worker-1</td>
+      </tr>
+      <tr>
+          <td>update-pods-md-29134860-kp8jg</td>
           <td>prod</td>
           <td>Succeeded</td>
           <td>k0s-color-worker-1</td>
@@ -438,42 +439,3 @@ Hash: <span class="commit-hash" id="git-commit-hash">089cd7e</span>
       </tr>
   </tbody>
 </table>
-<style>
-.pod-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.pod-table th {
-  background-color: #f8f9fa;
-  padding: 10px 15px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.pod-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.pod-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.status-running {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #dc3545;
-  font-weight: 600;
-}
-</style>
