@@ -1,6 +1,6 @@
 baseURL = 'https://k8s.edoo.dev/'
 languageCode = 'en-us'
-title = 'K8s Dashboard'
+title = '🐳 Edoo Color Kubernetes ☸️'
 theme = 'PaperMod'
 
 # Ignore warnings about raw HTML in markdown

@@ -116,739 +116,900 @@ spec:
                 # Update date field in frontmatter
                 sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" "${TMP_INDEX}"
                 
+                # Add markup field if not present
+                if ! grep -q "^markup:" "${TMP_INDEX}"; then
+                  echo "markup: html" >> "${TMP_INDEX}"
+                fi
+                
                 # Add a blank line after frontmatter
-                echo "" >> "${TMP_INDEX}"
+                echo "" >> "${TMP_INDEX}" 
                 
-                # Add the main title and header content
-                echo "# K8s Production Cluster" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "<div class=\"container\">" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "<div class=\"node-info\">" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "Worker node: <strong id=\"worker-node-name\">${WORKER_NODE}</strong><br>" >> "${TMP_INDEX}"
-                echo "<span style=\"color: white\">Cluster Status: <strong id=\"index-cluster-status\">Healthy</strong>" >> "${TMP_INDEX}"
-                echo "<br>" >> "${TMP_INDEX}"
-                echo "Total Pods: <strong id=\"index-total-pods\">${TOTAL_PODS}</strong>" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                echo "Repository: <a href=\"https://github.com/zoonderkins/edoo-k8s-demo-site\" target=\"_blank\">https://github.com/zoonderkins/edoo-k8s-demo-site</a>" >> "${TMP_INDEX}"
-                echo "</div>" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                
-                # Add last update section with current timestamp and git hash
-                echo "<div class=\"last-update\">" >> "${TMP_INDEX}"
-                echo "Last update: <span id=\"last-update-time\">${FORMATTED_DATE}</span><br>" >> "${TMP_INDEX}"
-                echo "Hash: <span class=\"commit-hash\" id=\"git-commit-hash\">${GIT_HASH}</span>" >> "${TMP_INDEX}"
-                echo "</div>" >> "${TMP_INDEX}"
-                echo "" >> "${TMP_INDEX}"
-                
-                # Add the kubernetes pods section header
-                echo "### Kubernetes Pods" >> "${TMP_INDEX}"
-                echo "<div class=\"table-container\">" >> "${TMP_INDEX}"
-                
-                # Add ONLY ONE table tag - this is the key fix
-                echo '<table class="pod-table" id="summary-table">' >> "${TMP_INDEX}"
-                echo '  <thead>' >> "${TMP_INDEX}"
-                echo '      <tr>' >> "${TMP_INDEX}"
-                echo '          <th>Pod Name</th>' >> "${TMP_INDEX}"
-                echo '          <th>Namespace</th>' >> "${TMP_INDEX}"
-                echo '          <th>Status</th>' >> "${TMP_INDEX}"
-                echo '          <th>Node</th>' >> "${TMP_INDEX}"
-                echo '      </tr>' >> "${TMP_INDEX}"
-                echo '  </thead>' >> "${TMP_INDEX}"
-                echo '  <tbody>' >> "${TMP_INDEX}"
-                
-                # Add pod data from POD_INFO - use a temporary file to avoid subshell issues
-                echo "$POD_INFO" > /tmp/pod_data.txt
-                while read -r POD_NAME NAMESPACE STATUS NODE; do
-                  # Skip empty lines
-                  [ -z "$POD_NAME" ] && continue
-                  
-                  echo "      <tr>" >> "${TMP_INDEX}"
-                  echo "          <td>${POD_NAME}</td>" >> "${TMP_INDEX}"
-                  echo "          <td>${NAMESPACE}</td>" >> "${TMP_INDEX}"
-                  
-                  # Add status with appropriate class
-                  if [[ "$STATUS" == "Running" ]]; then
-                    echo "          <td class=\"status-running\">${STATUS}</td>" >> "${TMP_INDEX}"
-                  elif [[ "$STATUS" == "Pending" ]]; then
-                    echo "          <td class=\"status-pending\">${STATUS}</td>" >> "${TMP_INDEX}"
-                  elif [[ "$STATUS" == "Failed" || "$STATUS" == "Error" ]]; then
-                    echo "          <td class=\"status-error\">${STATUS}</td>" >> "${TMP_INDEX}"
-                  else
-                    echo "          <td>${STATUS}</td>" >> "${TMP_INDEX}"
+                # Generate the complete HTML content with two-column layout
+                cat >> "${TMP_INDEX}" << 'EOF'
+<div class="main-container">
+  <div class="left-sidebar">
+    <div class="sidebar-section">
+      <h3>🌐 WEBRING NAVIGATION</h3>
+      <div class="webring">
+        <a href="#" class="webring-link">← PREV SITE</a>
+        <span class="webring-divider">|</span>
+        <a href="#" class="webring-link">RANDOM</a>
+        <span class="webring-divider">|</span>
+        <a href="#" class="webring-link">NEXT SITE →</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>📊 SITE STATS</h3>
+      <div class="visitor-counter">
+        <img src="https://via.placeholder.com/80x15/00ff00/000000?text=VISITORS" alt="Visitor Counter" style="image-rendering: pixelated;">
+        <div class="counter-display">
+          <span id="visitor-count">001337</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🎯 AFFILIATE ZONE</h3>
+      <div class="affiliate-banners">
+        <img src="https://via.placeholder.com/120x60/ff0080/ffffff?text=CYBER+DEALS" alt="Cyber Deals" class="affiliate-banner">
+        <img src="https://via.placeholder.com/120x60/00ffff/000000?text=MATRIX+GEAR" alt="Matrix Gear" class="affiliate-banner">
+        <img src="https://via.placeholder.com/120x60/ffff00/000000?text=HACK+TOOLS" alt="Hack Tools" class="affiliate-banner">
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🔥 HOT LINKS</h3>
+      <div class="hot-links">
+        <a href="#" class="hot-link">🌟 CYBER PORTAL</a>
+        <a href="#" class="hot-link">⚡ MATRIX ZONE</a>
+        <a href="#" class="hot-link">🔮 DIGITAL REALM</a>
+        <a href="#" class="hot-link">💎 NEON CITY</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>📡 LIVE FEED</h3>
+      <div class="live-feed">
+        <div class="feed-item">🔴 SYSTEM ONLINE</div>
+        <div class="feed-item">⚡ PODS UPDATING</div>
+        <div class="feed-item">🌐 NETWORK ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🎮 RETRO ZONE</h3>
+      <div class="retro-elements">
+        <img src="https://via.placeholder.com/88x31/ff00ff/000000?text=BEST+VIEWED" alt="Best Viewed" class="retro-button">
+        <img src="https://via.placeholder.com/88x31/00ff00/000000?text=NETSCAPE" alt="Netscape" class="retro-button">
+        <img src="https://via.placeholder.com/88x31/ffff00/000000?text=Y2K+READY" alt="Y2K Ready" class="retro-button">
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <canvas id="matrix-canvas"></canvas>
+    
+    <div class="content-wrapper">
+      <div class="header-section">
+        <h1 class="cyber-title">🚀 K0S COLOR DASHBOARD 🚀</h1>
+        <div class="subtitle">CYBERPUNK KUBERNETES MONITORING SYSTEM</div>
+        <div class="status-bar">
+          <span class="status-item">STATUS: <span class="status-online">ONLINE</span></span>
+          <span class="status-item">PODS: <span id="pod-count">${TOTAL_PODS}</span></span>
+          <span class="status-item">RUNNING: <span id="running-count">${RUNNING_PODS}</span></span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>📊 CLUSTER STATUS</h3>
+          <div class="metric">
+            <span class="metric-label">Total Pods:</span>
+            <span class="metric-value">${TOTAL_PODS}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Running:</span>
+            <span class="metric-value running">${RUNNING_PODS}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Worker Node:</span>
+            <span class="metric-value">${WORKER_NODE}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Last Update:</span>
+            <span class="metric-value">${FORMATTED_DATE}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Git Hash:</span>
+            <span class="metric-value">${GIT_HASH}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>🎯 QUICK ACTIONS</h3>
+          <div class="action-buttons">
+            <a href="/api/pods.json" class="action-btn">📡 RAW DATA</a>
+            <a href="#pods-section" class="action-btn">📋 POD LIST</a>
+            <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" class="action-btn">💻 SOURCE</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="pods-section" class="pods-section">
+        <h2 class="section-title">🔥 ACTIVE PODS 🔥</h2>
+        <div class="pods-container">
+EOF
+
+                # Generate pod information in HTML format
+                echo "$POD_INFO" | while IFS= read -r line; do
+                  if [ -n "$line" ]; then
+                    POD_NAME=$(echo "$line" | awk '{print $1}')
+                    POD_NAMESPACE=$(echo "$line" | awk '{print $2}')
+                    POD_STATUS=$(echo "$line" | awk '{print $3}')
+                    POD_NODE=$(echo "$line" | awk '{print $4}')
+                    
+                    # Determine status class
+                    case "$POD_STATUS" in
+                      "Running") STATUS_CLASS="running" ;;
+                      "Pending") STATUS_CLASS="pending" ;;
+                      "Failed"|"Error") STATUS_CLASS="failed" ;;
+                      *) STATUS_CLASS="unknown" ;;
+                    esac
+                    
+                    cat >> "${TMP_INDEX}" << EOF
+          <div class="pod-card">
+            <div class="pod-header">
+              <span class="pod-name">${POD_NAME}</span>
+              <span class="pod-status ${STATUS_CLASS}">${POD_STATUS}</span>
+            </div>
+            <div class="pod-details">
+              <div class="pod-detail">
+                <span class="detail-label">Namespace:</span>
+                <span class="detail-value">${POD_NAMESPACE}</span>
+              </div>
+              <div class="pod-detail">
+                <span class="detail-label">Node:</span>
+                <span class="detail-value">${POD_NODE}</span>
+              </div>
+            </div>
+          </div>
+EOF
                   fi
-                  
-                  echo "          <td>${NODE}</td>" >> "${TMP_INDEX}"
-                  echo "      </tr>" >> "${TMP_INDEX}"
-                done < /tmp/pod_data.txt
-                
-                # Clean up temp file
-                rm -f /tmp/pod_data.txt
-                
-                # Close the table
-                echo '  </tbody>' >> "${TMP_INDEX}"
-                echo '</table>' >> "${TMP_INDEX}"
-                echo '</div>' >> "${TMP_INDEX}"
-                echo '</div>' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                
-                # Add the comprehensive responsive CSS styles
-                echo '<style>' >> "${TMP_INDEX}"
-                echo ':root {' >> "${TMP_INDEX}"
-                echo '  --neon-green: #0f0;' >> "${TMP_INDEX}"
-                echo '  --neon-pink: #ff69b4;' >> "${TMP_INDEX}"
-                echo '  --cyber-purple: #9370db;' >> "${TMP_INDEX}"
-                echo '  --matrix-black: #000;' >> "${TMP_INDEX}"
-                echo '  --cyber-blue: #00ffff;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '* { box-sizing: border-box; }' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'body {' >> "${TMP_INDEX}"
-                echo '  margin: 0;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace;' >> "${TMP_INDEX}"
-                echo '  cursor: crosshair;' >> "${TMP_INDEX}"
-                echo '  line-height: 1.6;' >> "${TMP_INDEX}"
-                echo '  padding: 20px;' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '  overflow-x: auto;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Scanline effect */' >> "${TMP_INDEX}"
-                echo 'body::before {' >> "${TMP_INDEX}"
-                echo '  content: "";' >> "${TMP_INDEX}"
-                echo '  position: fixed;' >> "${TMP_INDEX}"
-                echo '  top: 0;' >> "${TMP_INDEX}"
-                echo '  left: 0;' >> "${TMP_INDEX}"
-                echo '  width: 100%;' >> "${TMP_INDEX}"
-                echo '  height: 100%;' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(to bottom,' >> "${TMP_INDEX}"
-                echo '    rgba(255,255,255,0) 0%,' >> "${TMP_INDEX}"
-                echo '    rgba(0,255,0,0.03) 50%,' >> "${TMP_INDEX}"
-                echo '    rgba(255,255,255,0) 100%);' >> "${TMP_INDEX}"
-                echo '  animation: scan 8s linear infinite;' >> "${TMP_INDEX}"
-                echo '  pointer-events: none;' >> "${TMP_INDEX}"
-                echo '  z-index: 1000;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes scan {' >> "${TMP_INDEX}"
-                echo '  0% { transform: translateY(-100vh); }' >> "${TMP_INDEX}"
-                echo '  100% { transform: translateY(100vh); }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.container {' >> "${TMP_INDEX}"
-                echo '  max-width: 1200px;' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto;' >> "${TMP_INDEX}"
-                echo '  background: rgba(0, 0, 0, 0.95);' >> "${TMP_INDEX}"
-                echo '  padding: 30px;' >> "${TMP_INDEX}"
-                echo '  border: 2px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  border-radius: 0;' >> "${TMP_INDEX}"
-                echo '  box-shadow:' >> "${TMP_INDEX}"
-                echo '    0 0 20px var(--neon-green),' >> "${TMP_INDEX}"
-                echo '    inset 0 0 20px rgba(0, 255, 0, 0.1);' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.container::before {' >> "${TMP_INDEX}"
-                echo '  content: "";' >> "${TMP_INDEX}"
-                echo '  position: absolute;' >> "${TMP_INDEX}"
-                echo '  top: -2px;' >> "${TMP_INDEX}"
-                echo '  left: -2px;' >> "${TMP_INDEX}"
-                echo '  right: -2px;' >> "${TMP_INDEX}"
-                echo '  bottom: -2px;' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(45deg, var(--neon-green), var(--cyber-purple), var(--neon-pink), var(--cyber-blue));' >> "${TMP_INDEX}"
-                echo '  z-index: -1;' >> "${TMP_INDEX}"
-                echo '  animation: border-glow 3s ease-in-out infinite alternate;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes border-glow {' >> "${TMP_INDEX}"
-                echo '  0% { opacity: 0.5; }' >> "${TMP_INDEX}"
-                echo '  100% { opacity: 1; }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'h1 {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  margin-bottom: 30px;' >> "${TMP_INDEX}"
-                echo '  font-size: 2.5rem;' >> "${TMP_INDEX}"
-                echo '  text-align: center;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 3px;' >> "${TMP_INDEX}"
-                echo '  animation: glitch-title 2s infinite;' >> "${TMP_INDEX}"
-                echo '  text-shadow:' >> "${TMP_INDEX}"
-                echo '    2px 2px var(--neon-pink),' >> "${TMP_INDEX}"
-                echo '    -2px -2px var(--cyber-purple),' >> "${TMP_INDEX}"
-                echo '    0 0 10px var(--neon-green);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes glitch-title {' >> "${TMP_INDEX}"
-                echo '  0% { transform: skew(0deg); }' >> "${TMP_INDEX}"
-                echo '  20% { transform: skew(2deg); filter: hue-rotate(0deg); }' >> "${TMP_INDEX}"
-                echo '  40% { transform: skew(-2deg); filter: hue-rotate(90deg); }' >> "${TMP_INDEX}"
-                echo '  60% { transform: skew(2deg); filter: hue-rotate(180deg); }' >> "${TMP_INDEX}"
-                echo '  80% { transform: skew(-2deg); filter: hue-rotate(270deg); }' >> "${TMP_INDEX}"
-                echo '  100% { transform: skew(0deg); filter: hue-rotate(360deg); }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'h3 {' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-purple);' >> "${TMP_INDEX}"
-                echo '  margin-top: 30px;' >> "${TMP_INDEX}"
-                echo '  margin-bottom: 15px;' >> "${TMP_INDEX}"
-                echo '  font-size: 1.5rem;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 2px;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--cyber-purple);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.node-info {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(135deg,' >> "${TMP_INDEX}"
-                echo '    rgba(147, 112, 219, 0.3) 0%,' >> "${TMP_INDEX}"
-                echo '    rgba(255, 105, 180, 0.3) 50%,' >> "${TMP_INDEX}"
-                echo '    rgba(0, 255, 255, 0.3) 100%);' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  padding: 25px;' >> "${TMP_INDEX}"
-                echo '  border: 2px solid var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  margin-bottom: 25px;' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '  animation: info-pulse 4s infinite;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 5px currentColor;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes info-pulse {' >> "${TMP_INDEX}"
-                echo '  0% { box-shadow: 0 0 10px var(--neon-pink); }' >> "${TMP_INDEX}"
-                echo '  50% { box-shadow: 0 0 30px var(--cyber-purple), 0 0 40px var(--neon-pink); }' >> "${TMP_INDEX}"
-                echo '  100% { box-shadow: 0 0 10px var(--neon-pink); }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.node-info::before {' >> "${TMP_INDEX}"
-                echo '  content: "> SYSTEM STATUS";' >> "${TMP_INDEX}"
-                echo '  position: absolute;' >> "${TMP_INDEX}"
-                echo '  top: -12px;' >> "${TMP_INDEX}"
-                echo '  left: 20px;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  padding: 0 10px;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.8rem;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.node-info a {' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-blue);' >> "${TMP_INDEX}"
-                echo '  text-decoration: none;' >> "${TMP_INDEX}"
-                echo '  transition: all 0.3s;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.node-info a:hover {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.last-update {' >> "${TMP_INDEX}"
-                echo '  background: rgba(0, 255, 0, 0.1);' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  border-left: 4px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  padding: 15px;' >> "${TMP_INDEX}"
-                echo '  margin: 20px 0;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.9em;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '  animation: data-stream 1s ease-in-out infinite alternate;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes data-stream {' >> "${TMP_INDEX}"
-                echo '  0% { box-shadow: 0 0 5px var(--neon-green); }' >> "${TMP_INDEX}"
-                echo '  100% { box-shadow: 0 0 15px var(--neon-green); }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.last-update::before {' >> "${TMP_INDEX}"
-                echo '  content: "> LAST_UPDATE.LOG";' >> "${TMP_INDEX}"
-                echo '  position: absolute;' >> "${TMP_INDEX}"
-                echo '  top: -12px;' >> "${TMP_INDEX}"
-                echo '  left: 15px;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  padding: 0 8px;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.7rem;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.commit-hash {' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace;' >> "${TMP_INDEX}"
-                echo '  background: rgba(255, 105, 180, 0.2);' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  padding: 4px 8px;' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  font-size: 0.85em;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 5px var(--neon-pink);' >> "${TMP_INDEX}"
-                echo '  animation: hash-flicker 2s infinite;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes hash-flicker {' >> "${TMP_INDEX}"
-                echo '  0%, 100% { opacity: 1; }' >> "${TMP_INDEX}"
-                echo '  50% { opacity: 0.7; }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.table-container {' >> "${TMP_INDEX}"
-                echo '  overflow-x: auto;' >> "${TMP_INDEX}"
-                echo '  margin: 25px 0;' >> "${TMP_INDEX}"
-                echo '  border: 2px solid var(--cyber-purple);' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '  background: rgba(147, 112, 219, 0.05);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.table-container::before {' >> "${TMP_INDEX}"
-                echo '  content: "> POD_MATRIX.DB";' >> "${TMP_INDEX}"
-                echo '  position: absolute;' >> "${TMP_INDEX}"
-                echo '  top: -12px;' >> "${TMP_INDEX}"
-                echo '  left: 20px;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-purple);' >> "${TMP_INDEX}"
-                echo '  padding: 0 10px;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.8rem;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table {' >> "${TMP_INDEX}"
-                echo '  width: 100%;' >> "${TMP_INDEX}"
-                echo '  border-collapse: collapse;' >> "${TMP_INDEX}"
-                echo '  margin: 0;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  min-width: 600px;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table th {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(135deg, var(--cyber-purple) 0%, var(--neon-pink) 100%);' >> "${TMP_INDEX}"
-                echo '  color: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  padding: 15px 12px;' >> "${TMP_INDEX}"
-                echo '  text-align: left;' >> "${TMP_INDEX}"
-                echo '  font-weight: 700;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.9rem;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '  position: sticky;' >> "${TMP_INDEX}"
-                echo '  top: 0;' >> "${TMP_INDEX}"
-                echo '  z-index: 10;' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  text-shadow: none;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table td {' >> "${TMP_INDEX}"
-                echo '  padding: 12px;' >> "${TMP_INDEX}"
-                echo '  border: 1px solid rgba(0, 255, 0, 0.3);' >> "${TMP_INDEX}"
-                echo '  font-size: 0.85rem;' >> "${TMP_INDEX}"
-                echo '  vertical-align: middle;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  background: rgba(0, 0, 0, 0.8);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table tbody tr {' >> "${TMP_INDEX}"
-                echo '  transition: all 0.3s ease;' >> "${TMP_INDEX}"
-                echo '  position: relative;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table tbody tr:hover {' >> "${TMP_INDEX}"
-                echo '  background: rgba(0, 255, 0, 0.1) !important;' >> "${TMP_INDEX}"
-                echo '  transform: scale(1.002);' >> "${TMP_INDEX}"
-                echo '  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table tbody tr:nth-child(even) {' >> "${TMP_INDEX}"
-                echo '  background: rgba(147, 112, 219, 0.05);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.pod-table tbody tr:nth-child(odd) {' >> "${TMP_INDEX}"
-                echo '  background: rgba(255, 105, 180, 0.05);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.status-running {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  font-weight: 600;' >> "${TMP_INDEX}"
-                echo '  padding: 4px 8px;' >> "${TMP_INDEX}"
-                echo '  background: rgba(0, 255, 0, 0.2);' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '  font-size: 0.8rem;' >> "${TMP_INDEX}"
-                echo '  display: inline-block;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '  animation: status-pulse 2s infinite;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 5px var(--neon-green);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.status-pending {' >> "${TMP_INDEX}"
-                echo '  color: #ffff00;' >> "${TMP_INDEX}"
-                echo '  font-weight: 600;' >> "${TMP_INDEX}"
-                echo '  padding: 4px 8px;' >> "${TMP_INDEX}"
-                echo '  background: rgba(255, 255, 0, 0.2);' >> "${TMP_INDEX}"
-                echo '  border: 1px solid #ffff00;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.8rem;' >> "${TMP_INDEX}"
-                echo '  display: inline-block;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '  animation: status-pulse 2s infinite;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 5px #ffff00;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.status-error {' >> "${TMP_INDEX}"
-                echo '  color: #ff0040;' >> "${TMP_INDEX}"
-                echo '  font-weight: 600;' >> "${TMP_INDEX}"
-                echo '  padding: 4px 8px;' >> "${TMP_INDEX}"
-                echo '  background: rgba(255, 0, 64, 0.2);' >> "${TMP_INDEX}"
-                echo '  border: 1px solid #ff0040;' >> "${TMP_INDEX}"
-                echo '  font-size: 0.8rem;' >> "${TMP_INDEX}"
-                echo '  display: inline-block;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px;' >> "${TMP_INDEX}"
-                echo '  animation: status-pulse 2s infinite;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 5px #ff0040;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes status-pulse {' >> "${TMP_INDEX}"
-                echo '  0%, 100% { opacity: 1; }' >> "${TMP_INDEX}"
-                echo '  50% { opacity: 0.7; }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Custom scrollbar */' >> "${TMP_INDEX}"
-                echo '::-webkit-scrollbar {' >> "${TMP_INDEX}"
-                echo '  width: 12px;' >> "${TMP_INDEX}"
-                echo '  height: 12px;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '::-webkit-scrollbar-track {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '::-webkit-scrollbar-thumb {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(45deg, var(--neon-green), var(--cyber-purple));' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--matrix-black);' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '::-webkit-scrollbar-thumb:hover {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(45deg, var(--cyber-purple), var(--neon-pink));' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Mobile responsiveness with cyberpunk flair */' >> "${TMP_INDEX}"
-                echo '@media (max-width: 768px) {' >> "${TMP_INDEX}"
-                echo '  body { padding: 10px; }' >> "${TMP_INDEX}"
-                echo '  .container { padding: 20px; }' >> "${TMP_INDEX}"
-                echo '  h1 { font-size: 1.8rem; letter-spacing: 2px; }' >> "${TMP_INDEX}"
-                echo '  h3 { font-size: 1.2rem; letter-spacing: 1px; }' >> "${TMP_INDEX}"
-                echo '  .node-info { padding: 20px; font-size: 0.9rem; }' >> "${TMP_INDEX}"
-                echo '  .pod-table th, .pod-table td { padding: 8px 6px; font-size: 0.75rem; }' >> "${TMP_INDEX}"
-                echo '  .pod-table th { font-size: 0.8rem; }' >> "${TMP_INDEX}"
-                echo '  .pod-table td:first-child { word-break: break-word; max-width: 150px; }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@media (max-width: 480px) {' >> "${TMP_INDEX}"
-                echo '  .pod-table { min-width: 500px; }' >> "${TMP_INDEX}"
-                echo '  .pod-table th, .pod-table td { padding: 6px 4px; font-size: 0.7rem; }' >> "${TMP_INDEX}"
-                echo '  .node-info { padding: 15px; font-size: 0.85rem; }' >> "${TMP_INDEX}"
-                echo '  .last-update { padding: 12px; font-size: 0.8rem; }' >> "${TMP_INDEX}"
-                echo '  h1 { font-size: 1.5rem; letter-spacing: 1px; }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Matrix rain effect for background */' >> "${TMP_INDEX}"
-                echo '.container::after {' >> "${TMP_INDEX}"
-                echo '  content: "";' >> "${TMP_INDEX}"
-                echo '  position: absolute;' >> "${TMP_INDEX}"
-                echo '  top: 0;' >> "${TMP_INDEX}"
-                echo '  left: 0;' >> "${TMP_INDEX}"
-                echo '  right: 0;' >> "${TMP_INDEX}"
-                echo '  bottom: 0;' >> "${TMP_INDEX}"
-                echo '  background-image:' >> "${TMP_INDEX}"
-                echo '    radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),' >> "${TMP_INDEX}"
-                echo '    radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),' >> "${TMP_INDEX}"
-                echo '    radial-gradient(circle at 40% 40%, rgba(147, 112, 219, 0.1) 0%, transparent 50%);' >> "${TMP_INDEX}"
-                echo '  pointer-events: none;' >> "${TMP_INDEX}"
-                echo '  z-index: -1;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Footer styling to match cyberpunk theme */' >> "${TMP_INDEX}"
-                echo 'footer, .footer, #footer, .site-footer {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  border-top: 2px solid var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  padding: 20px !important;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'footer a, .footer a, #footer a, .site-footer a {' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-blue) !important;' >> "${TMP_INDEX}"
-                echo '  text-decoration: none !important;' >> "${TMP_INDEX}"
-                echo '  transition: all 0.3s !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'footer a:hover, .footer a:hover, #footer a:hover, .site-footer a:hover {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Ensure any white backgrounds are overridden */' >> "${TMP_INDEX}"
-                echo '.content-wrapper, .main-content, .page-content {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override any default theme footer styling */' >> "${TMP_INDEX}"
-                echo 'body > footer,' >> "${TMP_INDEX}"
-                echo 'body > .footer,' >> "${TMP_INDEX}"
-                echo '.hugo-footer,' >> "${TMP_INDEX}"
-                echo '.theme-footer {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  border-top: 2px solid var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override Hugo theme header and navigation */' >> "${TMP_INDEX}"
-                echo '.nav, .header, .site-header, header {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  border-bottom: 2px solid var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  padding: 20px !important;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.nav a, .header a, .site-header a, header a {' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-blue) !important;' >> "${TMP_INDEX}"
-                echo '  text-decoration: none !important;' >> "${TMP_INDEX}"
-                echo '  transition: all 0.3s !important;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace !important;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase !important;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.nav a:hover, .header a:hover, .site-header a:hover, header a:hover {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override site title */' >> "${TMP_INDEX}"
-                echo '.site-title, .logo, .nav .logo a, .header .logo a {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace !important;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase !important;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 2px !important;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  animation: title-glow 2s ease-in-out infinite alternate !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '@keyframes title-glow {' >> "${TMP_INDEX}"
-                echo '  0% { text-shadow: 0 0 10px var(--neon-green); }' >> "${TMP_INDEX}"
-                echo '  100% { text-shadow: 0 0 20px var(--neon-green), 0 0 30px var(--cyber-purple); }' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override main content wrapper */' >> "${TMP_INDEX}"
-                echo '.main, .content, .post-single, .page-content, main {' >> "${TMP_INDEX}"
-                echo '  background: transparent !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override any remaining white backgrounds */' >> "${TMP_INDEX}"
-                echo 'html, body, .wrapper, .container-fluid, .page-wrapper {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override theme navigation menu */' >> "${TMP_INDEX}"
-                echo '#menu, .menu, .nav-menu {' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '#menu a, .menu a, .nav-menu a {' >> "${TMP_INDEX}"
-                echo '  color: var(--cyber-blue) !important;' >> "${TMP_INDEX}"
-                echo '  background: transparent !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '#menu a:hover, .menu a:hover, .nav-menu a:hover {' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '  background: rgba(255, 105, 180, 0.1) !important;' >> "${TMP_INDEX}"
-                echo '  text-shadow: 0 0 10px var(--neon-pink) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Override theme buttons */' >> "${TMP_INDEX}"
-                echo 'button, .button, .btn {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(45deg, var(--cyber-purple), var(--neon-pink)) !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  border: 1px solid var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  font-family: "Courier New", monospace !important;' >> "${TMP_INDEX}"
-                echo '  text-transform: uppercase !important;' >> "${TMP_INDEX}"
-                echo '  letter-spacing: 1px !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo 'button:hover, .button:hover, .btn:hover {' >> "${TMP_INDEX}"
-                echo '  background: linear-gradient(45deg, var(--neon-green), var(--cyber-blue)) !important;' >> "${TMP_INDEX}"
-                echo '  box-shadow: 0 0 15px var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '/* Hide any remaining post-header elements */' >> "${TMP_INDEX}"
-                echo '.post-header, header.post-header {' >> "${TMP_INDEX}"
-                echo '  display: none !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.post-title, h1.post-title {' >> "${TMP_INDEX}"
-                echo '  display: none !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Ensure post-single container has proper styling */' >> "${TMP_INDEX}"
-                echo '.post-single {' >> "${TMP_INDEX}"
-                echo '  background: transparent !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  border: none !important;' >> "${TMP_INDEX}"
-                echo '  padding: 0 !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.post-content {' >> "${TMP_INDEX}"
-                echo '  background: transparent !important;' >> "${TMP_INDEX}"
-                echo '  color: var(--neon-green) !important;' >> "${TMP_INDEX}"
-                echo '  padding: 0 !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '/* Center align main content */' >> "${TMP_INDEX}"
-                echo '.post-single {' >> "${TMP_INDEX}"
-                echo '  display: flex !important;' >> "${TMP_INDEX}"
-                echo '  justify-content: center !important;' >> "${TMP_INDEX}"
-                echo '  align-items: flex-start !important;' >> "${TMP_INDEX}"
-                echo '  width: 100% !important;' >> "${TMP_INDEX}"
-                echo '  min-height: 100vh !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '.post-content {' >> "${TMP_INDEX}"
-                echo '  width: 100% !important;' >> "${TMP_INDEX}"
-                echo '  max-width: 1200px !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto !important;' >> "${TMP_INDEX}"
-                echo '  text-align: center !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Ensure container is centered */' >> "${TMP_INDEX}"
-                echo '.container {' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto !important;' >> "${TMP_INDEX}"
-                echo '  text-align: left !important; /* Keep table content left-aligned for readability */' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Center the main title */' >> "${TMP_INDEX}"
-                echo 'h1 {' >> "${TMP_INDEX}"
-                echo '  text-align: center !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto 30px auto !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Center other headings */' >> "${TMP_INDEX}"
-                echo 'h3 {' >> "${TMP_INDEX}"
-                echo '  text-align: center !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Center the site-main element */' >> "${TMP_INDEX}"
-                echo '.site-main, main.site-main, main {' >> "${TMP_INDEX}"
-                echo '  display: flex !important;' >> "${TMP_INDEX}"
-                echo '  justify-content: center !important;' >> "${TMP_INDEX}"
-                echo '  align-items: flex-start !important;' >> "${TMP_INDEX}"
-                echo '  width: 100% !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto !important;' >> "${TMP_INDEX}"
-                echo '  padding: 20px !important;' >> "${TMP_INDEX}"
-                echo '  background: var(--matrix-black) !important;' >> "${TMP_INDEX}"
-                echo '  min-height: 100vh !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '' >> "${TMP_INDEX}"
-                echo '/* Ensure main content wrapper is centered */' >> "${TMP_INDEX}"
-                echo '.main-content, .content-wrapper {' >> "${TMP_INDEX}"
-                echo '  width: 100% !important;' >> "${TMP_INDEX}"
-                echo '  max-width: 1200px !important;' >> "${TMP_INDEX}"
-                echo '  margin: 0 auto !important;' >> "${TMP_INDEX}"
-                echo '  text-align: center !important;' >> "${TMP_INDEX}"
-                echo '}' >> "${TMP_INDEX}"
-                echo '</style>' >> "${TMP_INDEX}"
-                
-                # Replace the original file with our clean version
-                cp "${TMP_INDEX}" content/_index.md
-                
-                # Clean up the temp file
-                rm -f "${TMP_INDEX}"
-              else
-                # Error: _index.md file doesn't exist - this should not happen in normal operation
-                echo "ERROR: content/_index.md file not found. This cronjob requires an existing _index.md file to update." >&2
-                exit 1
+                done                
+                # Close the pods container and add the complete CSS and JavaScript
+                cat >> "${TMP_INDEX}" << 'EOF'
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: #000;
+  color: #00ff00;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Matrix canvas background */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+/* Main container with two-column layout */
+.main-container {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left sidebar */
+.left-sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #001122 0%, #003344 50%, #001122 100%);
+  border-right: 2px solid #00ffff;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}.sidebar-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+}
+
+.sidebar-section h3 {
+  color: #ffff00;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+/* Webring navigation */
+.webring {
+  text-align: center;
+}
+
+.webring-link {
+  color: #00ffff;
+  text-decoration: none;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.webring-link:hover {
+  color: #ffff00;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.webring-divider {
+  color: #ff00ff;
+  margin: 0 5px;
+}
+
+/* Visitor counter */
+.visitor-counter {
+  text-align: center;
+}
+
+.counter-display {
+  margin-top: 10px;
+  padding: 5px;
+  background: #000;
+  border: 1px solid #00ff00;
+  border-radius: 3px;
+}
+
+#visitor-count {
+  color: #00ff00;
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: 0 0 5px #00ff00;
+}/* Affiliate banners */
+.affiliate-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.affiliate-banner {
+  width: 120px;
+  height: 60px;
+  border: 1px solid #ff00ff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.affiliate-banner:hover {
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+  transform: scale(1.05);
+}
+
+/* Hot links */
+.hot-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hot-link {
+  color: #ff00ff;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid #ff00ff;
+  border-radius: 3px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.hot-link:hover {
+  background: rgba(255, 0, 255, 0.2);
+  box-shadow: 0 0 5px #ff00ff;
+}
+
+/* Live feed */
+.live-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.feed-item {
+  font-size: 11px;
+  color: #00ff00;
+  padding: 3px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 2px;
+  animation: pulse 2s infinite;
+}/* Retro elements */
+.retro-elements {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.retro-button {
+  width: 88px;
+  height: 31px;
+  border: 1px solid #ffff00;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.retro-button:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 0, 0.5);
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header section */
+.header-section {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #001122 0%, #003344 50%, #001122 100%);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.cyber-title {
+  font-size: 3em;
+  color: #00ffff;
+  text-shadow: 0 0 20px #00ffff;
+  margin-bottom: 10px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: #ffff00;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #ffff00;
+}.status-bar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  color: #ff00ff;
+  font-weight: bold;
+}
+
+.status-online {
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  animation: pulse 1.5s infinite;
+}
+
+/* Info grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  background: linear-gradient(135deg, #001122 0%, #002244 50%, #001122 100%);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.info-card h3 {
+  color: #ffff00;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 0 0 10px #ffff00;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(0, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.metric-label {
+  color: #00ffff;
+}
+
+.metric-value {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.metric-value.running {
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}/* Action buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.action-btn {
+  display: block;
+  padding: 15px;
+  background: linear-gradient(135deg, #ff00ff 0%, #ff0080 50%, #ff00ff 100%);
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid #ff00ff;
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, #ff0080 0%, #ff00ff 50%, #ff0080 100%);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Pods section */
+.pods-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  font-size: 2.5em;
+  color: #ff00ff;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 0 20px #ff00ff;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.pods-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* Pod cards */
+.pod-card {
+  background: linear-gradient(135deg, #001122 0%, #002244 50%, #001122 100%);
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.pod-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+  border-color: #ffff00;
+}.pod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #00ffff;
+}
+
+.pod-name {
+  color: #00ffff;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.pod-status {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.pod-status.running {
+  background: rgba(0, 255, 0, 0.2);
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  animation: pulse 2s infinite;
+}
+
+.pod-status.pending {
+  background: rgba(255, 255, 0, 0.2);
+  color: #ffff00;
+  border: 1px solid #ffff00;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.pod-status.failed {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff0000;
+  border: 1px solid #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+  animation: blink 1s infinite;
+}
+
+.pod-status.unknown {
+  background: rgba(128, 128, 128, 0.2);
+  color: #888888;
+  border: 1px solid #888888;
+}
+
+.pod-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pod-detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: rgba(0, 255, 255, 0.05);
+  border-radius: 4px;
+}.detail-label {
+  color: #ff00ff;
+  font-weight: bold;
+}
+
+.detail-value {
+  color: #ffffff;
+}
+
+/* Animations */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px currentColor;
+  }
+  to {
+    text-shadow: 0 0 30px currentColor, 0 0 40px currentColor;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.3;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .main-container {
+    flex-direction: column;
+  }
+  
+  .left-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 2px solid #00ffff;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .cyber-title {
+    font-size: 2em;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }  .pods-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .status-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-sidebar {
+    padding: 15px;
+  }
+  
+  .main-content {
+    padding: 15px;
+  }
+  
+  .cyber-title {
+    font-size: 1.5em;
+  }
+  
+  .section-title {
+    font-size: 1.8em;
+  }
+  
+  .pods-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .pod-card {
+    padding: 15px;
+  }
+}
+
+/* Hugo theme overrides */
+.post-content {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.post-header {
+  display: none !important;
+}
+
+.post-footer {
+  display: none !important;
+}
+
+main {
+  max-width: 1920px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+article {
+  max-width: none !important;
+  width: 100% !important;
+}.page-header {
+  display: none !important;
+}
+
+header.page-header {
+  display: none !important;
+}
+
+/* Hide Hugo navigation and footer */
+nav, .nav, header nav, .site-nav {
+  display: none !important;
+}
+
+footer, .footer, .site-footer {
+  display: none !important;
+}
+
+/* Ensure full width */
+body, html {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+#main {
+  max-width: 1920px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+</style>
+
+<script>
+// Matrix rain effect
+function initMatrix() {
+  const canvas = document.getElementById('matrix-canvas');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  // Set canvas size
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  
+  // Matrix characters
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
+  const charArray = chars.split('');
+  
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;  // Array to store y position of each column
+  const drops = [];
+  for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+  }
+  
+  function draw() {
+    // Black background with slight transparency for trail effect
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Green text
+    ctx.fillStyle = '#00ff00';
+    ctx.font = fontSize + 'px monospace';
+    
+    for (let i = 0; i < drops.length; i++) {
+      // Random character
+      const text = charArray[Math.floor(Math.random() * charArray.length)];
+      
+      // Draw character
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      
+      // Reset drop randomly or when it reaches bottom
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      
+      drops[i]++;
+    }
+  }
+  
+  // Start animation
+  setInterval(draw, 35);
+}
+
+// Visitor counter animation
+function animateCounter() {
+  const counter = document.getElementById('visitor-count');
+  if (!counter) return;
+  
+  let count = 1337;
+  setInterval(() => {
+    count += Math.floor(Math.random() * 3);
+    counter.textContent = count.toString().padStart(6, '0');
+  }, 5000);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  initMatrix();
+  animateCounter();
+  
+  // Add some interactive effects
+  const podCards = document.querySelectorAll('.pod-card');
+  podCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.borderColor = '#ffff00';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.borderColor = '#00ffff';
+    });
+  });
+});
+</script>
+EOF               
+               # Replace the original _index.md with our updated version
+               mv "${TMP_INDEX}" content/_index.md
+               
+               # Create JSON API file for programmatic access
+               echo "Creating JSON API file..."
+               mkdir -p static/api
+               
+               # Generate JSON data
+               cat > static/api/pods.json << EOF
+{
+  "metadata": {
+    "lastUpdate": "${CURRENT_DATE}",
+    "totalPods": ${TOTAL_PODS},
+    "runningPods": ${RUNNING_PODS},
+    "workerNode": "${WORKER_NODE}",
+    "gitHash": "${GIT_HASH}"
+  },
+  "pods": [
+EOF
+               
+               # Add pod data to JSON
+               FIRST_POD=true
+               echo "$POD_INFO" | while IFS= read -r line; do
+                 if [ -n "$line" ]; then
+                   POD_NAME=$(echo "$line" | awk '{print $1}')
+                   POD_NAMESPACE=$(echo "$line" | awk '{print $2}')
+                   POD_STATUS=$(echo "$line" | awk '{print $3}')
+                   POD_NODE=$(echo "$line" | awk '{print $4}')
+                   
+                   if [ "$FIRST_POD" = "true" ]; then
+                     FIRST_POD=false
+                   else
+                     echo "," >> static/api/pods.json
+                   fi
+                   
+                   cat >> static/api/pods.json << EOF
+    {
+      "name": "${POD_NAME}",
+      "namespace": "${POD_NAMESPACE}",
+      "status": "${POD_STATUS}",
+      "node": "${POD_NODE}"
+    }
+EOF
+                 fi
+               done
+               
+               # Close JSON structure
+               cat >> static/api/pods.json << EOF
+  ]
+}
+EOF               
+               # Check if there are any changes to commit
+               if git diff --quiet && git diff --cached --quiet; then
+                 echo "No changes detected, skipping commit"
+                 exit 0
+               fi
+               
+               # Add all changes
+               git add .
+               
+               # Commit changes
+               echo "Committing changes..."
+               git commit -m "Update pod information - ${FORMATTED_DATE}
+
+               - Total pods: ${TOTAL_PODS}
+               - Running pods: ${RUNNING_PODS}
+               - Worker node: ${WORKER_NODE}
+               - Git hash: ${GIT_HASH}
+               
+               Updated by cronjob from pod: ${HOSTNAME}"
+               
+               # Push changes
+               echo "Pushing changes to GitHub..."
+               git push origin main
+               
+               echo "Pod information updated successfully!"
               fi
-              
-              # Create JSON API with proper formatting
-              echo "{" > static/api/cluster-status.json
-              echo "  \"statistics\": {" >> static/api/cluster-status.json
-              echo "    \"totalPods\": ${TOTAL_PODS}," >> static/api/cluster-status.json
-              echo "    \"runningPods\": ${RUNNING_PODS}" >> static/api/cluster-status.json
-              echo "  }" >> static/api/cluster-status.json
-              echo "}" >> static/api/cluster-status.json
-              
-              # Stage all content updates
-              echo "Staging content updates..."
-              git add -A
-              
-              # Check if there are changes to commit
-              if git diff --staged --quiet; then
-                echo "No changes to commit"
-              else
-                echo "Committing content updates..."
-                git commit -m "Automatic update of pod status at $(date -u)"
-                
-                # Update image tag in values.yaml
-                if [ -f "charts/hugo-site/values.yaml" ]; then
-                  echo "Updating values.yaml first to ensure correct tag reference..."
-                  
-                  # Create a temporary unique tag to update later
-                  TEMP_TAG="temp-tag-$(date +%s)"
-                  
-                  # Update the values.yaml file with the temporary tag
-                  sed "s/^  tag:.*$/  tag: $TEMP_TAG/" charts/hugo-site/values.yaml > /tmp/new_values.yaml
-                  mv /tmp/new_values.yaml charts/hugo-site/values.yaml
-                  
-                  # Commit the temporary values.yaml change
-                  git add charts/hugo-site/values.yaml
-                  git commit -m "Temporary tag update for values.yaml"
-                  
-                  # Now get the final commit SHA - this will be the one GitHub Actions uses
-                  FINAL_COMMIT_SHA=$(git rev-parse HEAD)
-                  echo "Final commit SHA: ${FINAL_COMMIT_SHA}"
-                  
-                  # Update the git commit hash in the _index.md file if the element exists
-                  if grep -q "id=\"git-commit-hash\"" content/_index.md; then
-                    HASH_SHORT="${FINAL_COMMIT_SHA:0:7}"
-                    sed "s/<span class=\"commit-hash\" id=\"git-commit-hash\">[^<]*<\/span>/<span class=\"commit-hash\" id=\"git-commit-hash\">$HASH_SHORT<\/span>/g" content/_index.md > /tmp/new_index.md
-                    mv /tmp/new_index.md content/_index.md
-                    git add content/_index.md
-                  fi
-                  
-                  # Now update with the final SHA that GitHub Actions will use
-                  sed "s/^  tag:.*$/  tag: $FINAL_COMMIT_SHA/" charts/hugo-site/values.yaml > /tmp/new_values.yaml
-                  mv /tmp/new_values.yaml charts/hugo-site/values.yaml
-                  
-                  # Amend the commit to include the final SHA reference
-                  git add charts/hugo-site/values.yaml
-                  git commit --amend -m "Update image tag to match final commit SHA: ${FINAL_COMMIT_SHA}"
-                  
-                  echo "Values.yaml updated with final commit SHA: ${FINAL_COMMIT_SHA}"
-                fi
-                
-                # Push all changes to repository
-                echo "Pushing changes to repository..."
-                git remote set-url origin "https://${GIT_USERNAME}:${GITHUB_TOKEN}@github.com/zoonderkins/edoo-k8s-demo-site.git"
-                git push origin master --force
-                echo "All changes pushed successfully"
-                
-                # Trigger ArgoCD sync after GitHub Actions has time to build
-                echo "Waiting for GitHub Actions to build and push the new image (5 minutes)..."
-                sleep 300
-                
-                echo "Triggering ArgoCD sync..."
-                if command -v kubectl &> /dev/null; then
-                  # Patch ArgoCD application to force sync
-                  kubectl -n argocd patch application hugo-k8s-dashboard -p '{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}' --type=merge || echo "Failed to patch via kubectl"
-                  kubectl -n argocd patch application hugo-k8s-dashboard --type=json -p='[{"op": "replace", "path": "/metadata/annotations/argocd.argoproj.io~1sync-options", "value":"Force=true"}]' || echo "Failed to force sync via kubectl"
-                  echo "ArgoCD sync triggered"
-                else
-                  echo "kubectl not available, skipping manual sync"
-                fi
-              fi
-              
-              echo "Pod information update process completed successfully"
-          restartPolicy: OnFailure
+          restartPolicy: Never
           serviceAccountName: github-push

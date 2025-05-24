@@ -1,413 +1,509 @@
 ---
 date: 2025-05-24T18:39:22+00:00
+markup: html
 ---
 
-# K8s Production Cluster
+<div class="page-container">
+  <!-- Left Sidebar -->
+  <aside class="left-sidebar">
+    <div class="sidebar-header">
+      <h3 class="blink">⚡ CYBER LINKS ⚡</h3>
+    </div>
+    
+    <div class="affiliate-section">
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Animated Banner" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span class="blink">🔥 HOT DEALS! 🔥</span>
+        </a>
+      </div>
+      
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" alt="Matrix Code" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span>💻 CYBER GEAR 💻</span>
+        </a>
+      </div>
+      
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" alt="Neon Lights" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span class="blink">⚡ POWER UP! ⚡</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="visitor-counter">
+      <div class="counter-display">
+        <span class="blink">VISITORS:</span>
+        <span id="visitor-count">001337</span>
+      </div>
+    </div>
+    
+    <div class="webring-section">
+      <h4>🌐 WEBRING 🌐</h4>
+      <div class="webring-links">
+        <a href="#" class="webring-link">&lt;&lt; PREV</a>
+        <a href="#" class="webring-link">RANDOM</a>
+        <a href="#" class="webring-link">NEXT &gt;&gt;</a>
+      </div>
+    </div>
 
-<div class="container">
+    <!-- Merged content from right sidebar -->
+    <div class="sidebar-header">
+      <h3 class="blink">🚀 CYBER ZONE 🚀</h3>
+    </div>
+    
+    <div class="affiliate-section">
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="Spinning Globe" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span class="blink">🌐 WEB HOSTING 🌐</span>
+        </a>
+      </div>
+      
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif" alt="Digital Rain" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span>💾 CLOUD STORAGE 💾</span>
+        </a>
+      </div>
+      
+      <div class="affiliate-banner">
+        <img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="Cyber Security" class="gif-banner">
+        <a href="#" target="_blank" class="affiliate-link">
+          <span class="blink">🔒 SECURITY 🔒</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="matrix-rain-container">
+      <h4>📡 MATRIX FEED 📡</h4>
+      <div class="matrix-rain" id="matrix-rain-left"></div>
+    </div>
+    
+    <div class="retro-stats">
+      <h4>📊 STATS 📊</h4>
+      <div class="stat-item">
+        <span class="blink">UPTIME:</span> 99.9%
+      </div>
+      <div class="stat-item">
+        <span>LOAD:</span> <span class="blink">0.42</span>
+      </div>
+      <div class="stat-item">
+        <span>USERS:</span> <span id="online-users-left">1337</span>
+      </div>
+    </div>
+  </aside>
 
-<div class="node-info">
+  <!-- Main Content -->
+  <main class="main-dashboard">
+    <div class="container">
+      <h1>K8s Production Cluster</h1>
 
-Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
-<span style="color: green">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
-<br>
-Total Pods: <strong id="index-total-pods">62</strong>
+      <div class="node-info">
+        Worker node: <strong id="worker-node-name">k0s-color-worker-2</strong><br>
+        <span style="color: white">Cluster Status: <strong id="index-cluster-status">Healthy</strong>
+        <br>
+        Total Pods: <strong id="index-total-pods">62</strong>
+        <br>
+        Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="_blank">https://github.com/zoonderkins/edoo-k8s-demo-site</a>
+      </div>
 
-Repository: <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" target="_blank">https://github.com/zoonderkins/edoo-k8s-demo-site</a>
-</div>
+      <div class="last-update">
+        Last update: <span id="last-update-time">2025-05-24 13:39:22 CST</span><br>
+        Hash: <span class="commit-hash" id="git-commit-hash">5403e8f</span>
+      </div>
 
-<div class="last-update">
-Last update: <span id="last-update-time">2025-05-24 13:39:22 CST</span><br>
-Hash: <span class="commit-hash" id="git-commit-hash">5403e8f</span>
-</div>
-
-### Kubernetes Pods
-<div class="table-container">
-<table class="pod-table" id="summary-table">
-  <thead>
-      <tr>
-          <th>Pod Name</th>
-          <th>Namespace</th>
-          <th>Status</th>
-          <th>Node</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>alloy-lw24s</td>
-          <td>alloy</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>alloy-6sghp</td>
-          <td>alloy</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-applicationset-controller-5ff797b646hh47p</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-application-controller-0</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-dex-server-648b7c9844-k994n</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-notifications-controller-68bd6b9c47-w7s2x</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-redis-645cb8b784-25krn</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-repo-server-6c7479f898-99qq7</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>k0s-color-argo-argocd-server-d75dcf45-dk5zv</td>
-          <td>argocd</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cert-manager-cainjector-7fd85dcc7-kcwxb</td>
-          <td>cert-manager</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cert-manager-webhook-57df45f686-z97tc</td>
-          <td>cert-manager</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cert-manager-6468fc8f56-mhtqg</td>
-          <td>cert-manager</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cloudflared-68fd85bfc8-xvnjs</td>
-          <td>cloudflare</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cilium-2mf7n</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cilium-envoy-gw5hp</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>coredns-7d4f7fbd5c-jb7tq</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>hubble-relay-7b4c9d4474-5gtzm</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>hubble-ui-76d4965bb6-nsfgq</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>konnectivity-agent-n6bqk</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>cilium-envoy-n299t</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cilium-jgwgn</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>cilium-operator-5b47585b65-rfgqz</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>coredns-7d4f7fbd5c-6jgc5</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>konnectivity-agent-rx2vm</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>metrics-server-7778865875-kxhj5</td>
-          <td>kube-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-attacher-7bfc99fdf6-9tlkx</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>csi-provisioner-5bfbf9655-fmjpd</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>csi-provisioner-5bfbf9655-mw9xz</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>csi-resizer-6d8bdc48b6-7vqjm</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>csi-snapshotter-68467df45d-n6njl</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>engine-image-ei-b907910b-hdffg</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>instance-manager-dbe93ac7ea3ffe11771491a4a2ad12de</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>longhorn-csi-plugin-glqfw</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>longhorn-driver-deployer-5f44b4dc59-w2pbb</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>longhorn-manager-bfzfx</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>longhorn-ui-f7ff9c74-dvllq</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>csi-attacher-7bfc99fdf6-25w29</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-attacher-7bfc99fdf6-5mm9v</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-provisioner-5bfbf9655-qj6dc</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-resizer-6d8bdc48b6-489kx</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-resizer-6d8bdc48b6-nw9qk</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-snapshotter-68467df45d-pg44m</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>csi-snapshotter-68467df45d-xtfm8</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>engine-image-ei-b907910b-hf7hj</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>instance-manager-297c356f09fdf32b65cce1893ddc5485</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>longhorn-csi-plugin-n9gvd</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>longhorn-manager-fl5qw</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>longhorn-ui-f7ff9c74-pg4sr</td>
-          <td>longhorn-system</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>hugo-site-94f9ddf54-ffdhj</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-manual-1748111945198-9x2tq</td>
-          <td>prod</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29133120-tnwtn</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29133180-6tpn7</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>update-pods-md-29133240-9tjfs</td>
-          <td>prod</td>
-          <td>Succeeded</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>grafana-99b45986c-qr6nb</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>node-exporter-prometheus-node-exporter-5wjqc</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>otel-opentelemetry-collector-7cdd676b7d-psjhl</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>tempo-0</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>victoria-logs-vector-tgs72</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>victoria-logs-victoria-logs-single-server-0</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>vmsingle-victoria-metrics-single-server-0</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-1</td>
-      </tr>
-      <tr>
-          <td>node-exporter-prometheus-node-exporter-22wzf</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-      <tr>
-          <td>victoria-logs-vector-gsxl9</td>
-          <td>victoria</td>
-          <td class="status-running">Running</td>
-          <td>k0s-color-worker-2</td>
-      </tr>
-  </tbody>
-</table>
-</div>
+      <h3>Kubernetes Pods</h3>
+      <div class="table-container">
+        <table class="pod-table" id="summary-table">
+          <thead>
+              <tr>
+                  <th>Pod Name</th>
+                  <th>Namespace</th>
+                  <th>Status</th>
+                  <th>Node</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>alloy-lw24s</td>
+                  <td>alloy</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>alloy-6sghp</td>
+                  <td>alloy</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-applicationset-controller-5ff797b646hh47p</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-application-controller-0</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-dex-server-648b7c9844-k994n</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-notifications-controller-68bd6b9c47-w7s2x</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-redis-645cb8b784-25krn</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-repo-server-6c7479f898-99qq7</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>k0s-color-argo-argocd-server-d75dcf45-dk5zv</td>
+                  <td>argocd</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>cert-manager-cainjector-7fd85dcc7-kcwxb</td>
+                  <td>cert-manager</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>cert-manager-webhook-57df45f686-z97tc</td>
+                  <td>cert-manager</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>cert-manager-6468fc8f56-mhtqg</td>
+                  <td>cert-manager</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>cloudflared-68fd85bfc8-xvnjs</td>
+                  <td>cloudflare</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>cilium-2mf7n</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>cilium-envoy-gw5hp</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>coredns-7d4f7fbd5c-jb7tq</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>hubble-relay-7b4c9d4474-5gtzm</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>hubble-ui-76d4965bb6-nsfgq</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>konnectivity-agent-n6bqk</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>cilium-envoy-n299t</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>cilium-jgwgn</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>cilium-operator-5b47585b65-rfgqz</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>coredns-7d4f7fbd5c-6jgc5</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>konnectivity-agent-rx2vm</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>metrics-server-7778865875-kxhj5</td>
+                  <td>kube-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-attacher-7bfc99fdf6-9tlkx</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>csi-provisioner-5bfbf9655-fmjpd</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>csi-provisioner-5bfbf9655-mw9xz</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>csi-resizer-6d8bdc48b6-7vqjm</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>csi-snapshotter-68467df45d-n6njl</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>engine-image-ei-b907910b-hdffg</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>instance-manager-dbe93ac7ea3ffe11771491a4a2ad12de</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>longhorn-csi-plugin-glqfw</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>longhorn-driver-deployer-5f44b4dc59-w2pbb</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>longhorn-manager-bfzfx</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>longhorn-ui-f7ff9c74-dvllq</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>csi-attacher-7bfc99fdf6-25w29</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-attacher-7bfc99fdf6-5mm9v</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-provisioner-5bfbf9655-qj6dc</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-resizer-6d8bdc48b6-489kx</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-resizer-6d8bdc48b6-nw9qk</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-snapshotter-68467df45d-pg44m</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>csi-snapshotter-68467df45d-xtfm8</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>engine-image-ei-b907910b-hf7hj</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>instance-manager-297c356f09fdf32b65cce1893ddc5485</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>longhorn-csi-plugin-n9gvd</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>longhorn-manager-fl5qw</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>longhorn-ui-f7ff9c74-pg4sr</td>
+                  <td>longhorn-system</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>hugo-site-94f9ddf54-ffdhj</td>
+                  <td>prod</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>update-pods-md-manual-1748111945198-9x2tq</td>
+                  <td>prod</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>update-pods-md-29133120-tnwtn</td>
+                  <td>prod</td>
+                  <td>Succeeded</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>update-pods-md-29133180-6tpn7</td>
+                  <td>prod</td>
+                  <td>Succeeded</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>update-pods-md-29133240-9tjfs</td>
+                  <td>prod</td>
+                  <td>Succeeded</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>grafana-99b45986c-qr6nb</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>node-exporter-prometheus-node-exporter-5wjqc</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>otel-opentelemetry-collector-7cdd676b7d-psjhl</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>tempo-0</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>victoria-logs-vector-tgs72</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>victoria-logs-victoria-logs-single-server-0</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>vmsingle-victoria-metrics-single-server-0</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-1</td>
+              </tr>
+              <tr>
+                  <td>node-exporter-prometheus-node-exporter-22wzf</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+              <tr>
+                  <td>victoria-logs-vector-gsxl9</td>
+                  <td>victoria</td>
+                  <td class="status-running">Running</td>
+                  <td>k0s-color-worker-2</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
 </div>
 
 <style>
@@ -417,6 +513,279 @@ Hash: <span class="commit-hash" id="git-commit-hash">5403e8f</span>
   --cyber-purple: #9370db;
   --matrix-black: #000;
   --cyber-blue: #00ffff;
+}
+
+/* 90s Three-Column Layout */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--matrix-black);
+  font-family: "Courier New", monospace;
+}
+
+/* 90s Two-Column Layout */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--matrix-black);
+  font-family: "Courier New", monospace;
+}
+
+/* Override Hugo theme layout completely */
+.post-single {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  width: 1920px !important;
+  max-width: 1920px !important;
+  margin: 0 auto !important;
+  min-height: 100vh !important;
+}
+
+.post-content {
+  background: transparent !important;
+  color: var(--neon-green) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+}
+
+/* Ensure main site layout doesn't interfere */
+.site-main, main.site-main, main {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 20px !important;
+  background: var(--matrix-black) !important;
+  min-height: 100vh !important;
+}
+
+.left-sidebar, .right-sidebar {
+  width: 100%;
+  max-height: 200px;
+}
+
+.left-sidebar {
+  width: 100%;
+  max-height: 300px; /* More height for merged content */
+}
+
+/* Desktop layout for left sidebar */
+.left-sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #111 0%, #000 100%);
+  padding: 15px;
+  border: 2px solid var(--neon-green);
+  border-right: 3px solid var(--neon-green);
+  box-shadow: 3px 0 15px rgba(0, 255, 0, 0.3);
+  position: relative;
+  overflow-y: auto;
+  max-height: 100vh;
+  flex-shrink: 0;
+}
+
+.right-sidebar {
+  border-left: 3px solid var(--neon-green);
+  box-shadow: -3px 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.main-dashboard {
+  flex: 1;
+  padding: 15px 25px;
+  background: var(--matrix-black);
+  position: relative;
+  min-width: 0; /* Prevent flex item from overflowing */
+}
+
+.main-dashboard {
+  flex: 3; /* Give main content even more space */
+  padding: 20px 40px;
+  background: var(--matrix-black);
+  position: relative;
+  min-width: 0; /* Prevent flex item from overflowing */
+}
+
+/* Sidebar Headers */
+.sidebar-header h3 {
+  color: var(--neon-green);
+  text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 1rem;
+  text-shadow: 0 0 10px var(--neon-green);
+  border: 1px dashed var(--neon-green);
+  padding: 8px;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+/* 90s Affiliate Banners */
+.affiliate-section {
+  margin-bottom: 20px;
+}
+
+.affiliate-banner {
+  margin-bottom: 15px;
+  border: 2px solid var(--cyber-purple);
+  background: linear-gradient(45deg, rgba(147, 112, 219, 0.2), rgba(255, 105, 180, 0.2));
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.affiliate-banner:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 0 20px var(--neon-pink);
+  border-color: var(--neon-pink);
+}
+
+.gif-banner {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid var(--neon-green);
+  margin-bottom: 8px;
+  filter: hue-rotate(90deg) saturate(1.5);
+}
+
+.affiliate-link {
+  display: block;
+  color: var(--cyber-blue);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.affiliate-link:hover {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* Visitor Counter (90s style) */
+.visitor-counter {
+  background: rgba(0, 255, 0, 0.1);
+  border: 2px solid var(--neon-green);
+  padding: 10px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.counter-display {
+  font-size: 0.9rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+#visitor-count {
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  color: var(--cyber-blue);
+}
+
+/* Webring Section */
+.webring-section {
+  background: rgba(255, 105, 180, 0.1);
+  border: 2px solid var(--neon-pink);
+  padding: 10px;
+  margin: 15px 0;
+}
+
+.webring-section h4 {
+  color: var(--neon-pink);
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.webring-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.webring-link {
+  color: var(--cyber-blue);
+  text-decoration: none;
+  font-size: 0.7rem;
+  padding: 4px;
+  border: 1px solid var(--cyber-blue);
+  transition: all 0.3s ease;
+  text-align: center;
+  flex: 1;
+}
+
+.webring-link:hover {
+  background: var(--cyber-blue);
+  color: var(--matrix-black);
+  text-shadow: none;
+}
+
+/* Matrix Rain Container */
+.matrix-rain-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--neon-green);
+  padding: 10px;
+  margin: 15px 0;
+  height: 150px;
+}
+
+.matrix-rain-container h4 {
+  color: var(--neon-green);
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+.matrix-rain {
+  height: 100px;
+  background: var(--matrix-black);
+  border: 1px solid var(--neon-green);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Retro Stats */
+.retro-stats {
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid var(--cyber-blue);
+  padding: 10px;
+  margin: 15px 0;
+}
+
+.retro-stats h4 {
+  color: var(--cyber-blue);
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px var(--cyber-blue);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  font-size: 0.8rem;
+  color: var(--neon-green);
+}
+
+/* Blinking Animation (90s style) */
+.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 * { box-sizing: border-box; }
@@ -456,7 +825,8 @@ body::before {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1920px !important;
+  width: 100% !important;
   margin: 0 auto;
   background: rgba(0, 0, 0, 0.95);
   padding: 30px;
@@ -631,7 +1001,7 @@ h3 {
   border-collapse: collapse;
   margin: 0;
   background: var(--matrix-black);
-  min-width: 600px;
+  min-width: 1200px;
   font-family: "Courier New", monospace;
 }
 
@@ -756,6 +1126,20 @@ h3 {
   .pod-table th, .pod-table td { padding: 8px 6px; font-size: 0.75rem; }
   .pod-table th { font-size: 0.8rem; }
   .pod-table td:first-child { word-break: break-word; max-width: 150px; }
+  
+  /* Stack layout on mobile */
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .left-sidebar, .right-sidebar {
+    width: 100%;
+    max-height: 200px;
+  }
+  
+  .main-dashboard {
+    padding: 10px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -908,22 +1292,6 @@ button:hover, .button:hover, .btn:hover {
   display: none !important;
 }
 
-/* Ensure post-single container has proper styling */
-.post-single {
-  background: transparent !important;
-  color: var(--neon-green) !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.post-content {
-  background: transparent !important;
-  color: var(--neon-green) !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
 /* Center align main content */
 .post-single {
   display: flex !important;
@@ -933,12 +1301,11 @@ button:hover, .button:hover, .btn:hover {
   min-height: 100vh !important;
 }
 
-.post-content {
-  width: 100% !important;
-  max-width: 1200px !important;
+/* .post-content {
+  width: 1920px !important;
+  max-width: 1920px !important;
   margin: 0 auto !important;
-  text-align: center !important;
-}
+} */
 
 /* Ensure container is centered */
 .container {
@@ -976,4 +1343,83 @@ h3 {
   margin: 0 auto !important;
   text-align: center !important;
 }
+
+/* Additional CSS for wider main content */
+/* .page-container {
+  max-width: 100vw;
+  width: 100vw;
+} */
+
+.main-dashboard {
+  flex: 2; /* Give main content more space */
+  max-width: none;
+}
+
+.pod-table {
+  min-width: 1200px; /* Make table much wider */
+}
 </style>
+
+<script>
+// Matrix Rain Effect
+document.addEventListener('DOMContentLoaded', function() {
+  const matrixContainer = document.getElementById('matrix-rain-left');
+  if (matrixContainer) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    matrixContainer.appendChild(canvas);
+    
+    canvas.width = matrixContainer.offsetWidth;
+    canvas.height = matrixContainer.offsetHeight;
+    
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-=[]{}|;:,.<>?";
+    const fontSize = 8;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+    
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        
+        drops[i]++;
+      }
+    }
+    
+    setInterval(drawMatrix, 35);
+  }
+  
+  // Visitor Counter Animation
+  const visitorCount = document.getElementById('visitor-count');
+  if (visitorCount) {
+    let count = 1337;
+    setInterval(() => {
+      count += Math.floor(Math.random() * 3);
+      visitorCount.textContent = count.toString().padStart(6, '0');
+    }, 5000);
+  }
+  
+  // Online Users Counter
+  const onlineUsers = document.getElementById('online-users-left');
+  if (onlineUsers) {
+    setInterval(() => {
+      const users = Math.floor(Math.random() * 50) + 1300;
+      onlineUsers.textContent = users;
+    }, 3000);
+  }
+});
+</script>
