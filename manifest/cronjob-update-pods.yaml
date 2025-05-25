@@ -158,7 +158,7 @@ spec:
               
               # Commit changes
               echo "Committing changes..."
-              git commit -m "Update pod information - ${FORMATTED_DATE}
+              git commit -m "[ci] Update pod information - ${FORMATTED_DATE}
 
               - Total pods: ${TOTAL_PODS}
               - Running pods: ${RUNNING_PODS}
