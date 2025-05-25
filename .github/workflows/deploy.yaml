@@ -72,16 +72,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract tag from values.yaml
-        id: extract-tag
+      - name: Set image tag to commit SHA
+        id: set-tag
         run: |
-          TAG=$(grep -E '^\s*tag:' charts/hugo-site/values.yaml | sed -E 's/^\s*tag:\s*([^\s]+).*/\1/')
-          echo "Using tag from values.yaml: $TAG"
-          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
-          if [ -z "$TAG" ]; then
-            echo "No tag found in values.yaml, defaulting to commit SHA"
-            echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-          fi
+          # Always use the current commit SHA as the image tag
+          echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+          echo "Using commit SHA as image tag: ${{ github.sha }}"
 
       - name: Extract metadata for Docker
         id: meta
