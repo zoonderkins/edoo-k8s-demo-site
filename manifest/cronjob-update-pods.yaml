@@ -4,7 +4,7 @@ metadata:
   name: update-pods-md
   namespace: prod
 spec:
-  schedule: "0 */3 * * *"  # Run every 3 hour for more dynamic updates
+  schedule: "0 */3 * * *"  # Run every 3 hours for more dynamic updates
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
           - name: update-pods
-            image: bitnami/git:latest  # Changed to git-based image
+            image: bitnami/git:latest
             env:
             - name: GITHUB_TOKEN
               valueFrom:
@@ -59,22 +59,13 @@ spec:
               # Configure git (inside repo directory)
               cd "${REPO_DIR}"
               git config --global user.email "${GIT_EMAIL}"
-              git config --global user.name "${GIT_USERNAME}"
-              
-              # Create a simple update script directly in the script
-              echo "Fetching pod information..."
+              git config --global user.name "${GIT_USERNAME}"              
+              # Create directories if they don't exist
+              echo "Ensuring directories exist..."
               mkdir -p content static/api static/css static/js
-              
-              # Ensure custom directories exist and are not modified
-              echo "Ensuring custom content directories..."
-              mkdir -p static/css/custom static/js/custom
-              
-              # Create a .gitkeep file if the directories are empty
-              touch static/css/custom/.gitkeep static/js/custom/.gitkeep
               
               # Get actual pod information
               echo "Getting pod information..."
-              # Get pod data - Format: POD_NAME NAMESPACE STATUS NODE
               POD_INFO=$(kubectl get pods --all-namespaces -o=custom-columns=NAME:.metadata.name,NAMESPACE:.metadata.namespace,STATUS:.status.phase,NODE:.spec.nodeName --no-headers | sort -b -k2)
               
               # Calculate pod totals
@@ -86,930 +77,107 @@ spec:
               WORKER_NODE=$(kubectl get pod -o jsonpath="{.spec.nodeName}" -n ${POD_NAMESPACE} ${HOSTNAME} 2>/dev/null || echo "unknown-worker")
               echo "Current worker node: ${WORKER_NODE}"
               
-              # Get GitHub commit hash - use webhook SHA if available or current git hash
+              # Get GitHub commit hash
               if [ -n "${GITHUB_SHA}" ]; then
                 GIT_HASH="${GITHUB_SHA:0:7}"
               else
                 GIT_HASH=$(git rev-parse --short HEAD)
               fi
               
-              # Format date in CST timezone instead of UTC
-              # First make sure the tzdata package is installed
+              # Format date in CST timezone
               if ! dpkg -l | grep -q tzdata; then
                 apt-get update && apt-get install -y tzdata
               fi
               
-              # Set timezone to CST and format date - force update with current time
               export TZ="America/Chicago"
               FORMATTED_DATE=$(date "+%Y-%m-%d %H:%M:%S CST")
               
-              # Update _index.md directly with pod data instead of creating a separate pods.md
-              if [ -f "content/_index.md" ]; then
-                echo "Updating content in _index.md..."
-                
-                # Create a completely clean version of the file to work with
-                TMP_INDEX="/tmp/clean_index.md"
-                
-                # Extract frontmatter (everything from start until the second ---)
-                sed -n '1,/^---$/p' content/_index.md > "${TMP_INDEX}"
-                
-                # Update date field in frontmatter
-                sed -i "s/^date: .*$/date: ${CURRENT_DATE}/" "${TMP_INDEX}"
-                
-                # Add markup field if not present
-                if ! grep -q "^markup:" "${TMP_INDEX}"; then
-                  echo "markup: html" >> "${TMP_INDEX}"
-                fi
-                
-                # Add a blank line after frontmatter
-                echo "" >> "${TMP_INDEX}" 
-                
-                # Generate the complete HTML content with two-column layout
-                cat >> "${TMP_INDEX}" << 'EOF'
-<div class="main-container">
-  <div class="left-sidebar">
-    <div class="sidebar-section">
-      <h3>🌐 WEBRING NAVIGATION</h3>
-      <div class="webring">
-        <a href="#" class="webring-link">← PREV SITE</a>
-        <span class="webring-divider">|</span>
-        <a href="#" class="webring-link">RANDOM</a>
-        <span class="webring-divider">|</span>
-        <a href="#" class="webring-link">NEXT SITE →</a>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>📊 SITE STATS</h3>
-      <div class="visitor-counter">
-        <img src="https://via.placeholder.com/80x15/00ff00/000000?text=VISITORS" alt="Visitor Counter" style="image-rendering: pixelated;">
-        <div class="counter-display">
-          <span id="visitor-count">001337</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>🎯 AFFILIATE ZONE</h3>
-      <div class="affiliate-banners">
-        <img src="https://via.placeholder.com/120x60/ff0080/ffffff?text=CYBER+DEALS" alt="Cyber Deals" class="affiliate-banner">
-        <img src="https://via.placeholder.com/120x60/00ffff/000000?text=MATRIX+GEAR" alt="Matrix Gear" class="affiliate-banner">
-        <img src="https://via.placeholder.com/120x60/ffff00/000000?text=HACK+TOOLS" alt="Hack Tools" class="affiliate-banner">
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>🔥 HOT LINKS</h3>
-      <div class="hot-links">
-        <a href="#" class="hot-link">🌟 CYBER PORTAL</a>
-        <a href="#" class="hot-link">⚡ MATRIX ZONE</a>
-        <a href="#" class="hot-link">🔮 DIGITAL REALM</a>
-        <a href="#" class="hot-link">💎 NEON CITY</a>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>📡 LIVE FEED</h3>
-      <div class="live-feed">
-        <div class="feed-item">🔴 SYSTEM ONLINE</div>
-        <div class="feed-item">⚡ PODS UPDATING</div>
-        <div class="feed-item">🌐 NETWORK ACTIVE</div>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>🎮 RETRO ZONE</h3>
-      <div class="retro-elements">
-        <img src="https://via.placeholder.com/88x31/ff00ff/000000?text=BEST+VIEWED" alt="Best Viewed" class="retro-button">
-        <img src="https://via.placeholder.com/88x31/00ff00/000000?text=NETSCAPE" alt="Netscape" class="retro-button">
-        <img src="https://via.placeholder.com/88x31/ffff00/000000?text=Y2K+READY" alt="Y2K Ready" class="retro-button">
-      </div>
-    </div>
-  </div>
-
-  <div class="main-content">
-    <canvas id="matrix-canvas"></canvas>
-    
-    <div class="content-wrapper">
-      <div class="header-section">
-        <h1 class="cyber-title">🚀 K0S COLOR DASHBOARD 🚀</h1>
-        <div class="subtitle">CYBERPUNK KUBERNETES MONITORING SYSTEM</div>
-        <div class="status-bar">
-          <span class="status-item">STATUS: <span class="status-online">ONLINE</span></span>
-          <span class="status-item">PODS: <span id="pod-count">${TOTAL_PODS}</span></span>
-          <span class="status-item">RUNNING: <span id="running-count">${RUNNING_PODS}</span></span>
-        </div>
-      </div>
-
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>📊 CLUSTER STATUS</h3>
-          <div class="metric">
-            <span class="metric-label">Total Pods:</span>
-            <span class="metric-value">${TOTAL_PODS}</span>
-          </div>
-          <div class="metric">
-            <span class="metric-label">Running:</span>
-            <span class="metric-value running">${RUNNING_PODS}</span>
-          </div>
-          <div class="metric">
-            <span class="metric-label">Worker Node:</span>
-            <span class="metric-value">${WORKER_NODE}</span>
-          </div>
-          <div class="metric">
-            <span class="metric-label">Last Update:</span>
-            <span class="metric-value">${FORMATTED_DATE}</span>
-          </div>
-          <div class="metric">
-            <span class="metric-label">Git Hash:</span>
-            <span class="metric-value">${GIT_HASH}</span>
-          </div>
-        </div>
-
-        <div class="info-card">
-          <h3>🎯 QUICK ACTIONS</h3>
-          <div class="action-buttons">
-            <a href="/api/pods.json" class="action-btn">📡 RAW DATA</a>
-            <a href="#pods-section" class="action-btn">📋 POD LIST</a>
-            <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" class="action-btn">💻 SOURCE</a>
-          </div>
-        </div>
-      </div>
-
-      <div id="pods-section" class="pods-section">
-        <h2 class="section-title">🔥 ACTIVE PODS 🔥</h2>
-        <div class="pods-container">
-EOF
-
-                # Generate pod information in HTML format
-                echo "$POD_INFO" | while IFS= read -r line; do
-                  if [ -n "$line" ]; then
-                    POD_NAME=$(echo "$line" | awk '{print $1}')
-                    POD_NAMESPACE=$(echo "$line" | awk '{print $2}')
-                    POD_STATUS=$(echo "$line" | awk '{print $3}')
-                    POD_NODE=$(echo "$line" | awk '{print $4}')
-                    
-                    # Determine status class
-                    case "$POD_STATUS" in
-                      "Running") STATUS_CLASS="running" ;;
-                      "Pending") STATUS_CLASS="pending" ;;
-                      "Failed"|"Error") STATUS_CLASS="failed" ;;
-                      *) STATUS_CLASS="unknown" ;;
-                    esac
-                    
-                    cat >> "${TMP_INDEX}" << EOF
-          <div class="pod-card">
-            <div class="pod-header">
-              <span class="pod-name">${POD_NAME}</span>
-              <span class="pod-status ${STATUS_CLASS}">${POD_STATUS}</span>
-            </div>
-            <div class="pod-details">
-              <div class="pod-detail">
-                <span class="detail-label">Namespace:</span>
-                <span class="detail-value">${POD_NAMESPACE}</span>
-              </div>
-              <div class="pod-detail">
-                <span class="detail-label">Node:</span>
-                <span class="detail-value">${POD_NODE}</span>
-              </div>
-            </div>
-          </div>
-EOF
+              # Update _index.md frontmatter with current data
+              echo "Updating _index.md frontmatter..."
+              cat > content/_index.md << EOF
+              ---
+              title: "K0s Color Dashboard"
+              date: ${CURRENT_DATE}
+              markup: html
+              totalPods: ${TOTAL_PODS}
+              runningPods: ${RUNNING_PODS}
+              workerNode: "${WORKER_NODE}"
+              lastUpdate: "${FORMATTED_DATE}"
+              gitHash: "${GIT_HASH}"
+              ---
+              
+              <!-- This content is dynamically updated by the CronJob -->
+              <!-- The dashboard UI is rendered by Hugo templates and CSS/JS files -->
+              EOF              
+              # Create JSON API file for dynamic loading
+              echo "Creating JSON API file..."
+              cat > static/api/pods.json << EOF
+              {
+                "metadata": {
+                  "lastUpdate": "${CURRENT_DATE}",
+                  "totalPods": ${TOTAL_PODS},
+                  "runningPods": ${RUNNING_PODS},
+                  "workerNode": "${WORKER_NODE}",
+                  "gitHash": "${GIT_HASH}"
+                },
+                "pods": [
+              EOF
+              
+              # Add pod data to JSON
+              FIRST_POD=true
+              echo "$POD_INFO" | while IFS= read -r line; do
+                if [ -n "$line" ]; then
+                  POD_NAME=$(echo "$line" | awk '{print $1}')
+                  POD_NAMESPACE=$(echo "$line" | awk '{print $2}')
+                  POD_STATUS=$(echo "$line" | awk '{print $3}')
+                  POD_NODE=$(echo "$line" | awk '{print $4}')
+                  
+                  if [ "$FIRST_POD" = "true" ]; then
+                    FIRST_POD=false
+                  else
+                    echo "," >> static/api/pods.json
                   fi
-                done                
-                # Close the pods container and add the complete CSS and JavaScript
-                cat >> "${TMP_INDEX}" << 'EOF'
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Courier New', monospace;
-  background: #000;
-  color: #00ff00;
-  overflow-x: hidden;
-  min-height: 100vh;
-  position: relative;
-}
-
-/* Matrix canvas background */
-#matrix-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.1;
-}
-
-/* Main container with two-column layout */
-.main-container {
-  display: flex;
-  min-height: 100vh;
-  max-width: 1920px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-/* Left sidebar */
-.left-sidebar {
-  width: 280px;
-  background: linear-gradient(135deg, #001122 0%, #003344 50%, #001122 100%);
-  border-right: 2px solid #00ffff;
-  padding: 20px;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}.sidebar-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  background: rgba(0, 255, 255, 0.05);
-  border: 1px solid #00ffff;
-  border-radius: 5px;
-}
-
-.sidebar-section h3 {
-  color: #ffff00;
-  font-size: 14px;
-  margin-bottom: 10px;
-  text-align: center;
-  text-shadow: 0 0 5px #ffff00;
-}
-
-/* Webring navigation */
-.webring {
-  text-align: center;
-}
-
-.webring-link {
-  color: #00ffff;
-  text-decoration: none;
-  font-size: 12px;
-  transition: all 0.3s ease;
-}
-
-.webring-link:hover {
-  color: #ffff00;
-  text-shadow: 0 0 5px #ffff00;
-}
-
-.webring-divider {
-  color: #ff00ff;
-  margin: 0 5px;
-}
-
-/* Visitor counter */
-.visitor-counter {
-  text-align: center;
-}
-
-.counter-display {
-  margin-top: 10px;
-  padding: 5px;
-  background: #000;
-  border: 1px solid #00ff00;
-  border-radius: 3px;
-}
-
-#visitor-count {
-  color: #00ff00;
-  font-weight: bold;
-  font-size: 16px;
-  text-shadow: 0 0 5px #00ff00;
-}/* Affiliate banners */
-.affiliate-banners {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-.affiliate-banner {
-  width: 120px;
-  height: 60px;
-  border: 1px solid #ff00ff;
-  border-radius: 3px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.affiliate-banner:hover {
-  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-  transform: scale(1.05);
-}
-
-/* Hot links */
-.hot-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.hot-link {
-  color: #ff00ff;
-  text-decoration: none;
-  font-size: 12px;
-  padding: 5px;
-  border: 1px solid #ff00ff;
-  border-radius: 3px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.hot-link:hover {
-  background: rgba(255, 0, 255, 0.2);
-  box-shadow: 0 0 5px #ff00ff;
-}
-
-/* Live feed */
-.live-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.feed-item {
-  font-size: 11px;
-  color: #00ff00;
-  padding: 3px;
-  background: rgba(0, 255, 0, 0.1);
-  border-radius: 2px;
-  animation: pulse 2s infinite;
-}/* Retro elements */
-.retro-elements {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
-
-.retro-button {
-  width: 88px;
-  height: 31px;
-  border: 1px solid #ffff00;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.retro-button:hover {
-  box-shadow: 0 0 8px rgba(255, 255, 0, 0.5);
-}
-
-/* Main content area */
-.main-content {
-  flex: 1;
-  margin-left: 280px;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.content-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Header section */
-.header-section {
-  text-align: center;
-  margin-bottom: 40px;
-  padding: 30px;
-  background: linear-gradient(135deg, #001122 0%, #003344 50%, #001122 100%);
-  border: 2px solid #00ffff;
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-}
-
-.cyber-title {
-  font-size: 3em;
-  color: #00ffff;
-  text-shadow: 0 0 20px #00ffff;
-  margin-bottom: 10px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-.subtitle {
-  font-size: 1.2em;
-  color: #ffff00;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px #ffff00;
-}.status-bar {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.status-item {
-  color: #ff00ff;
-  font-weight: bold;
-}
-
-.status-online {
-  color: #00ff00;
-  text-shadow: 0 0 5px #00ff00;
-  animation: pulse 1.5s infinite;
-}
-
-/* Info grid */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.info-card {
-  background: linear-gradient(135deg, #001122 0%, #002244 50%, #001122 100%);
-  border: 2px solid #00ffff;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-}
-
-.info-card h3 {
-  color: #ffff00;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  text-align: center;
-  text-shadow: 0 0 10px #ffff00;
-}
-
-.metric {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
-  background: rgba(0, 255, 255, 0.05);
-  border-radius: 5px;
-}
-
-.metric-label {
-  color: #00ffff;
-}
-
-.metric-value {
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.metric-value.running {
-  color: #00ff00;
-  text-shadow: 0 0 5px #00ff00;
-}/* Action buttons */
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.action-btn {
-  display: block;
-  padding: 15px;
-  background: linear-gradient(135deg, #ff00ff 0%, #ff0080 50%, #ff00ff 100%);
-  color: #ffffff;
-  text-decoration: none;
-  text-align: center;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border: 2px solid #ff00ff;
-}
-
-.action-btn:hover {
-  background: linear-gradient(135deg, #ff0080 0%, #ff00ff 50%, #ff0080 100%);
-  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
-  transform: translateY(-2px);
-}
-
-/* Pods section */
-.pods-section {
-  margin-top: 40px;
-}
-
-.section-title {
-  font-size: 2.5em;
-  color: #ff00ff;
-  text-align: center;
-  margin-bottom: 30px;
-  text-shadow: 0 0 20px #ff00ff;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-.pods-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
-}
-
-/* Pod cards */
-.pod-card {
-  background: linear-gradient(135deg, #001122 0%, #002244 50%, #001122 100%);
-  border: 2px solid #00ffff;
-  border-radius: 8px;
-  padding: 20px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-}
-
-.pod-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-  border-color: #ffff00;
-}.pod-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #00ffff;
-}
-
-.pod-name {
-  color: #00ffff;
-  font-weight: bold;
-  font-size: 1.1em;
-  text-shadow: 0 0 5px #00ffff;
-}
-
-.pod-status {
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.9em;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.pod-status.running {
-  background: rgba(0, 255, 0, 0.2);
-  color: #00ff00;
-  border: 1px solid #00ff00;
-  text-shadow: 0 0 5px #00ff00;
-  animation: pulse 2s infinite;
-}
-
-.pod-status.pending {
-  background: rgba(255, 255, 0, 0.2);
-  color: #ffff00;
-  border: 1px solid #ffff00;
-  text-shadow: 0 0 5px #ffff00;
-}
-
-.pod-status.failed {
-  background: rgba(255, 0, 0, 0.2);
-  color: #ff0000;
-  border: 1px solid #ff0000;
-  text-shadow: 0 0 5px #ff0000;
-  animation: blink 1s infinite;
-}
-
-.pod-status.unknown {
-  background: rgba(128, 128, 128, 0.2);
-  color: #888888;
-  border: 1px solid #888888;
-}
-
-.pod-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pod-detail {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  background: rgba(0, 255, 255, 0.05);
-  border-radius: 4px;
-}.detail-label {
-  color: #ff00ff;
-  font-weight: bold;
-}
-
-.detail-value {
-  color: #ffffff;
-}
-
-/* Animations */
-@keyframes glow {
-  from {
-    text-shadow: 0 0 20px currentColor;
-  }
-  to {
-    text-shadow: 0 0 30px currentColor, 0 0 40px currentColor;
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0.3;
-  }
-}
-
-/* Responsive design */
-@media (max-width: 1200px) {
-  .main-container {
-    flex-direction: column;
-  }
-  
-  .left-sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 2px solid #00ffff;
-  }
-  
-  .main-content {
-    margin-left: 0;
-  }
-  
-  .cyber-title {
-    font-size: 2em;
-  }
-  
-  .info-grid {
-    grid-template-columns: 1fr;
-  }  .pods-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .status-bar {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .left-sidebar {
-    padding: 15px;
-  }
-  
-  .main-content {
-    padding: 15px;
-  }
-  
-  .cyber-title {
-    font-size: 1.5em;
-  }
-  
-  .section-title {
-    font-size: 1.8em;
-  }
-  
-  .pods-container {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .pod-card {
-    padding: 15px;
-  }
-}
-
-/* Hugo theme overrides */
-.post-content {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-.post-header {
-  display: none !important;
-}
-
-.post-footer {
-  display: none !important;
-}
-
-main {
-  max-width: 1920px !important;
-  width: 100% !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-}
-
-article {
-  max-width: none !important;
-  width: 100% !important;
-}.page-header {
-  display: none !important;
-}
-
-header.page-header {
-  display: none !important;
-}
-
-/* Hide Hugo navigation and footer */
-nav, .nav, header nav, .site-nav {
-  display: none !important;
-}
-
-footer, .footer, .site-footer {
-  display: none !important;
-}
-
-/* Ensure full width */
-body, html {
-  width: 100% !important;
-  max-width: none !important;
-}
-
-#main {
-  max-width: 1920px !important;
-  width: 100% !important;
-  margin: 0 auto !important;
-}
-</style>
-
-<script>
-// Matrix rain effect
-function initMatrix() {
-  const canvas = document.getElementById('matrix-canvas');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  
-  // Set canvas size
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-  
-  // Matrix characters
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
-  const charArray = chars.split('');
-  
-  const fontSize = 14;
-  const columns = canvas.width / fontSize;  // Array to store y position of each column
-  const drops = [];
-  for (let i = 0; i < columns; i++) {
-    drops[i] = 1;
-  }
-  
-  function draw() {
-    // Black background with slight transparency for trail effect
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Green text
-    ctx.fillStyle = '#00ff00';
-    ctx.font = fontSize + 'px monospace';
-    
-    for (let i = 0; i < drops.length; i++) {
-      // Random character
-      const text = charArray[Math.floor(Math.random() * charArray.length)];
-      
-      // Draw character
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      
-      // Reset drop randomly or when it reaches bottom
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      
-      drops[i]++;
-    }
-  }
-  
-  // Start animation
-  setInterval(draw, 35);
-}
-
-// Visitor counter animation
-function animateCounter() {
-  const counter = document.getElementById('visitor-count');
-  if (!counter) return;
-  
-  let count = 1337;
-  setInterval(() => {
-    count += Math.floor(Math.random() * 3);
-    counter.textContent = count.toString().padStart(6, '0');
-  }, 5000);
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  initMatrix();
-  animateCounter();
-  
-  // Add some interactive effects
-  const podCards = document.querySelectorAll('.pod-card');
-  podCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.borderColor = '#ffff00';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-      this.style.borderColor = '#00ffff';
-    });
-  });
-});
-</script>
-EOF               
-               # Replace the original _index.md with our updated version
-               mv "${TMP_INDEX}" content/_index.md
-               
-               # Create JSON API file for programmatic access
-               echo "Creating JSON API file..."
-               mkdir -p static/api
-               
-               # Generate JSON data
-               cat > static/api/pods.json << EOF
-{
-  "metadata": {
-    "lastUpdate": "${CURRENT_DATE}",
-    "totalPods": ${TOTAL_PODS},
-    "runningPods": ${RUNNING_PODS},
-    "workerNode": "${WORKER_NODE}",
-    "gitHash": "${GIT_HASH}"
-  },
-  "pods": [
-EOF
-               
-               # Add pod data to JSON
-               FIRST_POD=true
-               echo "$POD_INFO" | while IFS= read -r line; do
-                 if [ -n "$line" ]; then
-                   POD_NAME=$(echo "$line" | awk '{print $1}')
-                   POD_NAMESPACE=$(echo "$line" | awk '{print $2}')
-                   POD_STATUS=$(echo "$line" | awk '{print $3}')
-                   POD_NODE=$(echo "$line" | awk '{print $4}')
-                   
-                   if [ "$FIRST_POD" = "true" ]; then
-                     FIRST_POD=false
-                   else
-                     echo "," >> static/api/pods.json
-                   fi
-                   
-                   cat >> static/api/pods.json << EOF
-    {
-      "name": "${POD_NAME}",
-      "namespace": "${POD_NAMESPACE}",
-      "status": "${POD_STATUS}",
-      "node": "${POD_NODE}"
-    }
-EOF
-                 fi
-               done
-               
-               # Close JSON structure
-               cat >> static/api/pods.json << EOF
-  ]
-}
-EOF               
-               # Check if there are any changes to commit
-               if git diff --quiet && git diff --cached --quiet; then
-                 echo "No changes detected, skipping commit"
-                 exit 0
-               fi
-               
-               # Add all changes
-               git add .
-               
-               # Commit changes
-               echo "Committing changes..."
-               git commit -m "Update pod information - ${FORMATTED_DATE}
-
-               - Total pods: ${TOTAL_PODS}
-               - Running pods: ${RUNNING_PODS}
-               - Worker node: ${WORKER_NODE}
-               - Git hash: ${GIT_HASH}
-               
-               Updated by cronjob from pod: ${HOSTNAME}"
-               
-               # Push changes
-               echo "Pushing changes to GitHub..."
-               git push origin main
-               
-               echo "Pod information updated successfully!"
-              fi
+                  
+                  cat >> static/api/pods.json << EOF
+                  {
+                    "name": "${POD_NAME}",
+                    "namespace": "${POD_NAMESPACE}",
+                    "status": "${POD_STATUS}",
+                    "node": "${POD_NODE}"
+                  }
+              EOF
+                fi
+              done
+              
+              # Close JSON structure
+              cat >> static/api/pods.json << EOF
+                ]
+              }
+              EOF
+              
+              # Check if there are any changes to commit
+              if git diff --quiet && git diff --cached --quiet; then
+                echo "No changes detected, skipping commit"
+                exit 0
+              fi              
+              # Add all changes
+              git add .
+              
+              # Commit changes
+              echo "Committing changes..."
+              git commit -m "Update pod information - ${FORMATTED_DATE}
+
+              - Total pods: ${TOTAL_PODS}
+              - Running pods: ${RUNNING_PODS}
+              - Worker node: ${WORKER_NODE}
+              - Git hash: ${GIT_HASH}
+              
+              Updated by cronjob from pod: ${HOSTNAME}"
+              
+              # Push changes
+              echo "Pushing changes to GitHub..."
+              git push origin main
+              
+              echo "Pod information updated successfully!"
           restartPolicy: Never
           serviceAccountName: github-push

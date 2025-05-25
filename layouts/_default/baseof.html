@@ -9,23 +9,9 @@
     {{ partial "extend_head.html" . }}
 </head>
 <body>
-    <div class="container">
-        <header class="site-header">
-            <h1 class="site-title"><a href="{{ site.BaseURL }}">{{ site.Title }}</a></h1>
-            <nav class="site-nav">
-                {{ range site.Menus.main }}
-                <a class="nav-link" href="{{ .URL }}">{{ .Name }}</a>
-                {{ end }}
-            </nav>
-        </header>
-        
-        <main class="site-main">
-            {{ block "main" . }}{{ end }}
-        </main>
-        
-        <footer class="site-footer">
-            <p>&copy; {{ now.Format "2006" }} {{ site.Title }}</p>
-        </footer>
-    </div>
+    <!-- Removed container, site-header, and site-footer for cyberpunk design -->
+    <main id="main">
+        {{ block "main" . }}{{ end }}
+    </main>
 </body>
 </html> 

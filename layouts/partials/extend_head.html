@@ -1,5 +1,33 @@
 <!-- Custom head content -->
 <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/cyberpunk-dashboard.css" | relURL }}">
+<style>
+/* Critical cyberpunk styles to override any theme defaults */
+body {
+  background: #000 !important;
+  color: #00ff00 !important;
+  font-family: 'Courier New', monospace !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.cyber-title, h1.cyber-title {
+  color: #00ffff !important;
+  text-shadow: 0 0 20px #00ffff !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 3em !important;
+}
+.site-header {
+  display: none !important;
+}
+.container {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+</style>
 <script src="{{ "js/main.js" | relURL }}"></script>
+<script src="{{ "js/cyberpunk-dashboard.js" | relURL }}"></script>
+<script src="{{ "js/pod-loader.js" | relURL }}"></script>
 <meta name="description" content="Kubernetes Dashboard showing cluster information and running pods">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,11 +1,171 @@
-{{- define "main" }}
+{{ define "main" }}
+<canvas id="matrix-canvas"></canvas>
 
-<article class="post-single">
-  <div class="post-content">
-    {{- if .Content }}
-    {{ .Content | safeHTML }}
-    {{- end }}
+<div class="main-container">
+  <div class="left-sidebar">
+    <div class="sidebar-section">
+      <h3>🌐 WEBRING NAVIGATION</h3>
+      <div class="webring">
+        <a href="#" class="webring-link">← PREV SITE</a>
+        <span class="webring-divider">|</span>
+        <a href="#" class="webring-link">RANDOM</a>
+        <span class="webring-divider">|</span>
+        <a href="#" class="webring-link">NEXT SITE →</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>📊 SITE STATS</h3>
+      <div class="visitor-counter">
+        <img src="https://via.placeholder.com/80x15/00ff00/000000?text=VISITORS" alt="Visitor Counter" style="image-rendering: pixelated;">
+        <div class="counter-display">
+          <span id="visitor-count">001337</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🎯 ANIMATED ZONE</h3>
+      <div class="affiliate-banners">
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Animated Banner" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span class="blink">🔥 HOT DEALS! 🔥</span>
+          </a>
+        </div>
+        
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" alt="Matrix Code" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span>💻 CYBER GEAR 💻</span>
+          </a>
+        </div>
+        
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" alt="Neon Lights" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span class="blink">⚡ POWER UP! ⚡</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🔥 HOT LINKS</h3>
+      <div class="hot-links">
+        <a href="#" class="hot-link">🌟 CYBER PORTAL</a>
+        <a href="#" class="hot-link">⚡ MATRIX ZONE</a>
+        <a href="#" class="hot-link">🔮 DIGITAL REALM</a>
+        <a href="#" class="hot-link">💎 NEON CITY</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>📡 LIVE FEED</h3>
+      <div class="live-feed">
+        <div class="feed-item">🔴 SYSTEM ONLINE</div>
+        <div class="feed-item">⚡ PODS UPDATING</div>
+        <div class="feed-item">🌐 NETWORK ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>📊 MATRIX FEED</h3>
+      <div class="matrix-rain-container">
+        <canvas id="matrix-rain-sidebar" width="200" height="100"></canvas>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>🚀 CYBER ZONE</h3>
+      <div class="affiliate-banners">
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="Spinning Globe" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span class="blink">🌐 WEB HOSTING 🌐</span>
+          </a>
+        </div>
+        
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif" alt="Digital Rain" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span>💾 CLOUD STORAGE 💾</span>
+          </a>
+        </div>
+        
+        <div class="animated-banner">
+          <img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="Cyber Security" class="gif-banner">
+          <a href="#" target="_blank" class="affiliate-link">
+            <span class="blink">🔒 SECURITY 🔒</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>🎮 RETRO ZONE</h3>
+      <div class="retro-elements">
+        <img src="https://via.placeholder.com/88x31/ff00ff/000000?text=BEST+VIEWED" alt="Best Viewed" class="retro-button">
+        <img src="https://via.placeholder.com/88x31/00ff00/000000?text=NETSCAPE" alt="Netscape" class="retro-button">
+        <img src="https://via.placeholder.com/88x31/ffff00/000000?text=Y2K+READY" alt="Y2K Ready" class="retro-button">
+      </div>
+    </div>
+  </div>  <div class="main-content">
+    <div class="content-wrapper">
+      <div class="header-section">
+        <h1 class="cyber-title">🚀 K0S COLOR DASHBOARD 🚀</h1>
+        <div class="subtitle">CYBERPUNK KUBERNETES MONITORING SYSTEM</div>
+        <div class="status-bar">
+          <span class="status-item">STATUS: <span class="status-online">ONLINE</span></span>
+          <span class="status-item">PODS: <span id="pod-count">{{ .Params.totalPods | default "0" }}</span></span>
+          <span class="status-item">RUNNING: <span id="running-count">{{ .Params.runningPods | default "0" }}</span></span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>📊 CLUSTER STATUS</h3>
+          <div class="metric">
+            <span class="metric-label">Total Pods:</span>
+            <span class="metric-value">{{ .Params.totalPods | default "0" }}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Running:</span>
+            <span class="metric-value running">{{ .Params.runningPods | default "0" }}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Worker Node:</span>
+            <span class="metric-value">{{ .Params.workerNode | default "unknown" }}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Last Update:</span>
+            <span class="metric-value">{{ .Params.lastUpdate | default "Never" }}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Git Hash:</span>
+            <span class="metric-value">{{ .Params.gitHash | default "unknown" }}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>🎯 QUICK ACTIONS</h3>
+          <div class="action-buttons">
+            <a href="/api/pods.json" class="action-btn">📡 RAW DATA</a>
+            <a href="#pods-section" class="action-btn">📋 POD LIST</a>
+            <a href="https://github.com/zoonderkins/edoo-k8s-demo-site" class="action-btn">💻 SOURCE</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="pods-section" class="pods-section">
+        <h2 class="section-title">🔥 ACTIVE PODS 🔥</h2>
+        <div class="pods-container" id="pods-container">
+          <!-- Pods will be dynamically loaded here -->
+        </div>
+      </div>
+    </div>
   </div>
-</article>
+</div>
 
-{{- end }}{{/* end main */}} 
+{{ .Content }}
+{{ end }}

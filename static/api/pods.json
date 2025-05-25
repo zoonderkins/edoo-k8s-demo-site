@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "lastUpdate": "2025-01-15T12:00:00Z",
+    "totalPods": 12,
+    "runningPods": 10,
+    "workerNode": "k0s-worker-1",
+    "gitHash": "abc1234"
+  },
+  "pods": [
+    {
+      "name": "coredns-76f75df574-8x9yz",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "konnectivity-agent-7b8c9d5f6-4h2j3",
+      "namespace": "kube-system", 
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "metrics-server-5f8b7c9d6-2k4l5",
+      "namespace": "kube-system",
+      "status": "Running", 
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "cyberpunk-dashboard-6d7f8g9h-3m5n6",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "matrix-backend-8j9k1l2m-4p6q7",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "neon-api-5r8s9t1u-2v4w5",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "cyber-cache-7x8y9z1a-3b5c6",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "hologram-db-4d7e8f9g-1h3i4",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "quantum-processor-2j5k6l7m-8n1o2",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "neural-net-9p3q4r5s-6t8u9",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "data-stream-1v4w5x6y-7z2a3",
+      "namespace": "monitoring",
+      "status": "Pending",
+      "node": "k0s-worker-1"
+    },
+    {
+      "name": "error-pod-8b5c6d7e-9f1g2",
+      "namespace": "monitoring",
+      "status": "Failed",
+      "node": "k0s-worker-1"
+    }
+  ]
+}
