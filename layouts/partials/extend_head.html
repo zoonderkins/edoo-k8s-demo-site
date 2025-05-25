@@ -25,6 +25,18 @@ body {
   margin: 0 !important;
   padding: 0 !important;
 }
+/* Mobile-specific overrides */
+@media (max-width: 768px) {
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .cyber-title, h1.cyber-title {
+    font-size: 1.5em !important;
+    word-wrap: break-word !important;
+  }
+}
 </style>
 <script src="{{ "js/main.js" | relURL }}"></script>
 <script src="{{ "js/cyberpunk-dashboard.js" | relURL }}"></script>
