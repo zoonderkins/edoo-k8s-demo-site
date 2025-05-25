@@ -1,83 +1,451 @@
 {
   "metadata": {
-    "lastUpdate": "2025-01-15T12:00:00Z",
-    "totalPods": 12,
-    "runningPods": 10,
-    "workerNode": "k0s-worker-1",
-    "gitHash": "abc1234"
+    "lastUpdate": "2025-05-25T05:33:43+00:00",
+    "totalPods": 63,
+    "runningPods": 59,
+    "workerNode": "k0s-color-worker-1",
+    "gitHash": "05f4865"
   },
   "pods": [
     {
-      "name": "coredns-76f75df574-8x9yz",
+      "name": "alloy-lw24s",
+      "namespace": "alloy",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "alloy-6sghp",
+      "namespace": "alloy",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-applicationset-controller-5ff797b646hh47p",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-application-controller-0",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-dex-server-648b7c9844-k994n",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-notifications-controller-68bd6b9c47-w7s2x",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-redis-645cb8b784-25krn",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-repo-server-6c7479f898-99qq7",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-server-d75dcf45-dk5zv",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "cert-manager-cainjector-7fd85dcc7-kcwxb",
+      "namespace": "cert-manager",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "cert-manager-webhook-57df45f686-z97tc",
+      "namespace": "cert-manager",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "cert-manager-6468fc8f56-mhtqg",
+      "namespace": "cert-manager",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "cloudflared-68fd85bfc8-xvnjs",
+      "namespace": "cloudflare",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "cilium-2mf7n",
       "namespace": "kube-system",
       "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "konnectivity-agent-7b8c9d5f6-4h2j3",
-      "namespace": "kube-system", 
-      "status": "Running",
-      "node": "k0s-worker-1"
-    },
-    {
-      "name": "metrics-server-5f8b7c9d6-2k4l5",
+      "name": "cilium-envoy-gw5hp",
       "namespace": "kube-system",
-      "status": "Running", 
-      "node": "k0s-worker-1"
-    },
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "cyberpunk-dashboard-6d7f8g9h-3m5n6",
+      "name": "coredns-7d4f7fbd5c-jb7tq",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "hubble-relay-7b4c9d4474-5gtzm",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "hubble-ui-76d4965bb6-nsfgq",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "konnectivity-agent-n6bqk",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "cilium-envoy-n299t",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "cilium-jgwgn",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "cilium-operator-5b47585b65-rfgqz",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "coredns-7d4f7fbd5c-6jgc5",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "konnectivity-agent-rx2vm",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "metrics-server-7778865875-kxhj5",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-attacher-7bfc99fdf6-9tlkx",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-provisioner-5bfbf9655-fmjpd",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-provisioner-5bfbf9655-mw9xz",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-7vqjm",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-n6njl",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "engine-image-ei-b907910b-hdffg",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "instance-manager-dbe93ac7ea3ffe11771491a4a2ad12de",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "longhorn-csi-plugin-glqfw",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "longhorn-driver-deployer-5f44b4dc59-w2pbb",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "longhorn-manager-bfzfx",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "longhorn-ui-f7ff9c74-dvllq",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-attacher-7bfc99fdf6-25w29",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-attacher-7bfc99fdf6-5mm9v",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-provisioner-5bfbf9655-qj6dc",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-489kx",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-nw9qk",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-pg44m",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-xtfm8",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "engine-image-ei-b907910b-hf7hj",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "instance-manager-297c356f09fdf32b65cce1893ddc5485",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "longhorn-csi-plugin-n9gvd",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "longhorn-manager-fl5qw",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "longhorn-ui-f7ff9c74-pg4sr",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "hugo-site-7bf7c68bf6-gzwwl",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "matrix-backend-8j9k1l2m-4p6q7",
+      "name": "update-pods-md-manual-1748151179718-z2hq9",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "neon-api-5r8s9t1u-2v4w5",
+      "name": "update-pods-md-29133120-tnwtn",
       "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "status": "Succeeded",
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "cyber-cache-7x8y9z1a-3b5c6",
+      "name": "update-pods-md-29133180-6tpn7",
       "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "status": "Succeeded",
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "hologram-db-4d7e8f9g-1h3i4",
+      "name": "update-pods-md-29133240-9tjfs",
       "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "status": "Succeeded",
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "quantum-processor-2j5k6l7m-8n1o2",
+      "name": "update-pods-md-manual-1748150854740-c6627",
       "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "grafana-99b45986c-qr6nb",
+      "namespace": "victoria",
       "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "neural-net-9p3q4r5s-6t8u9",
-      "namespace": "prod",
+      "name": "node-exporter-prometheus-node-exporter-5wjqc",
+      "namespace": "victoria",
       "status": "Running",
-      "node": "k0s-worker-1"
-    },
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "data-stream-1v4w5x6y-7z2a3",
-      "namespace": "monitoring",
-      "status": "Pending",
-      "node": "k0s-worker-1"
-    },
+      "name": "otel-opentelemetry-collector-7cdd676b7d-psjhl",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
     {
-      "name": "error-pod-8b5c6d7e-9f1g2",
-      "namespace": "monitoring",
-      "status": "Failed",
-      "node": "k0s-worker-1"
+      "name": "tempo-0",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "victoria-logs-vector-tgs72",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "victoria-logs-victoria-logs-single-server-0",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "vmsingle-victoria-metrics-single-server-0",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "node-exporter-prometheus-node-exporter-22wzf",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "victoria-logs-vector-gsxl9",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
     }
   ]
 }
