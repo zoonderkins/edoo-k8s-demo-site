@@ -94,34 +94,31 @@ spec:
               
               # Update _index.md frontmatter with current data
               echo "Updating _index.md frontmatter..."
-              cat > content/_index.md << EOF
-              ---
-              title: "K0s Color Dashboard"
-              date: ${CURRENT_DATE}
-              markup: html
-              totalPods: ${TOTAL_PODS}
-              runningPods: ${RUNNING_PODS}
-              workerNode: "${WORKER_NODE}"
-              lastUpdate: "${FORMATTED_DATE}"
-              gitHash: "${GIT_HASH}"
-              ---
+              echo "---" > content/_index.md
+              echo "title: \"K0s Color Dashboard\"" >> content/_index.md
+              echo "date: ${CURRENT_DATE}" >> content/_index.md
+              echo "markup: html" >> content/_index.md
+              echo "totalPods: ${TOTAL_PODS}" >> content/_index.md
+              echo "runningPods: ${RUNNING_PODS}" >> content/_index.md
+              echo "workerNode: \"${WORKER_NODE}\"" >> content/_index.md
+              echo "lastUpdate: \"${FORMATTED_DATE}\"" >> content/_index.md
+              echo "gitHash: \"${GIT_HASH}\"" >> content/_index.md
+              echo "---" >> content/_index.md
+              echo "" >> content/_index.md
+              echo "<!-- This content is dynamically updated by the CronJob -->" >> content/_index.md
+              echo "<!-- The dashboard UI is rendered by Hugo templates and CSS/JS files -->" >> content/_index.md
               
-              <!-- This content is dynamically updated by the CronJob -->
-              <!-- The dashboard UI is rendered by Hugo templates and CSS/JS files -->
-              EOF              
               # Create JSON API file for dynamic loading
               echo "Creating JSON API file..."
-              cat > static/api/pods.json << EOF
-              {
-                "metadata": {
-                  "lastUpdate": "${CURRENT_DATE}",
-                  "totalPods": ${TOTAL_PODS},
-                  "runningPods": ${RUNNING_PODS},
-                  "workerNode": "${WORKER_NODE}",
-                  "gitHash": "${GIT_HASH}"
-                },
-                "pods": [
-              EOF
+              echo "{" > static/api/pods.json
+              echo "  \"metadata\": {" >> static/api/pods.json
+              echo "    \"lastUpdate\": \"${CURRENT_DATE}\"," >> static/api/pods.json
+              echo "    \"totalPods\": ${TOTAL_PODS}," >> static/api/pods.json
+              echo "    \"runningPods\": ${RUNNING_PODS}," >> static/api/pods.json
+              echo "    \"workerNode\": \"${WORKER_NODE}\"," >> static/api/pods.json
+              echo "    \"gitHash\": \"${GIT_HASH}\"" >> static/api/pods.json
+              echo "  }," >> static/api/pods.json
+              echo "  \"pods\": [" >> static/api/pods.json
               
               # Add pod data to JSON
               FIRST_POD=true
@@ -138,22 +135,18 @@ spec:
                     echo "," >> static/api/pods.json
                   fi
                   
-                  cat >> static/api/pods.json << EOF
-                  {
-                    "name": "${POD_NAME}",
-                    "namespace": "${POD_NAMESPACE}",
-                    "status": "${POD_STATUS}",
-                    "node": "${POD_NODE}"
-                  }
-              EOF
+                  echo "    {" >> static/api/pods.json
+                  echo "      \"name\": \"${POD_NAME}\"," >> static/api/pods.json
+                  echo "      \"namespace\": \"${POD_NAMESPACE}\"," >> static/api/pods.json
+                  echo "      \"status\": \"${POD_STATUS}\"," >> static/api/pods.json
+                  echo "      \"node\": \"${POD_NODE}\"" >> static/api/pods.json
+                  echo "    }" >> static/api/pods.json
                 fi
               done
               
               # Close JSON structure
-              cat >> static/api/pods.json << EOF
-                ]
-              }
-              EOF
+              echo "  ]" >> static/api/pods.json
+              echo "}" >> static/api/pods.json
               
               # Check if there are any changes to commit
               if git diff --quiet && git diff --cached --quiet; then
@@ -176,7 +169,7 @@ spec:
               
               # Push changes
               echo "Pushing changes to GitHub..."
-              git push origin main
+              git push origin master
               
               echo "Pod information updated successfully!"
           restartPolicy: Never

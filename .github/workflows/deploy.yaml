@@ -5,6 +5,8 @@ on:
     branches: [master]
     paths:
       - 'charts/**'
+      - 'content/**'
+      - 'static/**'
   workflow_dispatch:
 
 # Add a conditional check for commit messages containing [ci]
@@ -28,8 +30,14 @@ jobs:
           elif git diff --name-only HEAD^ HEAD | grep -q "^charts/"; then
             echo "Changes detected in charts directory, triggering workflow"
             echo "should_run=true" >> $GITHUB_OUTPUT
+          elif git diff --name-only HEAD^ HEAD | grep -q -E "^(content/|static/)"; then
+            echo "Changes detected in content or static directories, triggering workflow"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          elif git log -1 --pretty=format:%s | grep -q "Update pod information"; then
+            echo "CronJob pod information update detected, triggering workflow"
+            echo "should_run=true" >> $GITHUB_OUTPUT
           else
-            echo "No [ci] in commit message and no changes in charts directory"
+            echo "No trigger conditions met"
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
 
@@ -92,6 +100,28 @@ jobs:
 
       - name: Set up Kubectl
         uses: azure/setup-kubectl@v4
+
+      - name: Update ArgoCD values.yaml with new image tag
+        run: |
+          # Use the commit SHA as the new image tag
+          NEW_TAG="${{ github.sha }}"
+          echo "Updating values.yaml with new tag: $NEW_TAG"
+          
+          # Update the tag in values.yaml
+          sed -i "s/tag: .*/tag: $NEW_TAG/" charts/hugo-site/values.yaml
+          
+          # Commit and push the updated values.yaml
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add charts/hugo-site/values.yaml
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to values.yaml"
+          else
+            git commit -m "Update ArgoCD image tag to $NEW_TAG [skip ci]"
+            git push
+          fi
 
 env:
   IMAGE_NAME: hugo-k8s-dashboard
