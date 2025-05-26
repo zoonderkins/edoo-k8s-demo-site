@@ -1,12 +1,12 @@
 ---
 title: "K0s Color Dashboard"
-date: 2025-05-26T04:00:37+00:00
+date: 2025-05-26T07:00:29+00:00
 markup: html
 totalPods: 65
 runningPods: 59
 workerNode: "k0s-color-worker-2"
-lastUpdate: "2025-05-25 23:00:38 CST"
-gitHash: "82e0e79"
+lastUpdate: "2025-05-26 02:00:30 CST"
+gitHash: "cef939b"
 ---
 
 <!-- This content is dynamically updated by the CronJob -->
