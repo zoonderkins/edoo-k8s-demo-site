@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-26T07:00:29+00:00",
+    "lastUpdate": "2025-05-26T10:00:23+00:00",
     "totalPods": 65,
     "runningPods": 59,
-    "workerNode": "k0s-color-worker-2",
-    "gitHash": "cef939b"
+    "workerNode": "k0s-color-worker-1",
+    "gitHash": "349ee23"
   },
   "pods": [
     {
@@ -344,14 +344,14 @@
     }
 ,
     {
-      "name": "hugo-site-5b59bc56fb-6t2z5",
+      "name": "update-pods-md-29137560-n9v7k",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "update-pods-md-29137380-brrl6",
+      "name": "hugo-site-d4b6778-hn66x",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
@@ -379,13 +379,6 @@
     }
 ,
     {
-      "name": "update-pods-md-29136840-5f6kn",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
       "name": "update-pods-md-29137020-zcbw8",
       "namespace": "prod",
       "status": "Succeeded",
@@ -394,6 +387,13 @@
 ,
     {
       "name": "update-pods-md-29137200-4lt2f",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "update-pods-md-29137380-brrl6",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-2"
