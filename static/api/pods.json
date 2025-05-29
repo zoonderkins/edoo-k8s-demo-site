@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-29T16:00:31+00:00",
-    "totalPods": 65,
-    "runningPods": 59,
+    "lastUpdate": "2025-05-29T19:00:30+00:00",
+    "totalPods": 66,
+    "runningPods": 60,
     "workerNode": "k0s-color-worker-1",
-    "gitHash": "0fb5c90"
+    "gitHash": "5b2688b"
   },
   "pods": [
     {
@@ -183,6 +183,13 @@
     }
 ,
     {
+      "name": "kubebuilder-cronjob-controller-manager-fbd4c9cb7-pspf5",
+      "namespace": "kubebuilder-cronjob-system",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
       "name": "csi-attacher-7bfc99fdf6-9tlkx",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -344,14 +351,14 @@
     }
 ,
     {
-      "name": "update-pods-md-29142240-wr2vg",
+      "name": "update-pods-md-29142420-prrpq",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "hugo-site-b678c46b8-tj4j6",
+      "name": "hugo-site-65bcd6f49d-qff96",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
@@ -379,13 +386,6 @@
     }
 ,
     {
-      "name": "update-pods-md-29141700-lgfkk",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
       "name": "update-pods-md-29141880-chljg",
       "namespace": "prod",
       "status": "Succeeded",
@@ -394,6 +394,13 @@
 ,
     {
       "name": "update-pods-md-29142060-6gtss",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "update-pods-md-29142240-wr2vg",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-1"
