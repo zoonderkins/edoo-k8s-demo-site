@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-30T13:00:30+00:00",
-    "totalPods": 66,
-    "runningPods": 60,
-    "workerNode": "k0s-color-worker-2",
-    "gitHash": "70a41f0"
+    "lastUpdate": "2025-05-30T15:04:47+00:00",
+    "totalPods": 64,
+    "runningPods": 61,
+    "workerNode": "k0s-color-worker-1",
+    "gitHash": "b5119c1"
   },
   "pods": [
     {
@@ -94,6 +94,13 @@
     {
       "name": "cloudflared-68fd85bfc8-xvnjs",
       "namespace": "cloudflare",
+      "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "edoo-k8s-dashboard-operator-controller-manager-6b87547bfc-z9rv9",
+      "namespace": "edoo-k8s-dashboard-operator-system",
       "status": "Running",
       "node": "k0s-color-worker-2"
     }
@@ -351,14 +358,14 @@
     }
 ,
     {
-      "name": "hugo-site-5c6454d875-55bf9",
+      "name": "k0s-dashboard-updater-manual-1748617471444-nj4zj",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "update-pods-md-29143500-xffs5",
+      "name": "hugo-site-86457c6654-q7p9d",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
@@ -380,27 +387,6 @@
 ,
     {
       "name": "update-pods-md-29133240-9tjfs",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "update-pods-md-29142960-bh5pn",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "update-pods-md-29143140-7b6fx",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "update-pods-md-29143320-d2kpr",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-1"
