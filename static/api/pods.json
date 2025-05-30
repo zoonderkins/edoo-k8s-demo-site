@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-30T15:04:47+00:00",
-    "totalPods": 64,
+    "lastUpdate": "2025-05-30T15:13:23+00:00",
+    "totalPods": 61,
     "runningPods": 61,
-    "workerNode": "k0s-color-worker-1",
-    "gitHash": "b5119c1"
+    "workerNode": "k0s-color-worker-2",
+    "gitHash": "4204575"
   },
   "pods": [
     {
@@ -99,10 +99,10 @@
     }
 ,
     {
-      "name": "edoo-k8s-dashboard-operator-controller-manager-6b87547bfc-z9rv9",
+      "name": "edoo-k8s-dashboard-operator-controller-manager-d858d65cf-8j45x",
       "namespace": "edoo-k8s-dashboard-operator-system",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
@@ -358,38 +358,17 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-manual-1748617471444-nj4zj",
+      "name": "hugo-site-7d66c8b864-2969z",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "hugo-site-86457c6654-q7p9d",
+      "name": "k0s-dashboard-updater-29143630-h8qlx",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "update-pods-md-29133120-tnwtn",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "update-pods-md-29133180-6tpn7",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "update-pods-md-29133240-9tjfs",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
     }
 ,
     {
