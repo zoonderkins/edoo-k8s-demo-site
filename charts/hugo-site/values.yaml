@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/zoonderkins/hugo-k8s-dashboard
-  tag: 8db2302b1ca6a7eb9627328058001fb367bf71da
+  tag: a33e378dc37131fb08da658ee4001008f69f77b2
   pullPolicy: Always
   # Pull secrets for private image registry
   pullSecrets:
