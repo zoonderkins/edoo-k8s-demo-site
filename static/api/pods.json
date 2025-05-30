@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-30T15:13:23+00:00",
-    "totalPods": 61,
+    "lastUpdate": "2025-05-30T15:15:13+00:00",
+    "totalPods": 62,
     "runningPods": 61,
     "workerNode": "k0s-color-worker-2",
-    "gitHash": "4204575"
+    "gitHash": "85c59b3"
   },
   "pods": [
     {
@@ -365,9 +365,16 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29143630-h8qlx",
+      "name": "k0s-dashboard-updater-29143635-95x24",
       "namespace": "prod",
       "status": "Running",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29143630-h8qlx",
+      "namespace": "prod",
+      "status": "Succeeded",
       "node": "k0s-color-worker-2"
     }
 ,
