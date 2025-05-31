@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-31T07:00:45+00:00",
+    "lastUpdate": "2025-05-31T10:00:57+00:00",
     "totalPods": 64,
     "runningPods": 61,
-    "workerNode": "k0s-color-worker-2",
-    "gitHash": "60be214"
+    "workerNode": "k0s-color-worker-1",
+    "gitHash": "382c4ae"
   },
   "pods": [
     {
@@ -358,24 +358,17 @@
     }
 ,
     {
-      "name": "hugo-site-cc564fdb5-9cd66",
+      "name": "k0s-dashboard-updater-29144760-7qxzx",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29144580-pzf9l",
+      "name": "hugo-site-5bffc759c8-2fwsd",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29144040-xxtnb",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
     }
 ,
     {
@@ -387,6 +380,13 @@
 ,
     {
       "name": "k0s-dashboard-updater-29144220-9rw4c",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29144580-pzf9l",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-2"
