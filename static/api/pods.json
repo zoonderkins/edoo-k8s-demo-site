@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-05-31T10:00:57+00:00",
+    "lastUpdate": "2025-05-31T13:00:46+00:00",
     "totalPods": 64,
     "runningPods": 61,
-    "workerNode": "k0s-color-worker-1",
-    "gitHash": "382c4ae"
+    "workerNode": "k0s-color-worker-2",
+    "gitHash": "73da123"
   },
   "pods": [
     {
@@ -358,14 +358,14 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29144760-7qxzx",
+      "name": "hugo-site-5dd59d4978-bwhz7",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "hugo-site-5bffc759c8-2fwsd",
+      "name": "k0s-dashboard-updater-29144940-msgq8",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
@@ -379,10 +379,10 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29144220-9rw4c",
+      "name": "k0s-dashboard-updater-29144760-7qxzx",
       "namespace": "prod",
       "status": "Succeeded",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
