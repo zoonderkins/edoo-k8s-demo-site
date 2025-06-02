@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-02T04:01:03+00:00",
-    "totalPods": 62,
+    "lastUpdate": "2025-06-02T16:00:30+00:00",
+    "totalPods": 61,
     "runningPods": 61,
     "workerNode": "k0s-color-worker-2",
-    "gitHash": "71b708e"
+    "gitHash": "2066d85"
   },
   "pods": [
     {
@@ -22,84 +22,84 @@
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-applicationset-controller-5ff797b646hh47p",
-      "namespace": "argocd",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
       "name": "k0s-color-argo-argocd-application-controller-0",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-dex-server-648b7c9844-k994n",
+      "name": "k0s-color-argo-argocd-applicationset-controller-5ff797b646kfwwp",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-notifications-controller-68bd6b9c47-w7s2x",
+      "name": "k0s-color-argo-argocd-dex-server-648b7c9844-pgvjv",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-redis-645cb8b784-25krn",
+      "name": "k0s-color-argo-argocd-notifications-controller-68bd6b9c47-6g9ss",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-repo-server-6c7479f898-99qq7",
+      "name": "k0s-color-argo-argocd-redis-645cb8b784-jdplt",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-server-d75dcf45-dk5zv",
+      "name": "k0s-color-argo-argocd-repo-server-6c7479f898-9l577",
       "namespace": "argocd",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "cert-manager-cainjector-7fd85dcc7-kcwxb",
+      "name": "k0s-color-argo-argocd-server-d75dcf45-rnkq5",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "cert-manager-6468fc8f56-lgb6k",
       "namespace": "cert-manager",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "cert-manager-webhook-57df45f686-z97tc",
+      "name": "cert-manager-cainjector-7fd85dcc7-48csd",
       "namespace": "cert-manager",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "cert-manager-6468fc8f56-mhtqg",
+      "name": "cert-manager-webhook-57df45f686-7cs4p",
       "namespace": "cert-manager",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "cloudflared-68fd85bfc8-xvnjs",
+      "name": "cloudflared-68fd85bfc8-chs9s",
       "namespace": "cloudflare",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "edoo-k8s-dashboard-operator-controller-manager-d858d65cf-8j45x",
+      "name": "edoo-k8s-dashboard-operator-controller-manager-d858d65cf-qvppx",
       "namespace": "edoo-k8s-dashboard-operator-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -120,28 +120,42 @@
     }
 ,
     {
-      "name": "coredns-7d4f7fbd5c-jb7tq",
+      "name": "cilium-operator-5b47585b65-f92mk",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "hubble-relay-7b4c9d4474-5gtzm",
+      "name": "coredns-6c77c7d548-jvmbl",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "hubble-ui-76d4965bb6-nsfgq",
+      "name": "hubble-relay-7b4c9d4474-5vpcc",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "konnectivity-agent-n6bqk",
+      "name": "hubble-ui-76d4965bb6-fxwz2",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "konnectivity-agent-t52r5",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "metrics-server-7db8586f5-kbx8b",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -162,70 +176,105 @@
     }
 ,
     {
-      "name": "cilium-operator-5b47585b65-rfgqz",
+      "name": "coredns-6c77c7d548-zvtpb",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-2"
     }
 ,
     {
-      "name": "coredns-7d4f7fbd5c-6jgc5",
+      "name": "konnectivity-agent-j2thn",
       "namespace": "kube-system",
       "status": "Running",
       "node": "k0s-color-worker-2"
     }
 ,
     {
-      "name": "konnectivity-agent-rx2vm",
-      "namespace": "kube-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "metrics-server-7778865875-kxhj5",
-      "namespace": "kube-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "kubebuilder-cronjob-controller-manager-fbd4c9cb7-pspf5",
+      "name": "kubebuilder-cronjob-controller-manager-fbd4c9cb7-smpnz",
       "namespace": "kubebuilder-cronjob-system",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-attacher-7bfc99fdf6-9tlkx",
+      "name": "csi-attacher-7bfc99fdf6-4d57x",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-provisioner-5bfbf9655-fmjpd",
+      "name": "csi-attacher-7bfc99fdf6-ggqmq",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-provisioner-5bfbf9655-mw9xz",
+      "name": "csi-attacher-7bfc99fdf6-zz6jn",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-resizer-6d8bdc48b6-7vqjm",
+      "name": "csi-provisioner-5bfbf9655-98pp5",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-snapshotter-68467df45d-n6njl",
+      "name": "csi-provisioner-5bfbf9655-b9dx5",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-provisioner-5bfbf9655-m9kf8",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-6hvm9",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-mk7gl",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-resizer-6d8bdc48b6-n2kgp",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-bd2fv",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-nqsqs",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "csi-snapshotter-68467df45d-w29bd",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -253,7 +302,7 @@
     }
 ,
     {
-      "name": "longhorn-driver-deployer-5f44b4dc59-w2pbb",
+      "name": "longhorn-driver-deployer-5f44b4dc59-q9ksv",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -267,59 +316,17 @@
     }
 ,
     {
-      "name": "longhorn-ui-f7ff9c74-dvllq",
+      "name": "longhorn-ui-f7ff9c74-vxgzj",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "csi-attacher-7bfc99fdf6-25w29",
+      "name": "longhorn-ui-f7ff9c74-zw8nw",
       "namespace": "longhorn-system",
       "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-attacher-7bfc99fdf6-5mm9v",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-provisioner-5bfbf9655-qj6dc",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-resizer-6d8bdc48b6-489kx",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-resizer-6d8bdc48b6-nw9qk",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-snapshotter-68467df45d-pg44m",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "csi-snapshotter-68467df45d-xtfm8",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
@@ -351,35 +358,21 @@
     }
 ,
     {
-      "name": "longhorn-ui-f7ff9c74-pg4sr",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "hugo-site-58b585f56-4brtb",
-      "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29147280-hlc8v",
+      "name": "hugo-site-d85dd58bb-bjxrl",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-worker-2"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29146560-mlw8h",
+      "name": "k0s-dashboard-updater-29148000-t8jpc",
       "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-worker-1"
+      "status": "Running",
+      "node": "k0s-color-worker-2"
     }
 ,
     {
-      "name": "grafana-99b45986c-qr6nb",
+      "name": "grafana-99b45986c-hdxq7",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -393,7 +386,7 @@
     }
 ,
     {
-      "name": "otel-opentelemetry-collector-7cdd676b7d-psjhl",
+      "name": "otel-opentelemetry-collector-7cdd676b7d-995cc",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-worker-1"
