@@ -1,12 +1,19 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-05T16:01:05+00:00",
-    "totalPods": 65,
-    "runningPods": 61,
-    "workerNode": "k0s-color-worker-2",
-    "gitHash": "db9ad18"
+    "lastUpdate": "2025-06-06T04:01:18+00:00",
+    "totalPods": 74,
+    "runningPods": 70,
+    "workerNode": "k0s-color-300gb-worker",
+    "gitHash": "2e6068c"
   },
   "pods": [
+    {
+      "name": "alloy-2vfq6",
+      "namespace": "alloy",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
     {
       "name": "alloy-lw24s",
       "namespace": "alloy",
@@ -106,6 +113,27 @@
     }
 ,
     {
+      "name": "cilium-envoy-qpjzc",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "cilium-mjgt2",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "konnectivity-agent-z8rsc",
+      "namespace": "kube-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
       "name": "cilium-2mf7n",
       "namespace": "kube-system",
       "status": "Running",
@@ -194,6 +222,34 @@
       "namespace": "kubebuilder-cronjob-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "engine-image-ei-b907910b-b5kx8",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "longhorn-csi-plugin-bhklp",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "longhorn-manager-jh5xd",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "longhorn-ui-f7ff9c74-p8d6s",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
     }
 ,
     {
@@ -309,21 +365,14 @@
     }
 ,
     {
-      "name": "longhorn-manager-bfzfx",
+      "name": "longhorn-manager-fc2zt",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "longhorn-ui-f7ff9c74-vxgzj",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "longhorn-ui-f7ff9c74-zw8nw",
+      "name": "longhorn-ui-f7ff9c74-hzq67",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -351,7 +400,7 @@
     }
 ,
     {
-      "name": "longhorn-manager-fl5qw",
+      "name": "longhorn-manager-xkw9q",
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-worker-2"
@@ -365,23 +414,16 @@
     }
 ,
     {
-      "name": "hugo-site-849d86c5f-kczgb",
+      "name": "k0s-dashboard-updater-29153040-dlhjm",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-worker-2"
+      "node": "k0s-color-300gb-worker"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29152320-7pj99",
+      "name": "hugo-site-7fb8b4b764-f7x27",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-worker-2"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29150160-rw2gn",
-      "namespace": "prod",
-      "status": "Succeeded",
       "node": "k0s-color-worker-2"
     }
 ,
@@ -397,6 +439,27 @@
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29152320-7pj99",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-worker-2"
+    }
+,
+    {
+      "name": "node-exporter-prometheus-node-exporter-ts98w",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
+    }
+,
+    {
+      "name": "victoria-logs-vector-bllfw",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-worker"
     }
 ,
     {
