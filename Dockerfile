@@ -1,7 +1,7 @@
 # Build Hugo from source with Go 1.24
 FROM golang:1.24 AS builder
 
-ENV HUGO_VERSION=0.147.5
+ENV HUGO_VERSION=0.147.8
 
 RUN apt-get update && apt-get install -y git
 
