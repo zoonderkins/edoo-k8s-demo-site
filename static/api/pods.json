@@ -1,28 +1,28 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-09T12:21:26+00:00",
-    "totalPods": 73,
-    "runningPods": 73,
-    "workerNode": "k0s-color-worker-1",
-    "gitHash": "2cff7cc"
+    "lastUpdate": "2025-06-09T16:01:11+00:00",
+    "totalPods": 82,
+    "runningPods": 80,
+    "workerNode": "k0s-color-300gb-1",
+    "gitHash": "788391e"
   },
   "pods": [
     {
-      "name": "alloy-lvlwr",
+      "name": "alloy-d52w7",
       "namespace": "alloy",
       "status": "Running",
       "node": "k0s-color-300gb-1"
     }
 ,
     {
-      "name": "alloy-szv74",
+      "name": "alloy-w9mj2",
       "namespace": "alloy",
       "status": "Running",
       "node": "k0s-color-300gb-2"
     }
 ,
     {
-      "name": "alloy-gtlsm",
+      "name": "alloy-rrn4h",
       "namespace": "alloy",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -400,10 +400,45 @@
     }
 ,
     {
+      "name": "loki-chunks-cache-0",
+      "namespace": "monitoring",
+      "status": "Pending",
+      "node": "<none>"
+    }
+,
+    {
+      "name": "loki-canary-dm8vs",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "loki-minio-0",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
       "name": "prometheus-color-stack-prometheus-node-exporter-ff7xq",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "loki-0",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "loki-canary-vzrp2",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
     }
 ,
     {
@@ -435,6 +470,27 @@
     }
 ,
     {
+      "name": "loki-canary-krhrc",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "loki-gateway-64d7c7768b-7s7j5",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "loki-results-cache-0",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
       "name": "prometheus-color-stack-kube-state-metrics-588b58c8c8-q4pks",
       "namespace": "monitoring",
       "status": "Running",
@@ -449,7 +505,14 @@
     }
 ,
     {
-      "name": "hugo-site-c8c5bcc-pz4dz",
+      "name": "hugo-site-bb549c4cc-c48wc",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29158080-sljdl",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -458,7 +521,7 @@
     {
       "name": "k0s-dashboard-updater-manual-1749471628301-sfklx",
       "namespace": "prod",
-      "status": "Running",
+      "status": "Succeeded",
       "node": "k0s-color-worker-1"
     }
 ,
