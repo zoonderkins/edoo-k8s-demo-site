@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-09T16:01:11+00:00",
-    "totalPods": 82,
-    "runningPods": 80,
+    "lastUpdate": "2025-06-10T04:01:11+00:00",
+    "totalPods": 83,
+    "runningPods": 81,
     "workerNode": "k0s-color-300gb-1",
-    "gitHash": "788391e"
+    "gitHash": "7c613d7"
   },
   "pods": [
     {
@@ -400,21 +400,14 @@
     }
 ,
     {
-      "name": "loki-chunks-cache-0",
-      "namespace": "monitoring",
-      "status": "Pending",
-      "node": "<none>"
-    }
-,
-    {
-      "name": "loki-canary-dm8vs",
+      "name": "loki-canary-hw5r4",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-1"
     }
 ,
     {
-      "name": "loki-minio-0",
+      "name": "loki-chunks-cache-0",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -428,14 +421,21 @@
     }
 ,
     {
-      "name": "loki-0",
+      "name": "loki-canary-qcbps",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-2"
     }
 ,
     {
-      "name": "loki-canary-vzrp2",
+      "name": "loki-gateway-64d7c7768b-wffd9",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "prometheus-color-stack-grafana-745fc554c6-wnb4s",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-2"
@@ -470,14 +470,14 @@
     }
 ,
     {
-      "name": "loki-canary-krhrc",
+      "name": "loki-0",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "loki-gateway-64d7c7768b-7s7j5",
+      "name": "loki-canary-9mmgx",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-worker-1"
@@ -505,7 +505,14 @@
     }
 ,
     {
-      "name": "hugo-site-bb549c4cc-c48wc",
+      "name": "hugo-site-95758d494-sss7h",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29158800-v9pg6",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -514,7 +521,7 @@
     {
       "name": "k0s-dashboard-updater-29158080-sljdl",
       "namespace": "prod",
-      "status": "Running",
+      "status": "Succeeded",
       "node": "k0s-color-300gb-1"
     }
 ,
@@ -547,7 +554,7 @@
     }
 ,
     {
-      "name": "otel-opentelemetry-collector-585c7664c6-czk86",
+      "name": "otel-opentelemetry-collector-847b97d47-f9sl6",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-300gb-2"
