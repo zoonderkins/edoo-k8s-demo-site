@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-17T04:00:37+00:00",
-    "totalPods": 85,
-    "runningPods": 81,
-    "workerNode": "k0s-color-300gb-1",
-    "gitHash": "c5aa01c"
+    "lastUpdate": "2025-06-17T16:01:36+00:00",
+    "totalPods": 95,
+    "runningPods": 91,
+    "workerNode": "k0s-color-worker-1",
+    "gitHash": "28047aa"
   },
   "pods": [
     {
@@ -211,6 +211,69 @@
     }
 ,
     {
+      "name": "virt-api-5c65d4644b-5bt9s",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-api-5c65d4644b-nfddb",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-controller-7c8dfb87fc-k2qxj",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-controller-7c8dfb87fc-wrffk",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-handler-csxt8",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-handler-br8cj",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "virt-operator-6dc9b58467-8q87m",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "virt-handler-jwk8t",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "virt-operator-6dc9b58467-5pjkj",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
       "name": "csi-attacher-7bfc99fdf6-fq9sx",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -271,6 +334,13 @@
       "namespace": "longhorn-system",
       "status": "Running",
       "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "c-4349fs-29169600-j96rc",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
     }
 ,
     {
@@ -512,24 +582,17 @@
     }
 ,
     {
-      "name": "hugo-site-75475c88fd-mrpsp",
+      "name": "hugo-site-67667785cb-v8x6j",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-300gb-1"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29168880-2gr7x",
+      "name": "k0s-dashboard-updater-29169600-jx425",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-300gb-1"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29166720-gmrlt",
-      "namespace": "prod",
-      "status": "Succeeded",
-      "node": "k0s-color-300gb-1"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
@@ -541,6 +604,13 @@
 ,
     {
       "name": "k0s-dashboard-updater-29168160-wfvnp",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29168880-2gr7x",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-300gb-1"
