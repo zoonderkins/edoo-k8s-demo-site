@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-28T16:01:43+00:00",
-    "totalPods": 95,
-    "runningPods": 91,
-    "workerNode": "k0s-color-worker-1",
-    "gitHash": "ce93d92"
+    "lastUpdate": "2025-06-29T04:01:08+00:00",
+    "totalPods": 94,
+    "runningPods": 90,
+    "workerNode": "k0s-color-300gb-2",
+    "gitHash": "35c86f5"
   },
   "pods": [
     {
@@ -337,13 +337,6 @@
     }
 ,
     {
-      "name": "c-4349fs-29185440-g756l",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-300gb-2"
-    }
-,
-    {
       "name": "csi-attacher-7bfc99fdf6-pwl7l",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -470,7 +463,7 @@
     }
 ,
     {
-      "name": "c-4349fs-29184000-sjv5h",
+      "name": "c-4349fs-29185440-g756l",
       "namespace": "longhorn-system",
       "status": "Succeeded",
       "node": "k0s-color-300gb-2"
@@ -582,17 +575,17 @@
     }
 ,
     {
-      "name": "hugo-site-596ddf79b6-mfb6h",
+      "name": "hugo-site-7b47b5f5cd-gqjcl",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29185440-zvb9f",
+      "name": "k0s-dashboard-updater-29186160-qtfhr",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-worker-1"
+      "node": "k0s-color-300gb-2"
     }
 ,
     {
@@ -603,14 +596,14 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29183280-x59wj",
+      "name": "k0s-dashboard-updater-29184720-jgfsj",
       "namespace": "prod",
       "status": "Succeeded",
-      "node": "k0s-color-300gb-2"
+      "node": "k0s-color-worker-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29184720-jgfsj",
+      "name": "k0s-dashboard-updater-29185440-zvb9f",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-1"
