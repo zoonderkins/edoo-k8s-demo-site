@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-06-29T18:13:14+00:00",
-    "totalPods": 96,
-    "runningPods": 89,
-    "workerNode": "k0s-color-300gb-1",
-    "gitHash": "7a48003"
+    "lastUpdate": "2025-06-30T04:01:55+00:00",
+    "totalPods": 93,
+    "runningPods": 90,
+    "workerNode": "k0s-color-300gb-2",
+    "gitHash": "aacfa46"
   },
   "pods": [
     {
@@ -29,13 +29,6 @@
     }
 ,
     {
-      "name": "k0s-color-argo-argocd-dex-server-dd4fd8866-cjnbn",
-      "namespace": "argocd",
-      "status": "Pending",
-      "node": "k0s-color-300gb-1"
-    }
-,
-    {
       "name": "k0s-color-argo-argocd-application-controller-0",
       "namespace": "argocd",
       "status": "Running",
@@ -44,6 +37,13 @@
 ,
     {
       "name": "k0s-color-argo-argocd-applicationset-controller-795c7f8b49kw554",
+      "namespace": "argocd",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-color-argo-argocd-dex-server-dd4fd8866-cjnbn",
       "namespace": "argocd",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -68,13 +68,6 @@
       "namespace": "argocd",
       "status": "Running",
       "node": "k0s-color-300gb-1"
-    }
-,
-    {
-      "name": "k0s-color-argo-argocd-notifications-controller-66d968fc6d-8pngp",
-      "namespace": "argocd",
-      "status": "Running",
-      "node": "k0s-color-300gb-2"
     }
 ,
     {
@@ -281,27 +274,6 @@
     }
 ,
     {
-      "name": "discover-proc-kubelet-cmdline",
-      "namespace": "longhorn-system",
-      "status": "Pending",
-      "node": "k0s-color-300gb-2"
-    }
-,
-    {
-      "name": "instance-manager-439d3b70252fc57d338a96d54579760d",
-      "namespace": "longhorn-system",
-      "status": "Pending",
-      "node": "k0s-color-300gb-2"
-    }
-,
-    {
-      "name": "c-4349fs-29186880-fgjgk",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-300gb-1"
-    }
-,
-    {
       "name": "csi-attacher-7bfc99fdf6-fq9sx",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -407,6 +379,13 @@
     }
 ,
     {
+      "name": "instance-manager-439d3b70252fc57d338a96d54579760d",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
       "name": "longhorn-csi-plugin-c9v65",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -484,9 +463,9 @@
     }
 ,
     {
-      "name": "prometheus-color-stack-grafana-745fc554c6-pqxlm",
-      "namespace": "monitoring",
-      "status": "Pending",
+      "name": "c-4349fs-29186880-fgjgk",
+      "namespace": "longhorn-system",
+      "status": "Succeeded",
       "node": "k0s-color-300gb-1"
     }
 ,
@@ -512,6 +491,13 @@
     }
 ,
     {
+      "name": "prometheus-color-stack-grafana-745fc554c6-pqxlm",
+      "namespace": "monitoring",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
       "name": "prometheus-color-stack-kub-operator-6884c4467d-z65fm",
       "namespace": "monitoring",
       "status": "Running",
@@ -527,13 +513,6 @@
 ,
     {
       "name": "loki-canary-qcbps",
-      "namespace": "monitoring",
-      "status": "Running",
-      "node": "k0s-color-300gb-2"
-    }
-,
-    {
-      "name": "loki-gateway-64d7c7768b-wffd9",
       "namespace": "monitoring",
       "status": "Running",
       "node": "k0s-color-300gb-2"
@@ -596,24 +575,24 @@
     }
 ,
     {
+      "name": "hugo-site-65464f4585-fmcf8",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29187600-49nd8",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
       "name": "k0s-dashboard-updater-29186880-7gp62",
       "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-color-300gb-1"
-    }
-,
-    {
-      "name": "hugo-site-77cd6c5dcb-br5jj",
-      "namespace": "prod",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29184720-jgfsj",
-      "namespace": "prod",
       "status": "Succeeded",
-      "node": "k0s-color-worker-1"
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
@@ -621,13 +600,6 @@
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "vmsingle-victoria-metrics-single-server-0",
-      "namespace": "victoria",
-      "status": "Pending",
-      "node": "k0s-color-300gb-2"
     }
 ,
     {
@@ -660,6 +632,13 @@
 ,
     {
       "name": "victoria-logs-vector-f4wm6",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-2"
+    }
+,
+    {
+      "name": "vmsingle-victoria-metrics-single-server-0",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-300gb-2"
