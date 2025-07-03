@@ -1,12 +1,12 @@
 ---
 title: "K0s Color Dashboard"
-date: 2025-07-03T04:00:42+00:00
+date: 2025-07-03T16:02:45+00:00
 markup: html
-totalPods: 92
+totalPods: 94
 runningPods: 90
 workerNode: "k0s-color-300gb-1"
-lastUpdate: "2025-07-02 23:00:43 CST"
-gitHash: "de09b6c"
+lastUpdate: "2025-07-03 11:02:45 CST"
+gitHash: "0223982"
 ---
 
 <!-- This content is dynamically updated by the DashboardUpdater Operator -->
