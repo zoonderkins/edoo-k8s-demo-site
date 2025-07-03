@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-07-02T16:02:08+00:00",
-    "totalPods": 91,
-    "runningPods": 89,
-    "workerNode": "k0s-color-worker-1",
-    "gitHash": "d72e82f"
+    "lastUpdate": "2025-07-03T04:00:42+00:00",
+    "totalPods": 92,
+    "runningPods": 90,
+    "workerNode": "k0s-color-300gb-1",
+    "gitHash": "de09b6c"
   },
   "pods": [
     {
@@ -213,15 +213,8 @@
     {
       "name": "virt-api-5c65d4644b-h5t62",
       "namespace": "kubevirt",
-      "status": "Pending",
-      "node": "<none>"
-    }
-,
-    {
-      "name": "virt-controller-7c8dfb87fc-vnqq5",
-      "namespace": "kubevirt",
-      "status": "Pending",
-      "node": "<none>"
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
@@ -233,6 +226,13 @@
 ,
     {
       "name": "virt-controller-7c8dfb87fc-k2qxj",
+      "namespace": "kubevirt",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "virt-controller-7c8dfb87fc-vnqq5",
       "namespace": "kubevirt",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -372,13 +372,6 @@
     }
 ,
     {
-      "name": "c-4349fs-29191200-rqh5z",
-      "namespace": "longhorn-system",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
       "name": "csi-attacher-7bfc99fdf6-2wssc",
       "namespace": "longhorn-system",
       "status": "Running",
@@ -466,6 +459,13 @@
       "name": "longhorn-ui-6b44759848-vs89q",
       "namespace": "longhorn-system",
       "status": "Running",
+      "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "c-4349fs-29191200-rqh5z",
+      "namespace": "longhorn-system",
+      "status": "Succeeded",
       "node": "k0s-color-worker-1"
     }
 ,
@@ -575,16 +575,23 @@
     }
 ,
     {
-      "name": "hugo-site-7d7db74bb-md9k5",
+      "name": "hugo-site-7d57495cf4-xv98z",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-worker-1"
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29191920-9h5dp",
+      "namespace": "prod",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
       "name": "k0s-dashboard-updater-29191200-rgqrt",
       "namespace": "prod",
-      "status": "Running",
+      "status": "Succeeded",
       "node": "k0s-color-worker-1"
     }
 ,
