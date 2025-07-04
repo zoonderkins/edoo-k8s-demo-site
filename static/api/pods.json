@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-07-04T04:00:35+00:00",
-    "totalPods": 95,
-    "runningPods": 90,
+    "lastUpdate": "2025-07-04T16:01:13+00:00",
+    "totalPods": 96,
+    "runningPods": 91,
     "workerNode": "k0s-color-300gb-1",
-    "gitHash": "b041ab3"
+    "gitHash": "f5cd94e"
   },
   "pods": [
     {
@@ -271,6 +271,13 @@
       "namespace": "kubevirt",
       "status": "Running",
       "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "c-4349fs-29194080-xsffc",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
@@ -582,14 +589,14 @@
     }
 ,
     {
-      "name": "hugo-site-74dbd6f89c-95dd9",
+      "name": "hugo-site-574d5687c9-7t2ph",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29193360-scclp",
+      "name": "k0s-dashboard-updater-29194080-kg8cs",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -610,14 +617,35 @@
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29191200-rgqrt",
+      "name": "k0s-dashboard-updater-29193360-scclp",
       "namespace": "prod",
       "status": "Succeeded",
-      "node": "k0s-color-worker-1"
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "grafana-584c6d6cc7-ztnjm",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "tempo-0",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
       "name": "victoria-logs-vector-8vtlf",
+      "namespace": "victoria",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "vmsingle-victoria-metrics-single-server-0",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-300gb-1"
@@ -638,13 +666,6 @@
     }
 ,
     {
-      "name": "grafana-584c6d6cc7-ww5sc",
-      "namespace": "victoria",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
       "name": "otel-opentelemetry-collector-847b97d47-khbq8",
       "namespace": "victoria",
       "status": "Running",
@@ -652,21 +673,7 @@
     }
 ,
     {
-      "name": "tempo-0",
-      "namespace": "victoria",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
       "name": "victoria-logs-vector-gqgkk",
-      "namespace": "victoria",
-      "status": "Running",
-      "node": "k0s-color-worker-1"
-    }
-,
-    {
-      "name": "vmsingle-victoria-metrics-single-server-0",
       "namespace": "victoria",
       "status": "Running",
       "node": "k0s-color-worker-1"
