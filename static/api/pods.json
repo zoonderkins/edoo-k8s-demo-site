@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdate": "2025-07-08T04:00:34+00:00",
-    "totalPods": 95,
-    "runningPods": 91,
+    "lastUpdate": "2025-07-08T16:00:33+00:00",
+    "totalPods": 96,
+    "runningPods": 92,
     "workerNode": "k0s-color-300gb-1",
-    "gitHash": "1d6d305"
+    "gitHash": "f67b709"
   },
   "pods": [
     {
@@ -278,6 +278,13 @@
       "namespace": "kubevirt",
       "status": "Running",
       "node": "k0s-color-worker-1"
+    }
+,
+    {
+      "name": "c-4349fs-29199840-d5qf6",
+      "namespace": "longhorn-system",
+      "status": "Running",
+      "node": "k0s-color-300gb-1"
     }
 ,
     {
@@ -582,23 +589,16 @@
     }
 ,
     {
-      "name": "hugo-site-5f986bb89-5rzwh",
+      "name": "hugo-site-7cf56558b-cp7xp",
       "namespace": "prod",
       "status": "Running",
       "node": "k0s-color-300gb-1"
     }
 ,
     {
-      "name": "k0s-dashboard-updater-29199120-z7zs2",
+      "name": "k0s-dashboard-updater-29199840-7h7fh",
       "namespace": "prod",
       "status": "Running",
-      "node": "k0s-color-300gb-1"
-    }
-,
-    {
-      "name": "k0s-dashboard-updater-29196960-9n6j4",
-      "namespace": "prod",
-      "status": "Succeeded",
       "node": "k0s-color-300gb-1"
     }
 ,
@@ -611,6 +611,13 @@
 ,
     {
       "name": "k0s-dashboard-updater-29198400-jjklg",
+      "namespace": "prod",
+      "status": "Succeeded",
+      "node": "k0s-color-300gb-1"
+    }
+,
+    {
+      "name": "k0s-dashboard-updater-29199120-z7zs2",
       "namespace": "prod",
       "status": "Succeeded",
       "node": "k0s-color-300gb-1"
